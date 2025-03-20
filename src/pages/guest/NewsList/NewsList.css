@@ -1,0 +1,17 @@
+h2.NewlistPage-title.mb-4.text-center {
+    color: var(--primary-colorVaccine);
+}
+.NewlistPage-flex {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.NewlistPage-bnt{
+    background-color:var(--primary-colorVaccine);
+    color: white;
+}
+.NewlistPage-bnt:hover{
+    background-color:white;
+    color: black;
+    cursor: pointer;
+}

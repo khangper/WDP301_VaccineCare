@@ -1,0 +1,29 @@
+.layout_container {
+    display: flex;
+    background-color: #f7f9fb;
+    margin-top: 100px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .sidebar_container {
+    width: 210px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    transition: width 0.3s ease-in-out;
+    position: fixed;
+  }
+  
+  .content_outlet {
+    flex-grow: 1;
+    padding: 0 0 0 12.5%;
+    transition: margin-left 0.3s ease-in-out;
+    overflow: hidden;
+    background-color: transparent;
+    margin-top: 10px;
+    border-radius: 5px;
+  }
+  
+  .layout_container.collapsed .content_outlet {
+    margin-left: -120px;
+  }
+  

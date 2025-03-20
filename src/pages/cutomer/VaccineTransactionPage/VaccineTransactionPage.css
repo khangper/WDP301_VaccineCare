@@ -1,0 +1,28 @@
+/* Tùy chỉnh giao diện cho trang giao dịch */
+.transaction-page {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .transaction-card {
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  /* Tùy chỉnh thêm cho các đoạn text, nếu cần */
+  .transaction-card p {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .transaction-card .card-header {
+    padding: 1rem 1.5rem;
+  }
+  
+  .TransactionPage-title {
+    background-color:var(--primary-colorVaccine);
+    padding: 15px;
+    display: flex;
+    color: white;
+    justify-content: center;
+}

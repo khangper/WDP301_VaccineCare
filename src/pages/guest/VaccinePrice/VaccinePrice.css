@@ -1,0 +1,52 @@
+
+.vaccine-tableTitle{
+    background-color: #128a7a !important;
+    color: white !important;
+  }
+
+.VaccineTitle.text-center {
+    margin: 50px;
+    color: brown;
+    font-weight: 700;
+}
+
+/* Màu nền xen kẽ cho từng cột */
+.vaccine-table thead th {
+    background-color: #3a6ded; /* Màu xanh đậm cho tiêu đề */
+    color: white;
+  }
+  .vaccine-table tbody td:nth-child(3),  /* Cột Tên vắc xin */
+  .vaccine-table tbody td:nth-child(4) { /* Cột Nước sản xuất */
+    background-color: #c2e4ff; /* Màu xanh nhạt */
+    color: #0d66a3;
+  }
+  
+  .vaccine-table tbody td:nth-child(5),  /* Cột Giá bán lẻ */
+  .vaccine-table tbody td:nth-child(6),  /* Cột Giá ưu đãi */
+  .vaccine-table tbody td:nth-child(7) { /* Cột Tình trạng */
+    background-color: var(--primary-colorVaccine); /* Màu xanh đậm */
+    color: white;
+  }
+  
+  /* Hiệu ứng hover */
+  .vaccine-table tbody tr:hover {
+    background-color: #b0dafb !important;
+    transition: 0.3s ease-in-out;
+  }
+
+  /* Ghi chú bảng giá */
+.VaccinePrice-note {
+    margin-top: 20px;
+    padding: 15px;
+    background: #fff3cd;
+    border-left: 5px solid #ffbf00;
+    border-radius: 4px;
+  }
+  
+  .VaccinePrice-noteText {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #333;
+  }
+
+  

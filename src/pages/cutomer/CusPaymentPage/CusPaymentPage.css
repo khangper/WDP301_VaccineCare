@@ -1,0 +1,128 @@
+.BillPayment-flex.mt-3.text-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.payment-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 2rem;
+  margin: 20px auto;
+  max-width: 800px;
+}
+
+.payment-details {
+  margin-bottom: 2rem;
+}
+
+.info-row {
+  margin: 1.5rem 0;
+}
+
+.info-row p {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.status-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: 600;
+  margin-left: 0.5rem;
+}
+
+.status-badge-success {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.status-badge-pending {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.status-badge-default {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+.vaccine-details {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.vaccine-item {
+  background: #f9fafb;
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+.vaccine-item p {
+  margin-bottom: 0.5rem;
+}
+
+.payment-actions {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.btn-vnpay {
+  background-color: var(--primary-colorVaccine);
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-vnpay:hover {
+  opacity: 0.9;
+}
+
+.btn-vnpay:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.btn-cash {
+  background-color: #4B5563;
+  color: white;
+}
+
+.btn-cash.processing {
+  background-color: #6B7280;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-cash.success {
+  background-color: #10B981;
+}
+
+/* Style cho Spin component của Antd */
+.ant-spin {
+  color: white;
+}
+
+/* Thêm animation xoay */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.processing .anticon-spin {
+  animation: spin 1s linear infinite;
+}

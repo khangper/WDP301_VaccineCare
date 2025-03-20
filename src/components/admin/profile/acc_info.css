@@ -1,0 +1,34 @@
+.acc-info-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.profile-picture {
+    margin-bottom: 20px;
+}
+
+.profile-picture img {
+    width: 200px; /* Increase the width */
+    height: 200px; /* Increase the height */
+    border-radius: 50%; /* Keep it circular */
+    object-fit: cover; /* Ensure the image does not get distorted */
+}
+
+.info {
+    text-align: center;
+}
+
+.info h2 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.info p {
+    margin: 5px 0;
+    color: #555;
+}

@@ -1,0 +1,126 @@
+.sidebar_staff {
+    width: 210px;
+    background-color: #fff;
+    height: 90vh;
+    padding-top: 10px;
+    transition: width 0.3s ease-in-out;
+    margin-top: 10px;
+    border-right: 1px solid #e8e8e8;
+  }
+  
+  .sidebar_staff.collapsed {
+    width: 80px;
+  }
+  
+  .sidebar_main_staff {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+  }
+  
+  .sidebar_menu_container_1,
+  .sidebar_menu_container_staff {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding-left: 0 !important;
+  }
+  
+  .sidebar_menu_container_1 li,
+  .sidebar_menu_container_staff li {
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .sidebar_menu_container_staff li a,
+  .sidebar_menu_container_1 li a {
+    color: #333;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    
+  }
+  
+  .sidebar_menu_container_staff li:hover,
+  .sidebar_menu_container_1 li:hover {
+    background-color: #19b8b03a;
+    color: var(--primary-colorVaccine);
+    font-weight: bold;
+  }
+  
+  .sidebar_menu_container_staff li a:hover,
+  .sidebar_menu_container_1 li a:hover {
+    color: var(--primary-colorVaccine);
+  }
+  
+  .icon {
+    font-size: 14px;
+  }
+  
+  .sidebar_menu_container_staff li.active,
+  .sidebar_menu_container_1 li.active {
+    background-color: var(--primary-colorVaccine);
+    font-weight: 550;
+  }
+  
+  .sidebar_menu_container_staff li.active a,
+  .sidebar_menu_container_1 li.active a {
+    color: #f1eded !important;
+  }
+  
+  .sidebar_menu_container_1 {
+    border-top: 1px solid #e8e8e8;
+    padding-top: 5px;
+  }
+  
+  .sidebar_staff.collapsed .sidebar_menu_container_staff li a,
+  .sidebar_staff.collapsed .sidebar_menu_container_1 li a
+   {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .sidebar_staff.collapsed .sidebar_menu_container_staff li a span,
+  .sidebar_staff.collapsed .sidebar_menu_container_1 li a span {
+    display: none;
+  }
+  
+  .sidebar_staff.collapsed .sidebar_menu_container_staff li a .icon,
+  .sidebar_staff.collapsed .sidebar_menu_container_1 li a .icon {
+    margin-right: 0;
+    font-size: 18px;
+  }
+  
+  .sidebar-logout-btn{
+    background: transparent;
+    font-size: 14px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    outline: none;
+    border: 0;
+    color: #333;
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  .sidebar-logout-btn:hover{
+    color: var(--primary-colorVaccine);
+    font-weight: 550;
+  }
+
+  .sidebar_staff.collapsed .sidebar-logout-btn {
+    justify-content: center;
+    gap: 0;
+    width: 100%;
+    display: flex;
+  }
+
+  .sidebar_staff.collapsed .sidebar-logout-btn .icon {
+    font-size: 18px;
+  }

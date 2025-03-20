@@ -1,0 +1,470 @@
+.HomePage-main-container{
+    width: 100%;
+    height: 700px;
+    margin: 0 auto;
+    background: rgba(232, 242, 255, 0.2)
+      url(../../../assets/HomePage/babybg.png) no-repeat
+      center;
+    background-size: cover;
+    overflow: hidden;
+}
+  .flex-column-eb {
+    position: absolute;
+    width: 85.35px;
+    height: 540px;
+    top: 50%;
+    left: 1181.73px;
+    transform: translate(0, -55.56%);
+    z-index: 20;
+  }
+  .background-1 {
+    width: 60px;
+    height: 60px;
+    margin: 20px 0 0 0;
+    background: var(--primary-colorVaccine);
+    z-index: 12;
+    overflow: visible auto;
+    border-radius: 500px;
+  }
+  .svg {
+    position: relative;
+    width: 25px;
+    height: 24px;
+    margin: 18px 0 0 17.5px;
+    z-index: 13;
+    overflow: hidden;
+  }
+
+  .svg-1 {
+    position: absolute;
+    width: 25px;
+    height: 24px;
+    top: 50%;
+    left: 50%;
+    background: url(../../../assets/HomePage/search.png)
+      no-repeat center;
+    background-size: cover;
+    transform: translate(-50%, -50%);
+    z-index: 15;
+    overflow: hidden;
+  }
+  .background-2 {
+    /* position: relative; */
+    width: 60px;
+    height: 60px;
+    margin: 420px 0 0 25.35px;
+    background: #fe5858;
+    z-index: 20;
+    overflow: visible auto;
+    border-radius: 500px;
+  }
+  .stethoscope {
+    position: relative;
+    width: 25px;
+    height: 25px;
+    margin: 17.5px 0 0 17.5px;
+    z-index: 21;
+    overflow: hidden;
+  }
+
+  .stethoscope-3 {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    top: 50%;
+    left: 50%;
+    background: url(../../../assets/HomePage/heard.png)
+      no-repeat center;
+    background-size: cover;
+    transform: translate(-50%, -50%);
+    z-index: 23;
+    overflow: hidden;
+  }
+  .flex-column-af {
+    position: absolute;
+    top: 113px;
+    right: 805.02px;
+    bottom: 240.34px;
+    left: 401px;
+    font-size: 0px;
+    z-index: 16;
+  }
+  .HomPage-heading-protected-together {
+    height: 76px;
+    margin: 0 0 0 0;
+    color: var(--primary-colorVaccine);
+    font-family: Manrope, var(--default-font-family);
+    font-size: 56px;
+    font-weight: 800;
+    line-height: 76px;
+    text-align: left;
+    white-space: nowrap;
+    z-index: 11;
+  }
+  .hotline-24-7 {
+    color: #8e6b88;
+    font-family: Manrope, var(--default-font-family);
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 20px;
+    line-height: 21px;
+  }
+
+  .col-12.mt-152 {
+    margin-top: 152px;
+}
+  .welcome-software-management {
+    text-shadow: 2px 2px 4px #000000;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 594.06px;
+    height: 88px;
+    top: 156.66px;
+    right: 115.92px;
+    left: 4px;
+    color: white;
+    font-family: Manrope, var(--default-font-family);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 32px;
+    text-align: left;
+    z-index: 3;
+    margin-top: 100px;
+  }
+  .background-4 {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    top: 50%;
+    left: -200px;
+    background: #ffb71a;
+    transform: translate(0, 6.12%);
+    z-index: 16;
+    border-radius: 500px;
+  }
+  .svg-5 {
+    position: relative;
+    width: 31px;
+    height: 24px;
+    margin: 18px 0 0 14.5px;
+    z-index: 17;
+    overflow: hidden;
+  }
+  .svg-fill-6 {
+    position: absolute;
+    width: 31px;
+    height: 24px;
+    top: 0;
+    left: 0;
+    z-index: 18;
+    overflow: hidden;
+  }
+  .svg-7 {
+    position: absolute;
+    width: 25px;
+    height: 24px;
+    top: 50%;
+    left: 50%;
+    background: url(../../../assets/HomePage/heath.png)
+      no-repeat center;
+    background-size: cover;
+    transform: translate(-50%, -50%);
+    z-index: 19;
+    overflow: hidden;
+  }
+  .HomPage-datlich {
+    width: 238.28px;
+    top: 312.66px;
+    bottom: -18.67px;
+    left: 295.55px;
+    cursor: pointer;
+    background: var(--primary-colorVaccine);
+    border: none;
+    z-index: 9;
+    border-radius: 8px;
+  }
+  .HomPage-datlich:hover{
+    background-color: #285e61; 
+  }
+  .lien-he {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 238.28px;
+    top: 16px;
+    bottom: 17.67px;
+    left: 75px;
+    color: #ffffff;
+    font-family: Manrope, var(--default-font-family);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 52.67px;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+    z-index: 10;
+  }
+  .HomPage-Hotlinelink {
+    background-color: transparent;
+    height: 52.67px;
+    width: 253px;
+    text-align: -webkit-right;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-radius: 8px;
+    border: 1px solid var(--primary-colorVaccine) ;
+}
+  .HomePage-iconPhone {
+    margin-left: 30px;
+    width: 20px;
+    height: 20px;
+}
+  .HomePage-Hotline {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+    margin-top: 20px;
+}
+  .phone-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 151.507px;
+    height: 24px;
+    top: 325.66px;
+    left: calc(50% - 278.63px);
+    color: var(--primary-colorVaccine);
+    font-family: Manrope, var(--default-font-family);
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 24px;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+    z-index: 8;
+  }
+
+  /* Danh mục */
+/* Container chính */
+.HomePage-Danhmuc {
+  padding: 20px 0;
+}
+
+/* Tiêu đề */
+.HomePage-tilte {
+  margin-bottom: 20px;
+}
+
+/* Card Vaccine */
+.HomePage-card {
+  position: relative;
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.HomePage-card:hover {
+  transform: scale(1.05);
+}
+h2.HomePage-combovaccine_title {
+  margin-bottom: 40px;
+}
+
+button.btn.bnt-homePagecombo {
+  background-color: var(--primary-colorVaccine);
+  color: white;
+}
+button.btn.bnt-homePagecombo:hover {
+  background-color: var(--primary-colorVaccine);
+  color: white;
+}
+
+
+/* Ảnh vaccine */
+.HomePage-card-actions {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.HomePage-card-image {
+  display: block;
+  overflow: hidden;
+}
+
+.HomePage-card-image img {
+  width: 100%;
+  height: 300px;
+  transition: transform 1s ease-in-out;
+}
+.HomePage-combovaccine {
+  padding: 170px;
+}
+.HomePage-card-image:hover img {
+  transform: scale(1.2);
+  transition: transform 3s ease-in-out;
+}
+
+/* Nút xem chi tiết nổi */
+.HomePage-card-btn {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  width: 40px;
+  height: 40px;
+  background-color: #1c7adc;
+  color: white;
+  font-size: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.HomePage-card-actions:hover .HomePage-card-btn {
+  opacity: 1;
+}
+
+.HomePage-card-btn:hover {
+  background-color: #155a8a;
+}
+
+/* Nội dung card */
+.HomePage-card-body {
+  padding: 15px;
+}
+
+.HomePage-card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.HomePage-card-text {
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 10px;
+}
+a.btn.btn-primary.textdetail {
+    display: flex;
+    background-color: var(--primary-colorVaccine);
+    justify-content: center;
+    margin-top: 20px;
+    border: 1px solid darkcyan;
+}
+
+/* RESPONSIVE - Điều chỉnh số cột theo kích thước màn hình */
+@media (max-width: 1024px) { /* Tablet */
+  .col-lg-4 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+@media (max-width: 768px) { /* Mobile */
+  .col-md-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+  /* VideoHomePage */
+  .HomePage_video{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height:775px ;
+    border-radius: 49px;
+  }
+
+  .HomePage-videocontainer {
+    margin-top: 150px;
+}
+/* Danh mục dịch vụ */
+.HomePage-Danhmuc-Background{
+  width: 100%;
+  height: 450px;
+  margin: 0 auto;
+  background: var(--primary-colorVaccine);
+  opacity: 0.6;
+  border-radius: 78px;
+  box-shadow: 0 3px 23px 0 rgba(0, 71, 240, 0.13);
+}
+img.HomePage-Danhmuc-img {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  border-radius: 50px;
+  background-size: cover;
+  z-index: 2;
+}
+
+.HomePage-Danhmuc-Background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+.HomePage-Danhmuc-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  left: 599px;
+  color: #ffffff;
+  font-size: 30px;
+  font-weight: 700;
+  z-index: 5;
+}
+
+.HomePage-dm{
+  line-height: 56px;
+    font-weight: 800;
+    font-family: Manrope;
+    color: #0a083b;
+}
+.HomePage-DichVu.container {
+  margin-top: 100px;
+}
+/* loader */
+
+.loader {
+  width: 50px;
+  aspect-ratio: 1.154;
+  position: relative;
+  background: conic-gradient(from 120deg at 50% 64%, #0000, #25b09b 1deg 120deg, #0000 121deg);
+  animation: l27-0 1.5s infinite cubic-bezier(0.3, 1, 0, 1);
+  margin: 50px auto; /* Canh giữa loader */
+}
+
+.loader:before,
+.loader:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  transform-origin: 50% 66%;
+  animation: l27-1 1.5s infinite;
+}
+
+.loader:after {
+  --s: -1;
+}
+
+@keyframes l27-0 {
+  0%, 30% { transform: rotate(0); }
+  70% { transform: rotate(120deg); }
+  70.01%, 100% { transform: rotate(360deg); }
+}
+
+@keyframes l27-1 {
+  0% { transform: rotate(calc(var(--s,1)*120deg)) translate(0); }
+  30%, 70% { transform: rotate(calc(var(--s,1)*120deg)) translate(calc(var(--s,1)*-5px), 10px); }
+  100% { transform: rotate(calc(var(--s,1)*120deg)) translate(0); }
+}

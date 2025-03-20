@@ -1,0 +1,27 @@
+.ProfileChildPage-single-input {
+    /* position: absolute; */
+    top: 43.5px;
+    right: 200px;
+    left: 125px;
+    height: 53px;
+    background: #ffffff;
+    border: 1px solid #d2d3e5;
+    border-radius: 8px;
+    z-index: 4;
+    outline: none;
+    font-size: 16px;
+    color: #9091a8;
+    padding-left: 40px;
+    /* width: 80%; */
+    padding-top: 7px;
+}
+.ProfileChildPage-flex {
+    padding-right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 760px;
+}
+a.ProfileChildPage-text {
+    color: brown;
+}

@@ -1,0 +1,143 @@
+/* CSS cho trang About Us với thiết kế responsive */
+.AboutusPage-Title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-top: 100px;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  
+  .AboutusPage-Des {
+    font-size: 1.1rem;
+    color: #555;
+    text-align: justify;
+    line-height: 1.6;
+    padding: 10px 15px;
+  }
+  
+  .AboutusPage-mục2 {
+    background: #f8f9fa;
+    border-left: 5px solid var(--primary-colorVaccine);
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 5px;
+  }
+  
+  .AboutusPage-litte-Title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--primary-colorVaccine);
+    margin-bottom: 10px;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .AboutusPage-Title {
+      font-size: 1.5rem;
+    }
+    
+    .AboutusPage-Des {
+      font-size: 1rem;
+    }
+    
+    .AboutusPage-litte-Title {
+      font-size: 1.1rem;
+    }
+    .AboutusPage-flex {
+        display: contents;
+    }
+  }
+  
+  /* Hình ảnh minh họa */
+  .AboutusPage-Image {
+    width: 100%;
+    max-width: 600px;
+    display: block;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Hiệu ứng minh họa cho mục 3 */
+  .AboutusPage-Guide {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .AboutusPage-Guide img {
+    width: 100%;
+    max-width: 500px;
+    margin-top: 15px;
+    transition: transform 0.3s ease-in-out;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .AboutusPage-Guide img:hover {
+    transform: scale(1.1);
+  }
+  
+  /* Hình ảnh cho từng bước hướng dẫn */
+  .AboutusPage-Step {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .AboutusPage-Step img {
+    width: 80%;
+    max-width: 400px;
+    border-radius: 8px;
+    transition: transform 0.3s;
+  }
+  
+  .AboutusPage-Step img:hover {
+    transform: scale(1.05);
+  }
+/* Style cơ bản */
+.AboutusPage-flex {
+    display: flex;
+    flex-wrap: wrap; /* Cho phép các bước tự động xuống dòng */
+    gap: 60px;
+    margin-top: 15px;
+  }
+  
+  /* Giúp mỗi bước có độ co giãn hợp lý */
+  .AboutusPage-Step {
+    flex: 1 1 200px;  /* Mỗi phần tử có thể co giãn với kích thước tối thiểu 200px */
+    text-align: center; /* Canh giữa nội dung nếu cần */
+  }
+  
+  /* Điều chỉnh hình ảnh cho responsive */
+  .AboutusPage-Image {
+    width: 100%;
+    max-width: 300px; /* Bạn có thể điều chỉnh theo nhu cầu */
+    height: auto;
+  }
+  
+  /* Responsive cho màn hình nhỏ hơn (ví dụ: dưới 768px) */
+  @media (max-width: 768px) {
+    .AboutusPage-flex {
+      flex-direction: column; /* Hiển thị theo cột trên màn hình nhỏ */
+      align-items: center;
+      gap: 20px;
+    }
+  }
+  
+  .AboutusPages-Image {
+    width: 50%;
+    height: auto;
+}
+.AboutusPage-flex1 {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+.AboutusPage-Step {
+    transition: filter 0.3s ease-in-out;
+  }
+  .AboutusPage-flex:has(.AboutusPage-Step:hover) .AboutusPage-Step:not(:hover) {
+    filter: blur(4px);
+  }
+  

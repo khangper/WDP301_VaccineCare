@@ -1,0 +1,59 @@
+.staff-profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+
+.profile-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 500px;
+}
+
+.profile-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-card h2 {
+  margin-top: 10px;
+  color: #333;
+}
+
+.profile-card p {
+  margin: 5px 0;
+  color: #666;
+}
+
+.input-edit {
+  padding: 5px;
+  margin-left: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.btn-edit,
+.btn-save {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  background-color: var(--primary-colorVaccine);
+  color: #fff;
+  font-weight: 550;
+}
+
+.btn-edit:hover,
+.btn-save:hover {
+  background-color: #19b8b03a;
+  color: var(--primary-colorVaccine);
+}

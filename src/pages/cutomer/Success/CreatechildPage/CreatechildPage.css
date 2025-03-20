@@ -1,0 +1,111 @@
+.CreatechildPage-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url(../../../../assets/HomePage/Background.png);
+    background-size: cover;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+}
+.CreatechildPage-From{
+    background-color: #f9f9f9;
+    flex: 1; 
+    height: 100%;
+    padding-left: 75px;
+    padding-top: 60px;
+}
+.CreatechildPage-title{
+    flex: 1; 
+    height: 100%;
+}
+.CreatechildPage-Name{
+    color: #000;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 140%; /* 19.6px */
+}
+.CreatechildPage-input{
+  border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    width: 289px;
+    height: 48px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+.CreatechildPage-custom-select {
+    display: flex;
+    width: 64%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  .CreatechildPage-content {
+    margin-top: 10px;
+}
+  .CreatechildPage-custom-option {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    background: white;
+    font-weight: bold;
+    user-select: none;
+  }
+  
+  .CreatechildPage-custom-option:hover {
+    background:var(--primary-colorVaccine);
+  }
+  
+  .selected {
+    background: var(--primary-colorVaccine);
+  }
+  .CreatechildPage-content-kk {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+.CreatechildPage-title {
+    display: flex;
+    flex: 1;
+    height: 100%;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.CreatechildPage-button {
+    display: flex;
+    width: 148.94px;
+    height: 52.67px;
+    padding: 16px 24.647px 17.67px 25px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    margin-top: 190px;
+    border-radius: 8px;
+    background: var(--primary-colorVaccine);
+    color: white;
+    margin-top: 300px;
+    margin-left: 440px;
+}
+.CreatechildPage-button:hover{
+  cursor: pointer;
+}
+.SuccessRegis1-title {
+  flex-shrink: 0;
+  width: 660px;
+  height: 76px;
+  color: var(--primary-colorVaccine);
+  font-family: Manrope;
+  font-size: 80px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 76px;
+  margin-bottom: 40px;
+}

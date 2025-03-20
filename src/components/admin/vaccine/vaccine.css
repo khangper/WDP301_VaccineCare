@@ -1,0 +1,188 @@
+.admin .admin-vaccine-container {
+    padding: 24px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.admin .admin-vaccine-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--primary-colorVaccine);
+    margin-bottom: 24px;
+}
+
+.admin .admin-vaccine-top-bar {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.admin .admin-vaccine-sort-dropdown {
+    padding: 8px 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: #374151;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.admin .admin-vaccine-sort-dropdown:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1);
+}
+
+.admin .admin-vaccine-table-container {
+    overflow-x: auto;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.admin .admin-vaccine-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+    min-width: 800px;
+}
+
+.admin .admin-vaccine-table th {
+    background-color: var(--primary-colorVaccine);
+    color: white;
+    padding: 16px;
+    text-align: left;
+    font-weight: 500;
+    font-size: 16px;
+    border-bottom: none;
+}
+
+.admin .admin-vaccine-table td {
+    padding: 16px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.admin .admin-vaccine-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.admin .admin-vaccine-status {
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 16px;
+    display: inline-block;
+}
+
+.admin .admin-vaccine-status.available {
+    background-color: #dcfce7;
+    color: #166534;
+    padding: 4px 12px;
+    border-radius: 9999px;
+}
+
+.admin .admin-vaccine-status.out-of.stock {
+    background-color: #fee2e2;
+    color: #991b1b;
+    padding: 4px 12px;
+    border-radius: 9999px;
+}
+
+.admin .admin-vaccine-pagination {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 0 16px;
+}
+
+.admin .admin-vaccine-nav-button {
+    padding: 6px 12px;
+    border: 1px solid #e5e7eb;
+    background-color: #ffffff;
+    color: #374151;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.admin .admin-vaccine-nav-button:hover:not(:disabled) {
+    background-color: #f9fafb;
+    border-color: #d1d5db;
+}
+
+.admin .admin-vaccine-nav-button:disabled {
+    background-color: #f3f4f6;
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+
+.admin .vaccine-description-cell {
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+/* Tùy chỉnh style cho Tooltip */
+.ant-tooltip-inner {
+    max-height: 300px;
+    overflow-y: auto;
+    white-space: normal;
+    line-height: 1.5;
+}
+
+.admin .admin-vaccine-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.admin .admin-vaccine-tabs {
+    background-color: #fff;
+    border-radius: 6px;
+}
+
+.admin .admin-vaccine-tabs .ant-radio-button-wrapper {
+    padding: 8px 16px;
+    height: auto;
+    line-height: 1.5;
+}
+
+.admin .admin-vaccine-tabs .ant-radio-button-wrapper:first-child {
+    border-radius: 6px 0 0 6px;
+}
+
+.admin .admin-vaccine-tabs .ant-radio-button-wrapper:last-child {
+    border-radius: 0 6px 6px 0;
+}
+
+.admin .admin-vaccine-tabs .ant-radio-button-wrapper-checked {
+    background-color: var(--primary-colorVaccine);
+    border-color: var(--primary-colorVaccine);
+    color: white;
+}
+
+.admin .admin-vaccine-tabs .ant-radio-button-wrapper-checked::before {
+    background-color: var(--primary-colorVaccine) !important;
+}
+
+.admin .admin-delete-button {
+    background-color: #ff4d4f; /* Red background */
+    color: white; /* White text */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Rounded corners */
+    padding: 8px 12px; /* Padding for better size */
+    font-size: 14px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.admin .admin-delete-button:hover {
+    background-color: #ff7875; /* Lighter red on hover */
+}

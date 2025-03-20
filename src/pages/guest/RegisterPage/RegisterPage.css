@@ -1,0 +1,82 @@
+.Regis-from{
+    width: 540px;
+    height: 628px;
+    background-color: white;
+    opacity: 0.5;
+    border-radius: 8px;
+}
+.container.mt152 {
+    margin-top: 35px;
+}
+
+.Regis-single-input {
+    width: 100%;
+    top: 43.5px;
+    right: 267.36px;
+    left: 472.69px;
+    height: 53px;
+    background: #ffffff;
+    border: 1px solid #d2d3e5;
+    border-radius: 8px;
+    z-index: 4;
+    outline: none;
+    font-size: 16px;
+    color: #9091a8;
+    padding-left: 13px;
+}
+.Regis-input {
+    padding: 0px 45px;
+    margin-top: 10px;
+}
+.Regis-info {
+    font-size: larger;
+    margin-left: 5px;
+    margin-bottom: 8px;
+}
+.Regis-title {
+    font-weight: 700;
+    padding: 40px 0px 20px 35px;
+    font-size: x-large;
+}
+button.Regis-button {
+    background-color: var(--primary-colorVaccine);
+    width: 440px;
+    height: 50px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    border: 1px solid white;
+}
+
+.col-6.Regis-kkk {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    margin-bottom: 160px;
+}
+.Regis-intro {
+    margin-top: -140px;
+    color: white;
+    font-size: 16px;
+    width: 600px;
+    height: 100px;
+    margin-bottom: 10px;
+}
+.Regis-intro-khangdoan {
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+}
+img.Regis-icon {
+    margin-top: -6px;
+    width: 600px;
+    height: 150px;
+}
+.Regis-error{
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

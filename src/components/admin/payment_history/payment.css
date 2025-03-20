@@ -1,0 +1,56 @@
+.admin .payment-history {
+  padding: 24px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.admin .payment-history-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--primary-colorVaccine);
+  margin-bottom: 24px;
+}
+
+/* Ant Design Table Customization */
+.admin .payment-history .ant-table {
+  border-radius: 8px;
+  overflow: hidden;
+  font-size: 16px;
+}
+
+.admin .payment-history .ant-table-thead > tr > th {
+  background-color: var(--primary-colorVaccine);
+  color: white;
+  padding: 16px;
+  font-weight: 500;
+  font-size: 16px;
+  border-bottom: none;
+}
+
+.admin .payment-history .ant-table-tbody > tr > td {
+  padding: 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.admin .payment-history .ant-table-tbody > tr:hover > td {
+  background-color: #f8f9fa;
+}
+
+.admin .payment-history .ant-tag {
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.admin .payment-history .ant-pagination {
+  margin: 16px 0;
+  text-align: right;
+}
+
+.admin .payment-history .loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+}

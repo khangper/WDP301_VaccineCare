@@ -1,0 +1,380 @@
+
+:root {
+    --primary-colorVaccine: #5D8AB0; 
+  }
+  /* #19b8af */
+  /* #5D8AB0 */
+    .Header-main-container {
+      overflow: hidden;
+    }
+    .Header-main-container,
+    .Header-main-container * {
+      box-sizing: border-box;
+    }
+  
+    .Header-main-container {
+      position: relative;
+      width: 100%;
+      height: 46.39px;
+      margin: 0 auto;
+      background: var(--primary-colorVaccine);
+    }
+    .Header-dai-hoc-fpt-quan {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      position: absolute;
+      height: 19px;
+      top: 13px;
+      left: 1089.78px;
+      color: #ffffff;
+      font-family: Manrope, var(--default-font-family);
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 19px;
+      text-align: left;
+      white-space: nowrap;
+      z-index: 12;
+    }
+    .Header-phone-number {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      position: absolute;
+      height: 19px;
+      top: 13px;
+      left: 1400.16px;
+      color: #ffffff;
+      font-family: Manrope, var(--default-font-family);
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 19px;
+      text-align: left;
+      white-space: nowrap;
+      z-index: 15;
+    }
+    .Header-icon {
+      position: absolute;
+      width: 10.819px;
+      height: 14px;
+      top: 15px;
+      left: 1384.28px;
+      font-family: Font Awesome 5 Free, var(--default-font-family);
+      font-size: 14px;
+      font-weight: 900;
+      line-height: 14px;
+      background: url(/src/assets/header/phone.png) no-repeat center;
+      /* background-size: cover; */
+      z-index: 11;
+  }
+    .Header-symbol {
+      position: absolute;
+      width: 10.819px;
+      height: 14px;
+      top: 16px;
+      left: 1073.28px;
+      font-family: Font Awesome 5 Free, var(--default-font-family);
+      font-size: 14px;
+      font-weight: 900;
+      line-height: 14px;
+      background: url(../../../assets/header/local.png)
+        no-repeat center;
+      background-size: cover;
+      z-index: 11;
+    }
+    .Header-symbol-1 {
+      width: 16.134px;
+      height: 14px;
+      background: url(../../../assets/header/youtube.png)
+        no-repeat center;
+      background-size: cover;
+    }
+    .Header-symbol-2 {
+      width: 14.363px;
+      height: 14px;
+      background: url(../../../assets/header/facebooke.png)
+        no-repeat center;
+      background-size: cover;
+    }
+    .Header-symbol-3 {
+      width: 14.363px;
+      height: 22px;
+      background: url(/src/assets/header/twiii.png) no-repeat center;
+      background-size: cover;
+     
+    }
+    .Header-symbol-4 {
+      width: 12.591px;
+      height: 14px;
+      background: url(../../../assets/header/line.png)
+        no-repeat center;
+      background-size: cover;
+  
+    }
+    
+    .Header-iconContainer {
+      display: flex;
+      margin-top: 17px;
+      margin-left: 470px;
+      gap: 15px;
+  }
+  
+  /* header-endend */
+  .header-container {
+      background-color: #38b2ac; /* Teal */
+      color: white;
+      padding: 0.75rem 0;
+  }
+  
+  .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0 auto;
+  }
+  
+  .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+  }
+  
+  .header-logo img {
+      /* width: 200px; */
+      height: 100px;
+  }
+  .Header-text:hover{
+      color: var(--primary-colorVaccine);;
+  }
+  
+  .header-navigation {
+      display: flex;
+      gap: 3.5rem;
+      margin-left: 340px;
+      font-size: 0.875rem;
+  }
+  .Header-text {
+      cursor: pointer;
+      transition: background-color 0.3s;
+  }
+  
+  .header-dropdown {
+      position: relative;
+  }
+  
+  .header-dropdown .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 15px;
+      left: 0;
+      background: white;
+      color: black;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      z-index: 10;
+  }
+  
+  .header-dropdown:hover .dropdown-menu {
+      display: block;
+  }
+  
+  .dropdown-menu a {
+      display: block;
+      padding: 0.5rem 0.5rem;
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.3s;
+  }
+  
+  .Header-text {
+    color: black;
+      cursor: pointer;
+      transition: background-color 0.3s;
+  }
+  
+  .header-right-side {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-right: 70px;
+  }
+  
+  .header-search input {
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      border: none;
+      outline: none;
+      font-size: 0.875rem;
+      color: black;
+  }
+  
+  .header-register,
+  .header-login {
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      background-color: var(--primary-colorVaccine);;
+      text-decoration: none;
+      color: white;
+      transition: background-color 0.3s;
+  }
+  .header-createChild {
+    padding: 15px 1rem;
+    border-radius: 8px;
+    background-color: var(--primary-colorVaccine);
+    text-decoration: none;
+    color: white;
+    transition: background-color 0.3s;
+  }
+  
+  .header-logout-icon {
+    margin-left: 15px;
+    font-size: 20px;
+    color: black;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .header-logout-icon:hover {
+    color:var(--primary-colorVaccine); 
+    transform: scale(1.2); 
+  }
+  .header-flex {
+    gap: 20px;
+    margin-left: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .HeaderG-flex2 {
+    display: flex;
+    gap: 3.5rem;
+  }
+  .header-register:hover,
+  .header-login:hover {
+      background-color: #285e61; 
+  }
+  /* ========================= */
+  /* Các style cũ của HeaderGuest */
+  /* (Giữ nguyên các style đã có của Header-main-container, header-content, …) */
+  /* ========================= */
+  
+  /* ------------------------- */
+  /* Style cho nút hamburger   */
+  /* ------------------------- */
+  .drawer-toggle {
+    display: none; /* Ẩn mặc định, hiển thị trên mobile qua media query */
+    cursor: pointer;
+  }
+  
+  .hamburger {
+    width: 25px;
+    height: 18px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .hamburger span {
+    display: block;
+    height: 3px;
+    background: #000;
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  
+  /* Hiệu ứng chuyển thành dấu X khi mở drawer */
+  .hamburger.open span:nth-child(1) {
+    transform: translateY(7.5px) rotate(45deg);
+  }
+  .hamburger.open span:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger.open span:nth-child(3) {
+    transform: translateY(-7.5px) rotate(-45deg);
+  }
+  
+  .drawer {
+    position: fixed;
+    top: 0;
+    left: -100%; /* Ẩn drawer ra bên trái */
+    width: 250px;
+    height: 100%;
+    background: #fff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+    transition: left 0.3s ease;
+    z-index: 1000;
+    overflow-y: auto;
+    padding-top: 60px; /* Để tránh bị che header */
+  }
+  
+  .drawer.open {
+    left: 0;
+  }
+  
+  .drawer-navigation {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+  }
+  
+  .drawer-link {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    color: #333;
+    text-decoration: none;
+    font-size: 16px;
+  }
+  
+  /* Style cho dropdown trong drawer */
+  .drawer-dropdown {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .drawer-dropdown-menu {
+    padding-left: 10px;
+  }
+  
+  .drawer-sublink {
+    padding: 8px 0;
+    color: #555;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  
+  /* ------------------------- */
+  /* Responsive cho Drawer */
+  /* ------------------------- */
+  @media (max-width: 768px) {
+    /* Ẩn navigation dạng desktop */
+    .desktop-menu {
+      display: none;
+    }
+    /* Hiển thị nút hamburger */
+    .drawer-toggle {
+      display: block;
+    }
+  }
+  
+  /* Tạo hiệu ứng chuyển mượt cho dropdown items */
+  .dropdown-menu .dropdown-item {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  /* Hiệu ứng hover */
+  .dropdown-menu .dropdown-item:hover {
+    background-color: var(--primary-colorVaccine); 
+    color: white;           
+    cursor: pointer;
+  }
+  .kfadsjlkfsajdlfsd {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .kfadsjlkfsajdlfsd:hover{
+    background-color: var(--primary-colorVaccine); 
+    color: white;           
+    cursor: pointer;
+  }

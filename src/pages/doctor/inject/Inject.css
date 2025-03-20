@@ -1,0 +1,187 @@
+.inject {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.inject h3 {
+  color: #333;
+  font-size: 20px;
+  font-weight: 550;
+  margin-bottom: 30px !important;
+}
+
+.inject-top,
+.inject-bottom {
+  text-align: center;
+  padding: 10px;
+  background: #fff;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+.inject-bottom {
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+.inject-top {
+  margin: 30px 0;
+  width: 500px;
+}
+
+.inject-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+  gap: 10px;
+}
+
+.inject-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inject-btn,
+.button-update-inject {
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  background-color: var(--primary-colorVaccine);
+  color: #fff;
+  font-size: 14px;
+  border-radius: 4px;
+  font-weight: 550;
+  width: 100%;
+}
+
+.inject-btn:hover,
+.button-update-inject:hover,
+.btn-success:hover {
+  background-color: #19b8b03a;
+  color: var(--primary-colorVaccine);
+}
+
+.btn-success {
+  background-color: var(--primary-colorVaccine);
+  border: 0;
+  font-weight: 550;
+}
+
+.modal-overlay-2 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(1, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content-2 {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 950px;
+}
+
+
+.modal-table{
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border: 1px solid #e8e8e8;
+}
+
+.modal-table thead {
+  background-color: var(--primary-colorVaccine);
+}
+
+.modal-table th,
+.modal-table td {
+  text-align: center;
+  border: 1px solid #e8e8e8;
+}
+
+.modal-table td {
+  padding: 18px;
+  font-size: 14px;
+  color: #333;
+}
+
+.modal-table th {
+  font-size: 16px;
+  color: #fff;
+  padding: 12px;
+}
+
+.modal-pkg{
+  text-align: center;
+}
+
+.modal-pkg p{
+  font-size: 18px;
+  color: #333;
+}
+
+.modal-pkg p strong{
+  font-size: 22px;
+}
+
+.modal-table th:nth-child(1),
+.modal-table td:nth-child(1) {
+  width: 400px;
+}
+
+.modal-table td:nth-child(1){
+  text-align: left;
+}
+
+.modal-status-pending {
+  background-color: #ffa6003b;
+  color: #ffa500 !important;
+  font-weight: bold;
+}
+
+.modal-status-processing {
+  background-color: #1e8fff3b;
+  color: #1e90ff !important;
+  font-weight: bold;
+}
+
+.modal-status-completed {
+  background-color: #28a7463b;
+  color: #28a745 !important;
+  font-weight: bold;
+}
+
+.modal-status-canceled {
+  background-color: #8080803b;
+  color: #808080 !important;
+  font-weight: bold;
+}
+.modal-disabled-button {
+  background-color: gray;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.modal-disabled-button:hover{
+  background-color: gray;
+  cursor: not-allowed;
+  opacity: 0.6;
+  color: #fff;
+}
+
+.modal-input-date{
+  padding: 10px;
+  border: 1px solid #d9d9d9;
+  outline: none;
+}

@@ -1,0 +1,15 @@
+.Login-flex {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    margin-top: 25px;
+    gap: 30px;
+}
+.Login-text {
+    font-weight: 800;
+    color: black;
+}
+.Regis-button.mt-4:hover {
+    background-color: #285e61;
+}
+    

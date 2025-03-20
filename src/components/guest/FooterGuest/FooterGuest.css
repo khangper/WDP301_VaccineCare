@@ -1,0 +1,158 @@
+.Footer-container {
+    margin-top: 400px;
+      width: 100%;
+      height: 800px;
+      background: linear-gradient(to bottom, linen, var(--primary-colorVaccine));
+  }
+  .bg-shadow {
+      position: relative;
+      height: 135px;
+      margin: 0 0 0 15px;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 3px 23px 0 rgba(0, 71, 240, 0.13);
+    }
+    span.send {
+      color: white;
+  }
+    .update-news {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      position: absolute;
+      top: 50px;
+      left: 65px;
+      color: #0a083b;
+      font-family: Manrope, var(--default-font-family);
+      font-size: 22px;
+      font-weight: 800;
+      z-index: 3;
+  }
+    .single-input {
+      position: absolute;
+      top: 43.5px;
+      right: 267.36px;
+      left: 472.69px;
+      height: 53px;
+      background: #ffffff;
+      border: 1px solid #d2d3e5;
+      border-radius: 8px;
+      z-index: 4;
+      outline: none;
+      font-size: 16px;
+      color: #9091a8;
+      padding-left: 13px;
+    }
+    
+    .submit-btn {
+      position: absolute;
+      width: 119.31px;
+      top: 43.5px;
+      bottom: 38.5px;
+      left: 57%;
+      cursor: pointer;
+      background: var(--primary-colorVaccine);
+      border: none;
+      transform: translate(251.14%, 0);
+      z-index: 8;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+    .Footer-info {
+      display: flex;
+      justify-content: center;
+      text-align: left;
+      margin-top: 80px;
+      gap: 2px;
+  }
+  
+    .Footer-protect-health {
+      width: 520.36px;
+      height: 73.81px;
+      top: 42.19px;
+      left: 11.697px;
+      color: #ffffff;
+      font-family: Manrope, var(--default-font-family);
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 25.92px;
+      z-index: 13;
+  }
+  .Footer-phone-number {
+    align-items: center;
+    justify-content: flex-start;
+    top: 173.21px;
+    left: 48.58px;
+    color: #ffffff;
+    font-family: Manrope, var(--default-font-family);
+    font-size: 30px;
+    font-weight: 800;
+  }
+  .Footer-iconPhone {
+    height: 40px;
+  }
+  .Footer-text-6{
+    margin: 2px 0 0 46px;
+    color: #ffffff;
+    font-family: Manrope, var(--default-font-family);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 17px;
+    text-align: left;
+    white-space: nowrap;
+  }
+  
+  .Footer-pic {
+    width: 648px;
+    height: 300px;
+    background: url(/src/assets/Footer/Localmap.png) no-repeat center;
+    background-size: cover;
+    z-index: 27;
+    overflow: hidden;
+  }
+  .Footer-location-flex {
+    text-align: left;
+    margin-top: 15px;
+    gap: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .Footer-location-office {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 17px;
+    top: 3px;
+    left: 47px;
+    color: #ffffff;
+    font-family: Manrope, var(--default-font-family);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 12px;
+    text-align: left;
+    white-space: nowrap;
+    z-index: 23;
+  }
+  .Footer-location-9873{
+    flex-shrink: 0;
+    position: relative;
+    height: 16px;
+    color: #ffffff;
+    font-family: Manrope, var(--default-font-family);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 16px;
+    text-align: left;
+    white-space: nowrap;
+    z-index: 24;
+  }
+  .Footer-vector{
+    border: 1px solid white;
+    margin-top: 70px;
+  }
+  .Footer-iconContact {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 40px;
+  }

@@ -1,0 +1,263 @@
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 100;
+}
+
+.admin-header-title {
+    display: flex;
+    align-items: center;
+}
+
+.admin-header-logo {
+    width: 110px;
+    height: 95px;
+    margin-right: 12px;
+}
+
+.admin-header-admin-text {
+    font-size: 32px;
+    font-weight: bold;
+    color: black;
+}
+
+.admin-header-search-container {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.admin-header-search-input {
+    width: 300px;
+    padding: 12px;
+    margin-right: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.admin-header-search-input:focus {
+    border-color: #19b8af;
+    outline: none;
+}
+
+.admin-icons {
+    display: flex;
+    align-items: center;
+}
+
+.admin-notification-bell {
+    position: relative;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.admin-notification-count {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 5px;
+    font-size: 12px;
+}
+
+.admin-header .admin-profile-picture img {
+    width: 55px !important;
+    height: 55px !important;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.admin-sidebar-toggle-btn {
+    background: rgba(25, 184, 175, 0.1);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-right: 12px;
+    font-size: 24px;
+    color: black;
+    transition: background 0.3s, transform 0.2s;
+    padding: 12px;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-sidebar-toggle-btn:hover {
+    background: rgba(25, 184, 175, 0.3);
+    transform: scale(1.1);
+}
+
+.admin-profile-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.admin-dropdown-menu {
+    position: absolute;
+    top: 65px;
+    right: 0;
+    width: 320px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+    padding: 0;
+    z-index: 1000;
+    border: 1px solid #e0e0e0;
+    animation: slideDown 0.3s ease;
+}
+
+.admin-dropdown-header {
+    padding: 20px;
+    border-bottom: 1px solid #e0e0e0;
+    text-align: center;
+}
+
+.admin-dropdown-profile-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.admin-dropdown-header h3 {
+    margin: 10px 0 0;
+    color: #333;
+    font-size: 18px;
+}
+
+.admin-dropdown-content {
+    padding: 15px;
+}
+
+.admin-info-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.admin-info-item:last-child {
+    border-bottom: none;
+}
+
+.admin-info-item strong {
+    display: block;
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.admin-info-item span {
+    color: #333;
+    font-size: 15px;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.admin-profile-picture {
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.admin-profile-picture:hover {
+    transform: scale(1.05);
+}
+
+.admin-profile-picture img {
+    border: 2px solid transparent;
+    transition: border-color 0.2s;
+}
+
+.admin-profile-picture:hover img {
+    border-color: var(--primary-colorVaccine);
+}
+
+.admin-profile-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.admin-profile-modal {
+    background: white;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.3s ease-out;
+}
+
+.admin-profile-modal-header {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+}
+
+.admin-modal-profile-img {
+    width: 105px;
+    height: 110px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    border: 3px solid var(--primary-colorVaccine);
+}
+
+.admin-profile-modal-content {
+    padding: 20px;
+}
+
+.info-item {
+    margin-bottom: 15px;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.info-item strong {
+    display: block;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.info-item span {
+    color: #333;
+    font-size: 16px;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

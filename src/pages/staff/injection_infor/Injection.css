@@ -1,0 +1,274 @@
+.injection{
+  background-color: #fff;
+  padding: 10px 10px 0 10px;
+}
+
+.injection_tab_container {
+  display: flex;
+}
+
+.injection_tab_button {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  color: #808080;
+  font-weight: 500;
+  border: none;
+  border-bottom: 2px solid #ddd;
+  background: none;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.injection_tab_button.active {
+  color: var(--primary-colorVaccine) f;
+  font-weight: bold;
+  border-bottom: 2px solid var(--primary-colorVaccine);
+}
+
+.injection_tab_content {
+  background: #f9f9f9;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.injection_topic {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.status_label {
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.status_pending {
+  background-color: #ffa6003b;
+  color: #ffa500;
+}
+
+.status_processing {
+  background-color: #1e8fff3b;
+  color: #1e90ff;
+}
+
+.status_completed {
+  background-color: #28a7463b;
+  color: #28a745;
+}
+
+.status_canceled {
+  background-color: #8080803b;
+  color: #808080;
+}
+
+.inject_detail {
+  display: flex;
+  gap: 10px;
+}
+
+.injection_detail_button {
+  background: #19b8b03a;
+  color: var(--primary-colorVaccine);
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.injection_detail_button:hover,
+.injection_cancel_button:hover {
+  font-weight: bold;
+}
+
+.injection_cancel_button {
+  background: #b8195b3a;
+  color: #b8195b;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.disabled-button {
+  background-color: #8080803a !important;
+  cursor: not-allowed !important;
+  color: #808080;
+}
+
+/*Popup*/
+.popup_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.popup_container {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+  max-height: 660px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.popup_container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.popup_container::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+
+.popup_container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.popup_close {
+  position: sticky;
+  top: 0;
+  left: 1000px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #808080;
+  z-index: 999;
+}
+
+.popup_close:hover {
+  color: #333;
+}
+
+.popup_content {
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.popup_content h3 {
+  color: #333;
+  margin-bottom: 30px;
+}
+
+/*Process*/
+.step-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  position: relative;
+  gap: 120px;
+}
+
+.step-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.step-circle {
+  width: 69px;
+  height: 69px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: bold;
+  z-index: 1;
+  background-color: #eceef1;
+  color: #333;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.step-circle.active {
+  background-color: var(--primary-colorVaccine);
+  color: #fff;
+  transform: scale(1.2);
+}
+
+.step-label {
+  font-size: 14px;
+  color: #808080;
+}
+
+.step-label.active-text {
+  color: var(--primary-colorVaccine);
+  font-weight: bold;
+}
+
+.progress-bar {
+  position: absolute;
+  top: 33px;
+  left: 0;
+  height: 4px;
+  background-color: var(--primary-colorVaccine);
+  transition: width 0.3s ease-in-out;
+  z-index: 0;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.prev-button,
+.next-button {
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  background-color: var(--primary-colorVaccine);
+  color: #fff;
+  font-size: 14px;
+  border-radius: 4px;
+  font-weight: 550;
+}
+
+.prev-button:hover,
+.next-button:hover {
+  background-color: #19b8b03a;
+  color: var(--primary-colorVaccine);
+}
+
+.prev-button:disabled,
+.next-button:disabled {
+  background-color: #eceef1;
+  color: #333;
+  cursor: not-allowed;
+  font-weight: normal;
+}
+
+:where(.css-dev-only-do-not-override-19lec04).ant-pagination
+  .ant-pagination-item-active {
+  border-color: var(--primary-colorVaccine) !important;
+}
+
+:where(.css-dev-only-do-not-override-1yacf91).ant-pagination
+  .ant-pagination-item-active
+  a,
+a:not([href]):not([class]) {
+  color: var(--primary-colorVaccine) !important;
+}
+
+:where(.css-dev-only-do-not-override-1yacf91).ant-select-outlined:not(
+    .ant-select-disabled
+  ):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover
+  .ant-select-selector {
+  border-color: var(--primary-colorVaccine) !important;
+}

@@ -1,0 +1,74 @@
+.admin .disease-management {
+  padding: 24px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.admin .disease-management-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--primary-colorVaccine);
+  margin-bottom: 24px;
+}
+
+/* Ant Design Table Customization */
+.admin .disease-management .ant-table {
+  border-radius: 8px;
+  overflow: hidden;
+  font-size: 16px;
+}
+
+.admin .disease-management .ant-table-thead > tr > th {
+  background-color: var(--primary-colorVaccine);
+  color: white;
+  padding: 16px;
+  font-weight: 500;
+  font-size: 16px;
+  border-bottom: none;
+}
+
+.admin .disease-management .ant-table-tbody > tr > td {
+  padding: 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.admin .disease-management .ant-table-tbody > tr:hover > td {
+  background-color: #f8f9fa;
+}
+
+.admin .disease-management .ant-tag {
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.admin .disease-management .ant-tag-green {
+  background-color: #e6f8e6;
+  color: #52c41a;
+  border-color: #b7eb8f;
+}
+
+.admin .disease-management .ant-tag-orange {
+  background-color: #fff7e6;
+  color: #fa8c16;
+  border-color: #ffd591;
+}
+
+.admin .disease-management .ant-tag-red {
+  background-color: #fff1f0;
+  color: #f5222d;
+  border-color: #ffa39e;
+}
+
+.admin .disease-management .ant-pagination {
+  margin: 16px 0;
+  text-align: right;
+}
+
+Specific styles for disease description column */
+.admin .disease-management .ant-table-cell {
+  white-space: normal;
+  word-wrap: break-word;
+  max-width: 300px; /* Adjust based on your needs */
+} 

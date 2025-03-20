@@ -1,0 +1,161 @@
+.navbar_img{
+    border-radius: 50%;
+    height: 48px;
+    width: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar_dropdown_avatar{
+    height: 100px;
+    display: flex;
+    align-items: center;
+    transition: .3s;
+}
+
+.navbar_search_btn{
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    top: 50%;
+    left: 87%;
+    font-size: 22px;
+    transform: translateY(-50%);
+    border: none;
+    text-align: center;
+    background-color: transparent;
+    color: #96a0b5;
+}
+.icon_search{
+    display: flex;
+    font-size: 16px;
+}
+
+.icon_search:hover{
+    color: var(--primary-colorVaccine);
+}
+
+.navbar_form_search{
+    border: 1px solid transparent;
+    font-size: 13px;
+    height: 48px;
+    background: #eceef1;
+    box-shadow: 0 3px 16px rgba(142, 134, 171, .05);
+    width: 300px;
+    border-radius: 30px;
+    margin: 0 8px;
+    margin-bottom: 0;
+    padding: .517rem .95rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #2b2d3b;
+    outline: none;
+    
+}
+
+.navbar_form_search:focus{
+    border-color: var(--primary-colorVaccine);
+}
+
+.navbar_form_search::placeholder{
+    color: #808080;
+}
+
+
+.navbar_form{
+    position: relative;
+    z-index: 1;
+    display: flex;
+   
+}
+
+.navbar_search{
+    position: relative;
+    margin: 0;
+    list-style: none;
+}
+
+.navbar_top_bar_item_list{
+    height: 100px;
+    display: flex;
+    align-items: center;
+    transition: .3s;
+    margin-bottom: 0;
+    margin-right: 10px;
+    padding-left: 0 !important;
+}
+
+.navbar_text{
+    font-weight: 700;
+    margin-bottom: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #333;
+}
+
+.navbar_welcome{
+    margin-right: 1.5rem;
+    margin-left: 1.5rem;
+    list-style: none;
+}
+
+.navbar_menu_btn{
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #eceef1;
+    box-shadow: 0 3px 16px rgba(142, 134, 171, .05);
+    margin: 0 8px;
+    transition: .3s;
+    border: none;
+    font-size: 14px;
+    outline: none;
+}
+
+.navbar_menu_btn:hover{
+    background-color: var(--primary-colorVaccine);
+    color: #fff;
+}
+
+.navbar_top_bar_custom{
+    background-color: transparent;
+    transition: .3s;
+    justify-content: space-between;
+    display: flex;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar_container{
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.navbar_top_bar{
+    background-color: #fff;
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+}
+
+.navbar_logo_staff{  
+    height: 105px;
+}
+
+.navbar_li{
+    list-style: none;
+}
+
+.navbar_img_staff{
+ width: 210px;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ border-right: 1px solid #e8e8e8;
+}

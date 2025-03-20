@@ -1,0 +1,25 @@
+.CamNangPage-container {
+    padding: 20px;
+  }
+  
+  .CamNangPage-table-container {
+    overflow-x: auto;
+  }
+  
+  .CamNangPage-table thead th {
+    background-color:var(--primary-colorVaccine);
+    color: white;
+    text-align: center;
+    vertical-align: middle;
+  }
+  
+  .CamNangPage-table tbody td {
+    text-align: center;
+    vertical-align: middle;
+  }
+  
+  .CamNangPage-table .table-success {
+    background-color: #d4edda !important;
+    font-weight: bold;
+  }
+  
