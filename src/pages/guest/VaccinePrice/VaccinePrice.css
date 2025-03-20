@@ -1,6 +1,6 @@
 
 .vaccine-tableTitle{
-    background-color: #128a7a !important;
+    background-color: var(--primary-colorVaccine);
     color: white !important;
   }
 

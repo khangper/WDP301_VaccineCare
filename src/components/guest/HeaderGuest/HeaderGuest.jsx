@@ -102,7 +102,7 @@ const HeaderGuest = () => {
             {isLoggedIn && (
               <div className="HeaderG-flex2">
                 <Link to="/profilechild" className="Header-text hover:underline">Hồ sơ trẻ</Link>
-                <Link to="/bill" className="Header-text hover:underline">Hóa đơn</Link>
+                {/* <Link to="/bill" className="Header-text hover:underline">Hóa đơn</Link> */}
               </div>
             )}
           </nav>

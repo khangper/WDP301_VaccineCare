@@ -1,72 +1,77 @@
-import React, { useState } from "react";
+
+
+import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./VaccinePrice.css";
+import api from "../../../services/api";
 
-function VaccinePrice() {
-  const vaccineData = [
-    { id: 1, disease: "Uốn ván", name: "Vắc xin uốn ván hấp phụ (TT)", origin: "Việt Nam", price: 149000, discount: "", status: "Có" },
-    { id: 2, disease: "Lao", name: "BCG (lọ 1ml)", origin: "Việt Nam", price: 155000, discount: "", status: "Có" },
-    { id: 3, disease: "Tả", name: "Morcvax", origin: "Việt Nam", price: 165000, discount: "", status: "Có" },
-    { id: 4, disease: "Uốn ván", name: "Huyết thanh uốn ván (SAT)", origin: "Việt Nam", price: 175000, discount: "", status: "Có" },
-    { id: 5, disease: "Viêm não Nhật Bản", name: "Jevax 1ml", origin: "Việt Nam", price: 198000, discount: "", status: "Có *" },
-    { id: 6, disease: "Viêm gan B trẻ em", name: "Gene Hbvax 0.5ml", origin: "Việt Nam", price: 199000, discount: "", status: "Có" },
-    { id: 7, disease: "Bạch hầu – Uốn ván", name: "Uốn ván, bạch hầu hấp phụ (Td) - Liều", origin: "Việt Nam", price: 205000, discount: "", status: "Có" },
-    { id: 8, disease: "Viêm gan B người lớn", name: "Gene Hbvax 1ml", origin: "Việt Nam", price: 220000, discount: "", status: "Có" },
-    { id: 9, disease: "Viêm não Nhật Bản", name: "Imojev", origin: "Pháp", price: 250000, discount: "", status: "Có" },
-    { id: 10, disease: "Viêm phổi", name: "Synflorix", origin: "Bỉ", price: 270000, discount: "", status: "Có" },
-    { id: 11, disease: "Viêm gan A", name: "Havax 0.5ml", origin: "Việt Nam", price: 255000, discount: "", status: "Có" },
-    { id: 12, disease: "Sởi", name: "MVVac (Liều 0.5ml)", origin: "Việt Nam", price: 265000, discount: "", status: "Có" },
-    { id: 13, disease: "Thương hàn", name: "Typhoid VI", origin: "Việt Nam", price: 265000, discount: "", status: "Có" },
-    { id: 14, disease: "Viêm gan B trẻ em", name: "Heberbiovac 0.5ml", origin: "Cu Ba", price: 265000, discount: "", status: "Có" },
-    { id: 15, disease: "Cúm", name: "Ivacflu-S 0.5ml", origin: "Việt Nam", price: 285000, discount: "", status: "Có" },
-    { id: 16, disease: "Các bệnh do Hib", name: "Quimi-Hib", origin: "Cu Ba", price: 315000, discount: "", status: "Có" },
-    { id: 17, disease: "Dại", name: "Abhayrab 0.5ml (TTD)", origin: "Ấn Độ", price: 345000, discount: "", status: "Có" },
-    { id: 18, disease: "Cúm", name: "Influvac Tetra 0.5ml", origin: "Hà Lan", price: 356000, discount: "", status: "Có" },
-    { id: 19, disease: "Viêm màng não do não mô cầu nhóm B,C", name: "VA-Mengoc-BC", origin: "Cu Ba", price: 385000, discount: "", status: "Có" },
-    { id: 20, disease: "Viêm não Nhật Bản", name: "Jeev 3mcg/0.5ml", origin: "Ấn Độ", price: 399000, discount: "", status: "Có" },
-    { id: 21, disease: "Dại", name: "Abhayrab 0.5ml (TB)", origin: "Ấn Độ	", price: 415000, discount: "", status: "Có" },
+const VaccinePrice = () => {
+  const [vaccines, setVaccines] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  ];
+  useEffect(() => {
+    fetchAllVaccines();
+  }, []);
 
-  // State cho bộ lọc
-  const [filterType, setFilterType] = useState("");
+  const fetchAllVaccines = async () => {
+    setLoading(true);
+    try {
+      // 🔍 Lấy danh sách bệnh
+      const diseaseResponse = await api.get("/Disease/get-all?PageSize=30");
+      const diseaseList = diseaseResponse.data?.["$values"] || [];
 
-  // Xử lý thay đổi bộ lọc
-  const handleFilterChange = (event) => {
-    setFilterType(event.target.value);
+      console.log("✅ Danh sách bệnh từ API:", diseaseList);
+
+      // 🔍 Chỉ gọi API vắc xin nếu bệnh có danh sách vaccines
+      const vaccineRequests = diseaseList
+        .filter((disease) => disease.vaccines?.length > 0) // Chỉ lấy bệnh có vaccine
+        .map(async (disease) => {
+          try {
+            const encodedDiseaseName = encodeURIComponent(disease.name.trim());
+            console.log(`🔍 Fetching vaccines for: ${disease.name} -> ${encodedDiseaseName}`);
+
+            const res = await api.get(`/Vaccine/get-vaccines-by-diasease-name/${encodedDiseaseName}`);
+            
+            console.log(`📌 API Response for ${disease.name}:`, res.data);
+
+            const vaccineList = res.data || [];
+
+            if (vaccineList.length === 0) {
+              console.warn(`⚠️ Không có vắc xin cho bệnh ${disease.name}, bỏ qua.`);
+              return [];
+            }
+
+            return vaccineList.map((vaccine) => ({
+              ...vaccine,
+              diseaseName: disease.name,
+            }));
+          } catch (error) {
+            console.error(`❌ Lỗi khi lấy vắc xin cho bệnh ${disease.name}, API có thể bị lỗi.`);
+            return [];
+          }
+        });
+
+      const vaccineResults = await Promise.all(vaccineRequests);
+      const allVaccines = vaccineResults.flat().filter(Boolean); // Bỏ qua bệnh bị lỗi
+
+      console.log("✅ Danh sách vắc xin sau khi xử lý:", allVaccines);
+
+      setVaccines(allVaccines);
+    } catch (error) {
+      console.error("❌ Lỗi khi tải danh sách bệnh, không thể lấy dữ liệu.");
+    }
+    setLoading(false);
   };
 
-  // Lọc và sắp xếp danh sách dựa trên bộ lọc
-  const filteredData = [...vaccineData].sort((a, b) => {
-    if (filterType === "price-asc") {
-      return a.price - b.price;
-    }
-    if (filterType === "price-desc") {
-      return b.price - a.price;
-    }
-    if (filterType === "origin") {
-      return a.origin.localeCompare(b.origin);
-    }
-    return 0;
-  });
-
   return (
-    <div>
-      {/* bảng giá  */}
-      <div className="container mt-4">
-        <h2 className="text-center VaccineTitle">Danh Sách Vắc Xin</h2>
+    <div className="container mt-4">
+      <h2 className="text-center VaccineTitle">Danh Sách Vắc Xin</h2>
 
-        {/* Dropdown chọn bộ lọc */}
-        <div className="d-flex justify-content-end mb-3">
-          <select className="form-select w-auto" value={filterType} onChange={handleFilterChange}>
-            <option value="">Sắp xếp theo</option>
-            <option value="price-asc">Giá thấp đến cao</option>
-            <option value="price-desc">Giá cao đến thấp</option>
-            <option value="origin">Theo quốc gia sản xuất</option>
-          </select>
-        </div>
-
-        {/* Bảng danh sách vắc xin */}
+      {loading ? (
+        <div className="loader"></div>
+      ) : vaccines.length === 0 ? (
+        <p className="text-center">Không có dữ liệu vắc xin.</p>
+      ) : (
         <table className="table table-bordered table-striped vaccine-table">
           <thead>
             <tr>
@@ -74,26 +79,31 @@ function VaccinePrice() {
               <th className="vaccine-tableTitle">Phòng bệnh</th>
               <th className="vaccine-tableTitle">Tên vắc xin</th>
               <th className="vaccine-tableTitle">Nước sản xuất</th>
-              <th className="vaccine-tableTitle">Giá bán lẻ/liều (VNĐ)</th>
-              <th className="vaccine-tableTitle">Giá ưu đãi/liều (VNĐ)</th>
+              <th className="vaccine-tableTitle">Giá bán lẻ (VNĐ)</th>
               <th className="vaccine-tableTitle">Tình trạng</th>
             </tr>
           </thead>
           <tbody>
-            {filteredData.map((vaccine, index) => (
-              <tr key={vaccine.id}>
+            {vaccines.map((vaccine, index) => (
+              <tr key={vaccine.id || index}>
                 <td>{index + 1}</td>
-                <td>{vaccine.disease}</td>
+                <td>{vaccine.diseaseName}</td>
                 <td>{vaccine.name}</td>
-                <td>{vaccine.origin}</td>
-                <td>{vaccine.price.toLocaleString("vi-VN")} VNĐ</td>
-                <td>{vaccine.discount ? vaccine.discount.toLocaleString("vi-VN") : "-"}</td>
-                <td>{vaccine.status}</td>
+                <td>{vaccine.manufacture || "Không có thông tin"}</td>
+                <td>
+                  {vaccine.price
+                    ? Number(vaccine.price).toLocaleString("vi-VN") + " VND"
+                    : "Chưa có giá"}
+                </td>
+                <td className={vaccine.inStockNumber > 0 ? "text-success" : "text-danger"}>
+                  {vaccine.inStockNumber > 0 ? "Còn hàng" : <span style={{ color: "red" }}>Hết hàng</span>}
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
-      </div>
+      )}
+
       {/* Thông tin */}
       <div className="container">
         <div className="row">
@@ -121,6 +131,6 @@ function VaccinePrice() {
 
     </div>
   );
-}
+};
 
 export default VaccinePrice;
