@@ -222,10 +222,22 @@ function HomePage() {
         <ul>
           {selectedPackage.vaccinePackageItems?.$values?.map((item, index) => (
             <li key={index}>
-              {item.vaccineName} - Mũi {item.doseNumber} - Giá: {item.pricePerDose?.toLocaleString() ?? "Chưa có giá"} VND
+              {item.vaccineName} - 1 Mũi  - Giá: {item.pricePerDose?.toLocaleString() ?? "Chưa có giá"} VND
             </li>
           )) ?? <p>Không có dữ liệu vắc xin</p>}
         </ul>
+        {/* Lưu ý nổi bật */}
+      <div style={{
+        backgroundColor: "#fff8c4",
+        padding: "10px",
+        marginTop: "15px",
+        border: "2px solid #f1c40f",
+        borderRadius: "5px",
+        fontWeight: "bold",
+        color: "#d35400"
+      }}>
+        Lưu ý: Tổng Giá trị Gói vắc xin = Tổng giá trị các mũi tiêm lẻ + Khoảng 10% phí đặt giữ theo yêu cầu*
+      </div>
       </div>
     )}
   </Modal>

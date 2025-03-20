@@ -400,8 +400,8 @@ useEffect(() => {
                     onClick={() => setVaccineType('Vắc xin gói')}>Vắc xin gói</button>
                 <button className={`Booking-goi ${vaccineType === 'Vaccine lẻ' ? 'selected' : ''}`} 
                     onClick={() => setVaccineType('Vaccine lẻ')}>Vắc xin lẻ</button>
-                <button className={`Booking-goi ${vaccineType === 'Vắc xin đang chờ' ? 'selected' : ''}`} 
-                    onClick={() => setVaccineType('Vắc xin đang chờ')}>Vắc xin đang chờ</button>
+                {/* <button className={`Booking-goi ${vaccineType === 'Vắc xin đang chờ' ? 'selected' : ''}`} 
+                    onClick={() => setVaccineType('Vắc xin đang chờ')}>Vắc xin đang chờ</button> */}
             </div>
 
             {vaccineType === 'Vaccine lẻ' && (
