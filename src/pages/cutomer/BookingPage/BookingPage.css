@@ -140,3 +140,65 @@ width: 500px;
     background-color: #285e61; 
     cursor: pointer;
 }
+
+
+/* Thêm CSS cho phần lưu ý */
+.vaccine-note {
+    background: #fff9e6;
+    border-left: 4px solid #ffc107;
+    border-radius: 4px;
+    padding: 15px;
+    margin: 15px 0;
+    position: relative;
+  }
+  
+  .vaccine-note-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  
+  .vaccine-note-icon {
+    font-size: 20px;
+    color: #ffc107;
+    margin-right: 10px;
+  }
+  
+  .vaccine-note-title {
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .vaccine-note-list {
+    margin: 0;
+    padding-left: 20px;
+    color: #666;
+  }
+  
+  .vaccine-note-list li {
+    margin-bottom: 4px;
+  }
+  .vaccine-selection-container {
+    position: relative;
+  }
+  
+  .vaccine-detail {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+  }
+  
+  .vaccine-price {
+    color: #28a745;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+  .vaccine-note {
+    transition: transform 0.2s ease;
+  }
+  
+  .vaccine-note:hover {
+    transform: translateX(5px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
