@@ -117,12 +117,15 @@ const Inject_infor = () => {
         setChildrenMap(childrenMap);
 
         // Format dữ liệu
+        // const formattedData = upcomingAppointments
+        //   .filter(
+        //     (item) =>
+        //       item.processStep === "WaitingInject" ||
+        //       item.processStep === "Injected"
+        //   )
         const formattedData = upcomingAppointments
-          .filter(
-            (item) =>
-              item.processStep === "WaitingInject" ||
-              item.processStep === "Injected"
-          )
+  .filter((item) => item.processStep === "WaitingInject")
+
           .map((item) => ({
             id: item.id,
             fullname:
