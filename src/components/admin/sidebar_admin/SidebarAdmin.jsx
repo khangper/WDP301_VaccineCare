@@ -50,12 +50,12 @@ const SidebarAdmin = ({ isCollapsed }) => {
                         {!isCollapsed && "Diseases"}
                     </Link>
                 </li>
-                <li>
+                {/* <li>
                     <Link to="/admin/payment-history" className={location.pathname === '/admin/payment-history' ? 'active' : ''}>
                         <FaHistory className="sidebar-icon" />
                         {!isCollapsed && "Payment History"}
                     </Link>
-                </li>
+                </li> */}
                 <li className="logout-item">
                     <button onClick={handleLogout} className="logout-button">
                         <FaSignOutAlt className="sidebar-icon" />

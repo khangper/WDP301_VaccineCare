@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Table } from 'antd';
-import axios from 'axios';
+import api from '../../../services/api';
 import './child.css';
+import '../admin.css';
 
 const Child = () => {
     const [children, setChildren] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const getAllChildren = () => axios.get('https://vaccinecare.azurewebsites.net/api/Child/get-all');
+    const getAllChildren = () => api.get('/Child/get-all');
 
     useEffect(() => {
         fetchChildren();
@@ -57,22 +58,22 @@ const Child = () => {
             key: 'gender',
         },
         {
-            title: 'Tên ba',
+            title: "Tên cha",
             dataIndex: 'fatherName',
             key: 'fatherName',
         },
         {
-            title: 'SĐT ba',
+            title: "Số điện thoại cha",
             dataIndex: 'fatherPhone',
             key: 'fatherPhone',
         },
         {
-            title: 'Tên mẹ',
+            title: "Tên mẹ",
             dataIndex: 'motherName',
             key: 'motherName',
         },
         {
-            title: 'SĐT mẹ',
+            title: "Số điện thoại mẹ",
             dataIndex: 'motherPhone',
             key: 'motherPhone',
         },

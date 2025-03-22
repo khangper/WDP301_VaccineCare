@@ -131,6 +131,13 @@ const handleBooking = () => {
       .catch(error => console.error("API fetch error: ", error));
   }, []);
   
+  useEffect(() => {
+    if (selectedDisease?.name) {
+      api.get(`/Vaccine/get-vaccines-by-diasease-name/${selectedDisease.name}`)
+        .then(response => setVaccineList(response.data.$values || response.data))
+        .catch(error => console.error("API fetch error: ", error));
+    }
+  }, [selectedDisease]);
   const handleCellClick = (disease, month) => {
     setSelectedDisease(disease);
     setSelectedMonth(month);
@@ -552,48 +559,65 @@ const handleBooking = () => {
           </div>
         </div>
                </div>
-{showModal && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <h4>Cập nhật vaccine cho bệnh: {selectedDisease?.name} tại tháng {selectedMonth}</h4>
 
-            {selectedRecord?.actualInjectionDate && (
-  <div>
-    <p><strong>Ngày tiêm thực tế:</strong> {new Date(selectedRecord.actualInjectionDate).toLocaleDateString()}</p>
+
+               {showModal && (
+  <div className="modal-overlay">
+    <div className="modal-content">
+      <h4>Cập nhật vaccine cho bệnh: {selectedDisease?.name} tại tháng {selectedMonth}</h4>
+
+      {/* Ngày tiêm thực tế nếu có */}
+      {selectedRecord?.actualInjectionDate && (
+        <div>
+          <p><strong>Ngày tiêm thực tế:</strong> {new Date(selectedRecord.actualInjectionDate).toLocaleDateString()}</p>
+        </div>
+      )}
+
+      {/* Dropdown chọn vaccine */}
+      <div className="form-group">
+        <label><strong>Chọn Vaccine:</strong></label>
+        <select
+          className="form-control"
+          value={selectedVaccine}
+          onChange={(e) => setSelectedVaccine(e.target.value)}
+        >
+          <option value="">Chọn vaccine</option>
+          {vaccineList.map((vaccine) => (
+            <option key={vaccine.id} value={vaccine.name}>{vaccine.name}</option>
+          ))}
+        </select>
+      </div>
+
+      {/* Nút Xóa mũi tiêm (chỉ hiện nếu chưa tiêm thực tế) */}
+      {selectedRecord && !selectedRecord.actualInjectionDate && (
+        <button className="btn btn-danger mt-2" onClick={() => handleDelete(selectedRecord.id)}>
+          Xóa mũi tiêm
+        </button>
+      )}
+
+      {/* Button actions */}
+      <div className="VaccinPage-flex1 modal-buttons">
+        {/* Đóng modal */}
+        <button className="btn btn-secondary" onClick={() => setShowModal(false)}>Đóng</button>
+
+        {/* Nút Lưu chỉ hiển thị nếu: 
+            - Chưa tiêm thực tế
+            - Và chưa có vaccineId (tức là chưa lưu gì hết) */}
+        {!selectedRecord?.actualInjectionDate && !selectedRecord?.vaccineId && (
+          <button className="btn btn-success" onClick={handleSave}>Lưu</button>
+        )}
+
+        {/* Đặt lịch tiêm (chỉ hiện nếu chưa tiêm thực tế) */}
+        {!selectedRecord?.actualInjectionDate && (
+          <button className="btn btn-primary" onClick={handleBooking}>
+            Đặt lịch tiêm
+          </button>
+        )}
+      </div>
+    </div>
   </div>
 )}
 
-
-            <div className="form-group">
-              <label><strong>Chọn Vaccine:</strong></label>
-              <select
-                className="form-control"
-                value={selectedVaccine}
-                onChange={(e) => setSelectedVaccine(e.target.value)}
-              >
-                <option value="">Chọn vaccine</option>
-                {vaccineList.map((vaccine) => (
-                  <option key={vaccine.id} value={vaccine.name}>{vaccine.name}</option>
-                ))}
-              </select>
-            </div>
-
-            {selectedRecord && (
-              <button className="btn btn-danger mt-2" onClick={() => handleDelete(selectedRecord.id)}>
-                Xóa mũi tiêm
-              </button>
-            )}
-
-            <div className="VaccinPage-flex1 modal-buttons">
-              <button className="btn btn-secondary" onClick={() => setShowModal(false)}>Đóng</button>
-              <button className="btn btn-success" onClick={handleCreate}>Lưu</button>
-              <button className="btn btn-primary" onClick={handleBooking}>
-                Đặt lịch tiêm
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

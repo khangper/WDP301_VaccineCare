@@ -8,7 +8,8 @@ import api from '../../../services/api';
 const Dashboard = () => {
     // Primary color to match sidebar
     const PRIMARY_COLOR = '#00b894'; // This should match your sidebar color
-    
+    const [patientsData, setPatientsData] = useState([]);
+
     const [stats, setStats] = useState([
         { name: 'Tổng số bệnh nhân', value: 0, icon: <Users className="h-8 w-8" /> },
         { name: 'Lịch hẹn hôm nay', value: 0, icon: <Calendar className="h-8 w-8" /> },
@@ -32,26 +33,45 @@ const Dashboard = () => {
                     api.get('/User/get-all')
                 ]);
                 
-                // Process patients data
-                if (patientsData.data && patientsData.data.$values) {
-                    const totalPatients = patientsData.data.$values.length;
-                    setStats(prevStats => {
-                        const newStats = [...prevStats];
-                        newStats[0] = { ...newStats[0], value: totalPatients };
-                        return newStats;
-                    });
-                }
+// Process patients data
+if (patientsData.data && patientsData.data.$values) {
+    const patients = patientsData.data.$values;
+    const totalPatients = patients.length;
+    setPatientsData(patients); // <-- Thêm dòng này
+    setStats(prevStats => {
+        const newStats = [...prevStats];
+        newStats[0] = { ...newStats[0], value: totalPatients };
+        return newStats;
+    });
+  }
+
+  const getGenderData = () => {
+    const genderCounts = patientsData.reduce((acc, patient) => {
+        const gender = patient.gender || 'Khác';
+        acc[gender] = (acc[gender] || 0) + 1;
+        return acc;
+    }, {});
+  
+    return Object.keys(genderCounts).map(gender => ({
+        name: gender,
+        value: genderCounts[gender]
+    }));
+  };
+  
+  
                 
-                // Process appointments data
-                if (appointmentsData.data && appointmentsData.data.$values) {
-                    const appointments = appointmentsData.data.$values;
-                    setStats(prevStats => {
-                        const newStats = [...prevStats];
-                        newStats[1] = { ...newStats[1], value: appointments.length };
-                        return newStats;
-                    });
-                    setAppointmentData(appointments);
-                }
+                
+// Process appointments data
+if (appointmentsData.data && Array.isArray(appointmentsData.data)) {
+    const appointments = appointmentsData.data;
+    setStats(prevStats => {
+        const newStats = [...prevStats];
+        newStats[1] = { ...newStats[1], value: appointments.length };
+        return newStats;
+    });
+    setAppointmentData(appointments);
+}
+
                 
                 // Process vaccines data
                 if (vaccinesData.data && vaccinesData.data.$values) {
@@ -89,7 +109,19 @@ const Dashboard = () => {
 
         fetchData();
     }, []);
+// Đặt hàm getGenderData() ra ngoài fetchData()
+const getGenderData = () => {
+    const genderCounts = patientsData.reduce((acc, patient) => {
+        const gender = patient.gender || 'Khác';
+        acc[gender] = (acc[gender] || 0) + 1;
+        return acc;
+    }, {});
 
+    return Object.keys(genderCounts).map(gender => ({
+        name: gender,
+        value: genderCounts[gender]
+    }));
+};
     // Process appointment data for charts
     const getAppointmentStatusData = () => {
         if (!appointmentData.length) return [];
@@ -198,40 +230,34 @@ const Dashboard = () => {
                         
                         <div className="admin-dashboard-charts-grid">
                             {/* Chart 1: Patients by Gender */}
-                            <div 
-                                className="admin-dashboard-chart-card"
-                                style={{
-                                    ...chartCardStyle,
-                                    transitionDelay: '0.2s'
-                                }}
-                            >
-                                <h2>Phân bố bệnh nhân theo giới tính</h2>
-                                <ResponsiveContainer width="100%" height={250}>
-                                    <PieChart>
-                                        <Pie
-                                            data={[
-                                                { name: 'Nam', value: Math.round(stats[0].value * 0.55) },
-                                                { name: 'Nữ', value: Math.round(stats[0].value * 0.45) }
-                                            ]}
-                                            cx="50%"
-                                            cy="50%"
-                                            labelLine={true}
-                                            label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                                            outerRadius={80}
-                                            fill="#8884d8"
-                                            dataKey="value"
-                                            animationBegin={0}
-                                            animationDuration={1500}
-                                            animationEasing="ease-out"
-                                        >
-                                            <Cell fill="#8884d8" />
-                                            <Cell fill={PRIMARY_COLOR} />
-                                        </Pie>
-                                        <Tooltip />
-                                        <Legend />
-                                    </PieChart>
-                                </ResponsiveContainer>
-                            </div>
+{/* Chart 1: Patients by Gender */}
+<div className="admin-dashboard-chart-card" style={{ ...chartCardStyle, transitionDelay: '0.2s' }}>
+    <h2>Phân bố bệnh nhân theo giới tính</h2>
+    <ResponsiveContainer width="100%" height={250}>
+        <PieChart>
+            <Pie
+                data={getGenderData()} // <-- Dùng dữ liệu thật từ API
+                cx="50%"
+                cy="50%"
+                labelLine={true}
+                label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                outerRadius={80}
+                fill="#8884d8"
+                dataKey="value"
+                animationBegin={0}
+                animationDuration={1500}
+                animationEasing="ease-out"
+            >
+                {getGenderData().map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+            </Pie>
+            <Tooltip />
+            <Legend />
+        </PieChart>
+    </ResponsiveContainer>
+</div>
+
                             
                             {/* Chart 2: Appointment Status */}
                             <div 

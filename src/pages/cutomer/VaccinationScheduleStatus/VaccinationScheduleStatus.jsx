@@ -1,76 +1,98 @@
-// export default VaccinationScheduleStatus;
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../../context/AuthContext";
 import api from "../../../services/api";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Modal, Button } from "react-bootstrap";
 
 function VaccinationScheduleStatus() {
   const { token } = useContext(AuthContext);
   const [singleAppointments, setSingleAppointments] = useState([]);
   const [packageAppointments, setPackageAppointments] = useState([]);
   const [activeTab, setActiveTab] = useState("single");
-  
-  useEffect(() => {
-    if (token) {
-      api
-        .get("/Appointment/customer-appointments", {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then((response) => {
-          const data = response.data;
-          console.log("data tra ve:", data)
-          const singleAppointments = data.singleVaccineAppointments.$values.map((appt) => ({
-            id: appt.id,
-            customer: appt.childFullName,
-            phone: appt.contactPhoneNumber,
-            type: "Mũi lẻ",
-            vaccine: appt.vaccineName,
-            date: appt.dateInjection.split("T")[0],
-            status: appt.status,
-            createdAt: new Date(appt.dateInjection).getTime(),
-          }));
+  const [showModal, setShowModal] = useState(false);
+  const [selectedInjection, setSelectedInjection] = useState(null);
 
-          // const packageAppointments = data.packageVaccineAppointments.$values.map((pkg) => ({
-          //   id: pkg.vaccinePackageId,
-          //   customer: pkg.childFullName,
-          //   phone: pkg.contactPhoneNumber,
-          //   type: "Trọn gói",
-          //   package: pkg.vaccinePackageName,
-          //   createdAt: new Date(pkg.vaccineItems.$values[0].dateInjection).getTime(),
-          //   injections: pkg.vaccineItems.$values.map((dose) => ({
-          //     vaccine: `Mũi ${dose.doseSequence} - ${dose.vaccineName}`,
-          //     date: dose.dateInjection.split("T")[0],
-          //     status: dose.status,
-          //   })),
-          // }));
-          const packageAppointments = data.packageVaccineAppointments.$values.map((pkg) => ({
-            id: pkg.vaccinePackageId, 
-            customer: pkg.childFullName,
-            phone: pkg.contactPhoneNumber,
-            type: "Trọn gói",
-            package: pkg.vaccinePackageName,
-            createdAt: pkg.vaccineItems.length > 0 
-              ? new Date(pkg.vaccineItems[0].dateInjection).getTime() 
-              : new Date().getTime(),
-            injections: pkg.vaccineItems.map((dose) => ({
-              vaccine: `Mũi ${dose.doseSequence} - ${dose.vaccineName}`,
-              date: dose.dateInjection ? dose.dateInjection.split("T")[0] : "Không xác định",
-              status: dose.status,
-            })),
-          }));
-          
-          setSingleAppointments([...singleAppointments].sort((a, b) => b.createdAt - a.createdAt));
-          setPackageAppointments([...packageAppointments].sort((a, b) => b.createdAt - a.createdAt));
-          if(singleAppointments){
-            console.log("co single")
-          }
-          if(packageAppointments){
-            console.log("co package")
-          }
-        })
-        .catch((error) => console.error("Lỗi khi tải lịch tiêm:", error));
-    }
+  useEffect(() => {
+    fetchAppointments();
   }, [token]);
+
+  const fetchAppointments = async () => {
+    try {
+      const res = await api.get("/Appointment/customer-appointments", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+  
+      const data = res.data;
+      const formatDate = (date) =>
+        new Date(date).toLocaleDateString("vi-VN", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        });
+  
+      // Xử lý danh sách mũi lẻ
+      const singles = data.singleVaccineAppointments.$values.map((appt) => ({
+        id: appt.id,
+        customer: appt.contactPhoneNumber, // Thay bằng tên nếu có
+        phone: appt.contactPhoneNumber,
+        vaccine: appt.vaccineName,
+        date: formatDate(appt.dateInjection),
+        status: appt.status,
+        dateInjection: new Date(appt.dateInjection).getTime(),
+      }));
+  
+      // Giữ nguyên danh sách gói tiêm (không gộp)
+      const packages = data.packageVaccineAppointments.$values.map((pkg) => ({
+        id: pkg.vaccinePackageName,
+        customer: pkg.contactPhoneNumber,
+        phone: pkg.contactPhoneNumber,
+        injections: pkg.vaccineItems.map((dose) => ({
+          id: dose.id,
+          vaccine: `Mũi ${dose.doseSequence} - ${dose.vaccineName}`,
+          date: formatDate(dose.dateInjection),
+          status: dose.status,
+          dateInjection: new Date(dose.dateInjection).getTime(),
+        })),
+      }));
+  
+      setSingleAppointments(singles.sort((a, b) => a.dateInjection - b.dateInjection));
+      setPackageAppointments(packages);
+    } catch (err) {
+      console.error("Lỗi khi tải lịch:", err);
+    }
+  };
+  
+
+  const handleCancel = (ids, label) => {
+    console.log("📤 Gửi yêu cầu hủy lịch:", {
+      ids,
+      label,
+      endpoint: `/Appointment/cancel-appointment/${ids}`,
+      method: "PUT",
+    });
+
+    setSelectedInjection({
+      ids,
+      label,
+    });
+
+    setShowModal(true);
+  };
+
+  const confirmCancel = async () => {
+    try {
+      for (const id of selectedInjection.ids) {
+        await api.put(`/Appointment/cancel-appointment/${id}`, {}, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+      }
+      console.log("✅ Kết quả hủy:", selectedInjection.ids);
+      setShowModal(false);
+      fetchAppointments();
+    } catch (err) {
+      console.error("❌ Lỗi khi hủy lịch:", err.response?.data || err.message);
+    }
+  };
 
   const getStatusBadge = (status) => {
     switch (status) {
@@ -90,6 +112,7 @@ function VaccinationScheduleStatus() {
   return (
     <div className="container mt-5">
       <h2 className="text-center mb-4">📅 Lịch Tiêm Vaccine</h2>
+
       <ul className="nav nav-tabs">
         <li className="nav-item">
           <button className={`nav-link ${activeTab === "single" ? "active" : ""}`} onClick={() => setActiveTab("single")}>
@@ -104,62 +127,88 @@ function VaccinationScheduleStatus() {
       </ul>
 
       <div className="tab-content mt-3">
+        {/* MŨI LẺ */}
         {activeTab === "single" && (
           <div>
-            {singleAppointments.length > 0 ? (
-              singleAppointments.map((schedule) => (
-                <div className="card mb-4 shadow" key={schedule.id}>
-                  <div className="card-body">
-                    <h5 className="card-title">{schedule.customer}</h5>
-                    <p><strong>SĐT:</strong> {schedule.phone}</p>
-                    <p><strong>Vắc xin:</strong> {schedule.vaccine}</p>
-                    <p><strong>Ngày tiêm:</strong> {schedule.date}</p>
-                    <p><strong>Trạng thái:</strong> {getStatusBadge(schedule.status)}</p>
-                  </div>
+            {singleAppointments.map((s) => (
+              <div className="card mb-4 shadow" key={s.id}>
+                <div className="card-body">
+                  <h5 className="card-title">{s.customer}</h5>
+                  <p><strong>Vắc xin:</strong> {s.vaccine}</p>
+                  <p><strong>Ngày tiêm:</strong> {s.date}</p>
+                  <p><strong>Trạng thái:</strong> {getStatusBadge(s.status)}</p>
+                  {s.status !== "Canceled" && s.status !== "Completed" && (
+                    <button className="btn btn-danger" onClick={() => handleCancel([s.id], s.vaccine)}>
+                      ❌ Hủy
+                    </button>
+                  )}
                 </div>
-              ))
-            ) : (
-              <p className="text-center">Không có lịch tiêm mũi lẻ nào.</p>
-            )}
+              </div>
+            ))}
           </div>
         )}
 
+        {/* TRỌN GÓI */}
         {activeTab === "package" && (
-          <div>
-            {packageAppointments.length > 0 ? (
-              packageAppointments.map((schedule) => (
-                <div className="card mb-4 shadow" key={schedule.id}>
-                  <div className="card-body">
-                    <h5 className="card-title">{schedule.customer}</h5>
-                    <p><strong>SĐT:</strong> {schedule.phone}</p>
-                    <p><strong>Gói tiêm:</strong> {schedule.package}</p>
-                    <table className="table table-bordered mt-3">
-                      <thead className="table-dark">
-                        <tr>
-                          <th>Mũi tiêm</th>
-                          <th>Ngày tiêm</th>
-                          <th>Trạng thái</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {schedule.injections.map((inj, idx) => (
-                          <tr key={idx}>
-                            <td>{inj.vaccine}</td>
-                            <td>{inj.date}</td>
-                            <td>{getStatusBadge(inj.status)}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <p className="text-center">Không có lịch tiêm trọn gói nào.</p>
-            )}
-          </div>
-        )}
+  <div>
+    {packageAppointments.map((pkg, index) => (
+      <div className="card mb-4 shadow" key={index}>
+        <div className="card-body">
+          <h5 className="card-title">📦 {pkg.id}</h5>
+          <p><strong>SĐT:</strong> {pkg.phone}</p>
+          <p><strong>Gói tiêm:</strong> {pkg.id}</p>
+          <table className="table table-bordered mt-3">
+            <thead className="table-dark">
+              <tr>
+                <th>Mũi tiêm</th>
+                <th>Ngày tiêm</th>
+                <th>Trạng thái</th>
+                <th>Hành động</th>
+              </tr>
+            </thead>
+            <tbody>
+              {pkg.injections.map((inj) => (
+                <tr key={inj.id}>
+                  <td>{inj.vaccine}</td>
+                  <td>{inj.date}</td>
+                  <td>{getStatusBadge(inj.status)}</td>
+                  <td>
+                    {inj.status !== "Canceled" && inj.status !== "Completed" && (
+                      <button className="btn btn-danger btn-sm" 
+                        onClick={() => handleCancel([inj.id], `Mũi ${inj.vaccine} trong ${pkg.id}`)}>
+                        ❌ Hủy mũi này
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <button className="btn btn-danger mt-2"
+            onClick={() => handleCancel(pkg.injections.map((i) => i.id), `Gói tiêm ${pkg.id}`)}>
+            ❌ Hủy toàn bộ gói
+          </button>
+        </div>
       </div>
+    ))}
+  </div>
+)}
+
+      </div>
+
+      {/* MODAL XÁC NHẬN HỦY */}
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Xác nhận hủy lịch</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Bạn có chắc chắn muốn hủy <strong>{selectedInjection?.label}</strong> không?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>Đóng</Button>
+          <Button variant="danger" onClick={confirmCancel}>Xác nhận hủy</Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }

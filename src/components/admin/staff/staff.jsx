@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './staff.css';
+import '../admin.css';
 import RegisterForm from './RegisterForm';
-import axios from 'axios';
+import api from '../../../services/api';
 import { Modal, message } from 'antd';
 
 const Staff = () => {
@@ -18,21 +19,24 @@ const Staff = () => {
 
     const fetchStaffMembers = async () => {
         try {
-            const response = await axios.get('https://vaccinecare.azurewebsites.net/api/User/get-all?FilterOn=role&FilterQuery=staff');
-            setStaffMembers(response.data.$values);
+            const response = await api.get('/User/get-all');
+            const staff = response.data.$values.filter(user => user.role === 'staff');
+            setStaffMembers(staff);
         } catch (error) {
             console.error('Error fetching staff members:', error);
         }
     };
-
+    
     const fetchDoctors = async () => {
         try {
-            const response = await axios.get('https://vaccinecare.azurewebsites.net/api/User/get-all?FilterOn=role&FilterQuery=doctor');
-            setDoctors(response.data.$values);
+            const response = await api.get('/User/get-all');
+            const doctors = response.data.$values.filter(user => user.role === 'doctor');
+            setDoctors(doctors);
         } catch (error) {
             console.error('Error fetching doctors:', error);
         }
     };
+    
 
     useEffect(() => {
         fetchStaffMembers();
@@ -83,7 +87,7 @@ const Staff = () => {
     const currentItems = currentData.slice(indexOfFirstItem, indexOfLastItem);
 
     const createStaff = (data) => {
-        return axios.post('https://vaccinecare.azurewebsites.net/api/User/create-staff', {
+        return api.post('/User/create-staff', {
             username: data.username,
             password: data.password,
             email: data.email
@@ -91,7 +95,7 @@ const Staff = () => {
     };
 
     const createDoctor = (data) => {
-        return axios.post('https://vaccinecare.azurewebsites.net/api/User/create-doctor', {
+        return api.post('/User/create-doctor', {
             username: data.username,
             password: data.password,
             email: data.email
@@ -150,7 +154,7 @@ const Staff = () => {
         if (!userToDelete) return;
         
         try {
-            await axios.delete(`https://vaccinecare.azurewebsites.net/api/User/delete?id=${userToDelete.id}`);
+            await api.delete(`/User/delete?id=${userToDelete.id}`);
             message.success(`Đã xóa ${userToDelete.role === 'doctor' ? 'bác sĩ' : 'nhân viên'} thành công!`);
             
             if (userToDelete.role === 'doctor') {
@@ -172,19 +176,19 @@ const Staff = () => {
             <div className="staff-container">
                 <div className="staff-header">
                     <div className="staff-header-left">
-                        <h1 className="staff-title">Staff Management</h1>
+                        <h1 className="staff-title">Quản lý nhân viên</h1>
                         <div className="staff-tabs">
                             <button 
                                 className={`tab-button ${activeTab === 'staff' ? 'active' : ''}`}
                                 onClick={() => setActiveTab('staff')}
                             >
-                                Staff List
+                                Danh sách nhân viên
                             </button>
                             <button 
                                 className={`tab-button ${activeTab === 'doctor' ? 'active' : ''}`}
                                 onClick={() => setActiveTab('doctor')}
                             >
-                                Doctor List
+                                Danh sách bác sĩ
                             </button>
                         </div>
                     </div>
@@ -193,23 +197,23 @@ const Staff = () => {
                             className="create-account-btn doctor"
                             onClick={() => handleOpenModal('doctor')}
                         >
-                            Create Doctor Account
+                            Tạo tài khoản bác sĩ
                         </button>
                         <button 
                             className="create-account-btn staff"
                             onClick={() => handleOpenModal('staff')}
                         >
-                            Create Staff Account
+                            Tạo tài khoản nhân viên
                         </button>
                     </div>
                 </div>
                 
                 <div className="top-bar">
                     <select value={sortOption} onChange={handleSortChange} className="sort-dropdown">
-                        <option value="name">Sort by Name</option>
-                        <option value="id">Sort by ID</option>
-                        <option value="date">Sort by Date</option>
-                        <option value="status">Sort by Status</option>
+                        <option value="name">Sắp xếp theo tên</option>
+                        <option value="id">Sắp xếp theo ID</option>
+                        <option value="date">Sắp xếp theo ngày</option>
+                        <option value="status">Sắp xếp theo trạng thái</option>
                     </select>
                 </div>
 
@@ -223,7 +227,7 @@ const Staff = () => {
                                 <th>Email</th>
                                 <th>Vai trò</th>
                                 <th>Ngày tạo</th>
-                                <th>Cập nhật lần cuối</th>
+                                {/* <th>Last Updated</th> */}
                                 <th>Thao tác</th>
                             </tr>
                         </thead>
@@ -235,8 +239,8 @@ const Staff = () => {
                                     <td>{item.username}</td>
                                     <td>{item.email}</td>
                                     <td>{item.role === 'doctor' ? 'Bác sĩ' : 'Nhân viên'}</td>
-                                    <td>{new Date(item.createdAt).toLocaleString('vi-VN')}</td>
-                                    <td>{new Date(item.updatedAt).toLocaleString('vi-VN')}</td>
+                                    <td>{new Date(item.createdAt).toLocaleDateString('vi-VN')}</td>
+                                    {/* <td>{new Date(item.updatedAt).toLocaleDateString('vi-VN')}</td> */}
                                     <td>
                                         <button 
                                             className="admin-delete-button" 
@@ -257,14 +261,14 @@ const Staff = () => {
                         disabled={currentPage === 1} 
                         className="nav-button"
                     >
-                        ◀ Previous
+                        ◀ Trước
                     </button>
                     <button 
                         onClick={() => handlePageChange('next')} 
                         disabled={indexOfLastItem >= currentData.length} 
                         className="nav-button"
                     >
-                        Next ▶
+                        Tiếp ▶
                     </button>
                 </div>
 
