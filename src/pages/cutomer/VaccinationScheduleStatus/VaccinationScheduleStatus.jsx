@@ -3,6 +3,8 @@ import { AuthContext } from "../../../context/AuthContext";
 import api from "../../../services/api";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button } from "react-bootstrap";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 function VaccinationScheduleStatus() {
   const { token } = useContext(AuthContext);
@@ -11,6 +13,9 @@ function VaccinationScheduleStatus() {
   const [activeTab, setActiveTab] = useState("single");
   const [showModal, setShowModal] = useState(false);
   const [selectedInjection, setSelectedInjection] = useState(null);
+  
+const [editDate, setEditDate] = useState(null);
+const [editingAppointmentId, setEditingAppointmentId] = useState(null);
 
   useEffect(() => {
     fetchAppointments();
@@ -108,7 +113,41 @@ function VaccinationScheduleStatus() {
         return <span className="badge bg-secondary">{status}</span>;
     }
   };
-
+  const handleReschedule = async () => {
+    if (!editingAppointmentId) {
+      alert("Không có lịch hẹn nào được chọn.");
+      return;
+    }
+  
+    if (!editDate) {
+      alert("Vui lòng chọn ngày mới để cập nhật.");
+      return;
+    }
+  
+    try {
+      const response = await api.put(
+        "/Appointment/reschedule-package",
+        {
+          appointmentId: editingAppointmentId,
+          newDate: new Date(editDate).toISOString(),
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+  
+      if (response.status === 200) {
+        fetchAppointments(); // reload data
+        setEditDate(null); // reset lại
+        setEditingAppointmentId(null);
+      }
+    } catch (err) {
+      console.error("❌ Lỗi cập nhật lịch:", err);
+      alert("Lỗi cập nhật lịch. Vui lòng thử lại!");
+    }
+  };
+  
+  
   return (
     <div className="container mt-5">
       <h2 className="text-center mb-4">📅 Lịch Tiêm Vaccine</h2>
@@ -154,7 +193,7 @@ function VaccinationScheduleStatus() {
     {packageAppointments.map((pkg, index) => (
       <div className="card mb-4 shadow" key={index}>
         <div className="card-body">
-          <h5 className="card-title">📦 {pkg.id}</h5>
+          <h5 className="card-title">📦 {pkg.packageName }</h5>
           <p><strong>SĐT:</strong> {pkg.phone}</p>
           <p><strong>Gói tiêm:</strong> {pkg.id}</p>
           <table className="table table-bordered mt-3">
@@ -167,22 +206,65 @@ function VaccinationScheduleStatus() {
               </tr>
             </thead>
             <tbody>
-              {pkg.injections.map((inj) => (
-                <tr key={inj.id}>
-                  <td>{inj.vaccine}</td>
-                  <td>{inj.date}</td>
-                  <td>{getStatusBadge(inj.status)}</td>
-                  <td>
-                    {inj.status !== "Canceled" && inj.status !== "Completed" && (
-                      <button className="btn btn-danger btn-sm" 
-                        onClick={() => handleCancel([inj.id], `Mũi ${inj.vaccine} trong ${pkg.id}`)}>
-                        ❌ Hủy mũi này
-                      </button>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+  {pkg.injections.map((inj, i) => (
+    <tr key={inj.id}>
+      <td>{inj.vaccine}</td>
+
+      <td>
+        {editingAppointmentId === inj.id ? (
+          <DatePicker
+          selected={editDate}
+          onChange={(date) => setEditDate(date)}
+          className="form-control"
+          dateFormat="dd/MM/yyyy"
+          minDate={new Date()} // optional: không cho chọn ngày quá khứ
+          placeholderText="Chọn ngày mới"
+        />
+        
+        ) : (
+          inj.date
+        )}
+      </td>
+
+      <td>{getStatusBadge(inj.status)}</td>
+
+      <td>
+        {/* Đổi lịch nếu mũi 1 đã Completed, và không phải mũi 1 */}
+        {pkg.injections[0].status === "Completed" &&
+          i !== 0 &&
+          inj.status !== "Completed" &&
+          inj.status !== "Canceled" && (
+            editingAppointmentId === inj.id ? (
+              <button className="btn btn-sm btn-success me-2" onClick={handleReschedule}>
+                ✅ Xác nhận
+              </button>
+            ) : (
+              <button
+                className="btn btn-sm btn-primary me-2"
+                onClick={() => {
+                  setEditingAppointmentId(inj.id);
+                  setEditDate(null);
+                }}
+              >
+                ✏️ Đổi lịch
+              </button>
+            )
+          )}
+
+        {/* Nút Hủy */}
+        {inj.status !== "Canceled" && inj.status !== "Completed" && (
+          <button
+            className="btn btn-danger btn-sm"
+            onClick={() => handleCancel([inj.id], `Mũi ${inj.vaccine} trong ${pkg.id}`)}
+          >
+            ❌ Hủy mũi này
+          </button>
+        )}
+      </td>
+    </tr>
+  ))}
+</tbody>
+
           </table>
           <button className="btn btn-danger mt-2"
             onClick={() => handleCancel(pkg.injections.map((i) => i.id), `Gói tiêm ${pkg.id}`)}>
