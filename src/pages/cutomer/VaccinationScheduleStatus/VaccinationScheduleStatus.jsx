@@ -137,8 +137,8 @@ const [editingAppointmentId, setEditingAppointmentId] = useState(null);
       );
   
       if (response.status === 200) {
-        fetchAppointments(); // reload data
-        setEditDate(null); // reset lại
+        fetchAppointments(); 
+        setEditDate(null); 
         setEditingAppointmentId(null);
       }
     } catch (err) {
