@@ -12,16 +12,37 @@ const Completed = ({ record }) => {
   const [userRole, setUserRole] = useState(null);
   const [note, setNote] = useState("");
   const [loading, setLoading] = useState(false);
-
+  useEffect(() => {
+    const fetchNote = async () => {
+      if (record?.id && token) {
+        try {
+          const response = await api.get(`/Appointment/get-by-id/${record.id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
+  
+          if (response.data?.injectionNote) {
+            setNote(response.data.injectionNote);
+          }
+        } catch (error) {
+          console.error("Lỗi khi lấy ghi chú:", error);
+        }
+      }
+    };
+  
+    fetchNote();
+  }, [record?.id, token]);
   useEffect(() => {
     if (token) {
       try {
         const decoded = jwtDecode(token);
 
-        const user =
-          decoded[
-            "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
-          ];
+        const user = decoded.role
+          
+          // [
+          //   "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+          // ];
         setUserRole(user); // Lấy role từ token
       } catch (error) {
         console.error("Lỗi khi giải mã token:", error);
@@ -89,20 +110,24 @@ const Completed = ({ record }) => {
         <p>Quy trình đã được xử lý thành công.</p>
 
         {/* Chỉ hiển thị ghi chú nếu role là doctor */}
-        {userRole === "doctor" && (
-          <div className="note_section">
-            <h3>Ghi chú:</h3>
-            <Input.TextArea
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
-              placeholder="Nhập ghi chú tại đây..."
-              rows={4}
-            />
-            <button className="note-btn" type="submit" onClick={handleSaveNote}>
-              Lưu ghi chú
-            </button>
-          </div>
-        )}
+        {(userRole === "doctor" || (userRole === "staff" && note)) && (
+  <div className="note_section">
+    <h3>Ghi chú:</h3>
+    <Input.TextArea
+      value={note}
+      onChange={(e) => setNote(e.target.value)}
+      placeholder="Nhập ghi chú tại đây..."
+      rows={4}
+      readOnly={userRole !== "doctor"}
+    />
+    {userRole === "doctor" && (
+      <button className="note-btn" type="submit" onClick={handleSaveNote}>
+        Lưu ghi chú
+      </button>
+    )}
+  </div>
+)}
+
       </Card>
     </div>
   );

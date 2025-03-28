@@ -25,7 +25,7 @@ function BillPage() {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(response => {
-        const data = response.data.$values;
+        const data = response.data?.$values || response.data || [];
         // Sắp xếp payments theo paymentId giảm dần (mới nhất lên đầu)
         const sortedData = [...data].sort((a, b) => {
           return new Date(b.createdAt) - new Date(a.createdAt);
@@ -40,18 +40,27 @@ function BillPage() {
 
   const handlePayment = async (paymentId) => {
     try {
-      const response = await api.get(`/VNPay/CreatePaymentUrl?paymentId=${paymentId}`, {
+      const response = await api.post(`/Zalopay/create?paymentId=${paymentId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      
-      if (response.data) {
-        window.location.href = response.data; // Redirect to VNPay payment URL
+  
+      const { orderUrl, qrCode } = response.data;
+  
+      if (orderUrl) {
+        window.location.href = orderUrl;
+      } else {
+        alert("Không thể tạo đơn hàng ZaloPay.");
       }
+  
+      // Nếu bạn muốn show QR code thay vì redirect:
+      // setQrCode(qrCode);
+  
     } catch (error) {
-      console.error("Error creating payment URL:", error);
-      alert("Không thể tạo đường dẫn thanh toán. Vui lòng thử lại sau!");
+      console.error("Lỗi ZaloPay:", error);
+      alert("Tạo đơn hàng ZaloPay thất bại!");
     }
   };
+  
 
   const getFilteredPayments = () => {
     return payments.filter(payment => payment.type.toLowerCase() === activeTab.toLowerCase());
@@ -110,7 +119,7 @@ function BillPage() {
 
         <div className="detail-items mt-4">
           <h6 className="mb-3">Danh sách vaccine:</h6>
-          {selectedPayment.items.$values.map((item, index) => (
+          {(selectedPayment.items?.$values || selectedPayment.items || []).map((item, index) => (
             <div key={index} className="vaccine-item">
               <div className="info-row">
                 <span className="label">Tên vaccine:</span>
@@ -159,7 +168,7 @@ function BillPage() {
                 <div className="payment-details">
                   <small>Tổng tiền: {formatPrice(payment.totalPrice)}</small>
                   <div className="vaccine-list-preview">
-                    {payment.items.$values.map((item, index) => (
+                    {payment.items.map((item, index) => (
                       <small key={index} className="d-block">
                         - {item.vaccineName} (Số liều: {item.doseNumber})
                       </small>
@@ -241,7 +250,7 @@ function BillPage() {
 
         <Modal
           title={null}
-          visible={isModalVisible}
+          open={isModalVisible}
           onCancel={() => setIsModalVisible(false)}
           footer={null}
           width={700}
