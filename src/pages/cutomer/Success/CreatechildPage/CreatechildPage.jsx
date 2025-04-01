@@ -19,6 +19,7 @@ function CreatechildPage() {
   const [ward, setWard] = useState("");
   const [street, setStreet] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [dobError, setDobError] = useState("");
 
   const navigate = useNavigate();
   const { token } = useContext(AuthContext);
@@ -34,12 +35,22 @@ function CreatechildPage() {
       console.error("❌ Lỗi giải mã token:", err);
     }
   }
-
   const handleCreateChild = async () => {
     setErrorMessage(""); // Reset error message
-
+  
     if (!childrenFullName || !dob || !motherFullName || !fatherFullName || !phonemom || !phonedad || !province || !district || !ward || !street) {
       setErrorMessage("Vui lòng điền đầy đủ thông tin.");
+      return;
+    }
+  
+    // ✅ Validate ngày sinh trong khoảng 0-12 tháng
+    const today = new Date();
+    const dobDate = new Date(dob);
+    const twelveMonthsAgo = new Date(today);
+    twelveMonthsAgo.setFullYear(today.getFullYear() - 1);
+  
+    if (dobDate < twelveMonthsAgo || dobDate > today) {
+      setErrorMessage("Ngày sinh phải trong khoảng 0 đến 12 tháng tuổi.");
       return;
     }
   
@@ -48,7 +59,7 @@ function CreatechildPage() {
     const payload = {
       userId: userId || 0,
       childrenFullname: childrenFullName,
-      dob: new Date(dob).toISOString(),
+      dob: dobDate.toISOString(),
       gender: gender,
       fatherFullName: fatherFullName,
       motherFullName: motherFullName,
@@ -58,8 +69,8 @@ function CreatechildPage() {
       vaccinationDetails: [
         {
           id: 0,
-          diseaseId: null, 
-          vaccineId: null, 
+          diseaseId: null,
+          vaccineId: null,
           expectedInjectionDate: new Date().toISOString(),
           actualInjectionDate: new Date().toISOString()
         }
@@ -82,6 +93,54 @@ function CreatechildPage() {
       setErrorMessage(err.response?.data?.message || "Đã xảy ra lỗi khi tạo hồ sơ trẻ.");
     }
   };
+  
+  // const handleCreateChild = async () => {
+  //   setErrorMessage(""); // Reset error message
+
+  //   if (!childrenFullName || !dob || !motherFullName || !fatherFullName || !phonemom || !phonedad || !province || !district || !ward || !street) {
+  //     setErrorMessage("Vui lòng điền đầy đủ thông tin.");
+  //     return;
+  //   }
+  
+  //   const address = `${province}, ${district}, ${ward}, ${street}`;
+  
+  //   const payload = {
+  //     userId: userId || 0,
+  //     childrenFullname: childrenFullName,
+  //     dob: new Date(dob).toISOString(),
+  //     gender: gender,
+  //     fatherFullName: fatherFullName,
+  //     motherFullName: motherFullName,
+  //     fatherPhoneNumber: phonedad,
+  //     motherPhoneNumber: phonemom,
+  //     address: address,
+  //     vaccinationDetails: [
+  //       {
+  //         id: 0,
+  //         diseaseId: null, 
+  //         vaccineId: null, 
+  //         expectedInjectionDate: new Date().toISOString(),
+  //         actualInjectionDate: new Date().toISOString()
+  //       }
+  //     ]
+  //   };
+  
+  //   try {
+  //     console.log("Sending child profile data:", JSON.stringify(payload, null, 2));
+  //     const response = await api.post("/Child/create", payload, {
+  //       headers: {
+  //         "accept": "*/*",
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${token}`
+  //       }
+  //     });
+  //     console.log("API response:", response.data);
+  //     navigate("/successbaby");
+  //   } catch (err) {
+  //     console.error("Error creating child profile:", err);
+  //     setErrorMessage(err.response?.data?.message || "Đã xảy ra lỗi khi tạo hồ sơ trẻ.");
+  //   }
+  // };
   return (
     <div className='CreatechildPage-container'>
       <div className='CreatechildPage-From'>
@@ -104,13 +163,38 @@ function CreatechildPage() {
               value={dob}
               onChange={(e) => setDob(e.target.value)}
             /> */}
-            <input
+            {/* <input
   type="date"
   className='CreatechildPage-input'
   value={dob}
   max={new Date().toISOString().split("T")[0]} 
   onChange={(e) => setDob(e.target.value)}
+/> */}
+<input
+  type="date"
+  className='CreatechildPage-input'
+  value={dob}
+  min={new Date(new Date().setFullYear(new Date().getFullYear() - 1)).toISOString().split("T")[0]}
+  max={new Date().toISOString().split("T")[0]}
+  onChange={(e) => {
+    const value = e.target.value;
+    setDob(value);
+
+    const selectedDate = new Date(value);
+    const today = new Date();
+    const twelveMonthsAgo = new Date(today);
+    twelveMonthsAgo.setFullYear(today.getFullYear() - 1);
+
+    if (selectedDate < twelveMonthsAgo || selectedDate > today) {
+      setDobError("Ngày sinh phải trong khoảng 0 đến 12 tháng tuổi.");
+    } else {
+      setDobError("");
+    }
+  }}
 />
+{dobError && <div className="CreatechildPage-error">{dobError}</div>}
+
+
           </div>
         </div>
         <div className='CreatechildPage-content-kk'>
