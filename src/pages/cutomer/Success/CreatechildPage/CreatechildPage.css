@@ -109,3 +109,9 @@
   line-height: 76px;
   margin-bottom: 40px;
 }
+
+.CreatechildPage-error {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
