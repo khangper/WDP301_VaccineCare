@@ -25,6 +25,41 @@ function BookingPage() {
     const location = useLocation();
     const [selectionMode, setSelectionMode] = useState('');
     const [vaccineDiseaseMap, setVaccineDiseaseMap] = useState({});
+    const [hasCompletedToday, setHasCompletedToday] = useState(false);
+
+    useEffect(() => {
+        const checkTodayCompletedAppointments = async () => {
+            try {
+                const response = await api.get('/Appointment/customer-appointments', {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+    
+                const today = new Date().toISOString().split("T")[0];
+    
+                const allAppointments = [
+                    ...(response.data?.singleVaccineAppointments?.$values || []),
+                    ...(response.data?.packageVaccineAppointments?.$values || [])
+                ];
+    
+                const hasCompleted = allAppointments.some(appt => {
+                    const date = new Date(appt.dateInjection).toISOString().split("T")[0];
+                    return appt.status === "Completed" && date === today;
+                });
+    
+                setHasCompletedToday(hasCompleted);
+            } catch (error) {
+                console.error("Lỗi check lịch hôm nay:", error);
+            }
+        };
+    
+        if (token) checkTodayCompletedAppointments();
+    }, [token]);
+    
+
+
+
+
+
      // Nhận dữ liệu từ VaccinationSchedule    
     useEffect(() => {
         if (location.state) {
@@ -66,7 +101,17 @@ function BookingPage() {
         }
     }, [location.state, diseases]);
     
-    
+    useEffect(() => {
+        if (selectionMode === 'directVaccine') {
+          api.get('/Vaccine/get-all')
+            .then(response => {
+              setRelatedVaccines(response.data?.$values || []);
+            })
+            .catch(error => console.error('Lỗi khi lấy danh sách vaccine:', error));
+        }
+      }, [selectionMode]);
+      
+      
     // Xây dựng ánh xạ vaccine - bệnh ✅
 useEffect(() => {
     const buildVaccineDiseaseMap = async () => {
@@ -261,6 +306,13 @@ const renderDiseaseNotes = () => {
     //     }
     // };    
     const handleSubmit = async () => {
+
+        const today = new Date().toISOString().split("T")[0];
+
+    if (appointmentDate === today && hasCompletedToday) {
+        alert("Bạn đã tiêm 1 mũi hôm nay. Vui lòng chọn ngày khác.");
+        return;
+    }
         if (
             !selectedChild ||
             !appointmentDate ||
@@ -479,10 +531,17 @@ useEffect(() => {
             >
               <option value="">Chọn vắc xin</option>
               {relatedVaccines.map(vaccine => (
-                <option key={vaccine.id} value={vaccine.id}>
-                  {vaccine.name} - {vaccine.price?.toLocaleString()} VND
-                </option>
-              ))}
+  <option
+    key={vaccine.id}
+    value={vaccine.id}
+    disabled={vaccine.inStockNumber === 0}
+  >
+    {vaccine.name} - {vaccine.price?.toLocaleString()} VND
+    {vaccine.inStockNumber === 0 ? ' (Hết hàng)' : ''}
+  </option>
+))}
+
+
             </select>
 
             {selectedVaccine && (
@@ -495,7 +554,7 @@ useEffect(() => {
       </>
     )}
 
-    {selectionMode === 'directVaccine' && (
+    {/* {selectionMode === 'directVaccine' && (
       <>
         <div className='BookingPage-tuade mt-3'>Chọn vắc xin</div>
         <select
@@ -504,10 +563,44 @@ useEffect(() => {
           onChange={(e) => setSelectedVaccine(Number(e.target.value))}
         >
           <option value="">Chọn vắc xin</option>
-          {vaccines.map(vaccine => (
-            <option key={vaccine.id} value={vaccine.id}>
-              {vaccine.name} - {vaccine.price?.toLocaleString()} VND
-            </option>
+          {relatedVaccines.map(vaccine => (
+  <option
+    key={vaccine.id}
+    value={vaccine.id}
+    disabled={vaccine.inStockNumber === 0}
+  >
+    {vaccine.name} - {vaccine.price?.toLocaleString()} VND
+    {vaccine.inStockNumber === 0 ? ' (Hết hàng)' : ''}
+  </option>
+))}
+
+        </select>
+
+        {selectedVaccine && (
+          <div className="vaccine-detail mt-3">
+            {renderDiseaseNotes()}
+          </div>
+        )}
+      </>
+    )} */}
+
+{selectionMode === 'directVaccine' && (
+  <>
+    {relatedVaccines.filter(v => v.inStockNumber > 0).length > 0 ? (
+      <>
+        <div className='BookingPage-tuade mt-3'>Chọn vắc xin</div>
+        <select
+          className='BookingPage-input'
+          value={selectedVaccine}
+          onChange={(e) => setSelectedVaccine(Number(e.target.value))}
+        >
+          <option value="">Chọn vắc xin</option>
+          {relatedVaccines
+            .filter(vaccine => vaccine.inStockNumber > 0)
+            .map(vaccine => (
+              <option key={vaccine.id} value={vaccine.id}>
+                {vaccine.name} - {vaccine.price?.toLocaleString()} VND
+              </option>
           ))}
         </select>
 
@@ -517,7 +610,12 @@ useEffect(() => {
           </div>
         )}
       </>
+    ) : (
+      <div className="text-danger mt-3">Tất cả vắc xin hiện đang hết hàng.</div>
     )}
+  </>
+)}
+
   </>
 )}
 
@@ -555,13 +653,25 @@ useEffect(() => {
             )}
                                 {/* NGÀY TIÊM DỰ KIẾN */}
             <div className='BookingPage-tuade'>Ngày mong muốn tiêm</div>
-            <input 
+            {/* <input 
                 type="date" 
                 className='BookingPage-inputdate' 
                 min={new Date().toISOString().split("T")[0]} 
                 value={appointmentDate} 
                 onChange={(e) => setAppointmentDate(e.target.value)} 
-            />
+            /> */}
+<input 
+  type="date" 
+  className='BookingPage-inputdate' 
+  min={new Date().toISOString().split("T")[0]} 
+  value={appointmentDate} 
+  onChange={(e) => setAppointmentDate(e.target.value)} 
+/>
+
+
+{appointmentDate === new Date().toISOString().split("T")[0] && hasCompletedToday && (
+  <div className="text-danger mt-2">Bạn đã tiêm 1 mũi hôm nay. Không thể đặt thêm.</div>
+)}
 
                     {/* NÚT HOÀN THÀNH */}
                     <button className='BookingPage-button' onClick={handleSubmit}>Hoàn thành đăng ký</button>
