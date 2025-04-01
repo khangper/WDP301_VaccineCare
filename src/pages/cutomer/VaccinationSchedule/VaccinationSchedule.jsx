@@ -492,10 +492,31 @@ const handleBooking = () => {
           );
 
           // ✅ Kiểm tra ô hiện tại có nằm trong danh sách highlight (vàng) không
-          const isYellow = templateVaccinesForDisease
-            .slice(0, totalHighlight)
-            .some(v => v.month === month);
-
+          // const isYellow = templateVaccinesForDisease
+          // .slice(0, totalHighlight)
+          // .some(v => {
+          //   const isSameMonth = v.month === month;
+          //   const isAlreadyVaccinated = vaccinationRecords.some(
+          //     record => record.diseaseId === disease.id && record.month === month
+          //   );
+          //   return isSameMonth && !isAlreadyVaccinated;
+          // });
+          const isYellow = pendingAppointments.some(appt => {
+            const relatedDiseaseIds = vaccineToDiseaseMap[appt.vaccineId] || [];
+          
+            const matchesDisease = 
+              (appt.diseaseName && appt.diseaseName.includes(disease.name)) ||
+              relatedDiseaseIds.includes(disease.id);
+          
+            const matchesMonth = templateVaccinesForDisease.some(v => v.month === month);
+          
+            const alreadyInjected = vaccinationRecords.some(
+              record => record.diseaseId === disease.id && record.month === month
+            );
+          
+            return matchesDisease && matchesMonth && !alreadyInjected;
+          });
+          
           return (
             <td
               key={idx}

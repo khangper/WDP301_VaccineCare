@@ -377,7 +377,7 @@ const renderDiseaseNotes = () => {
         }
          else if (vaccineTypeFormatted === "Package") {
             const selectedPackage = vaccinePackages.find(pkg => pkg.id === parseInt(selectedVaccinePackage));
-    
+            console.log("vaccine goi tim duoc: ", selectedPackage);
             if (selectedPackage && selectedPackage.vaccineItems?.$values?.length > 0) {
                 const vaccineIds = selectedPackage.vaccineItems.$values.map(v => v.vaccineId);
                 

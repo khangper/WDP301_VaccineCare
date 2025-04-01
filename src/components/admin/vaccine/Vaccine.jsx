@@ -85,7 +85,7 @@ const Vaccine = () => {
       const formattedData = response.data.$values.map((pkg) => ({
         id: pkg.id,
         name: pkg.name,
-        totalPrice: pkg.price || 0,
+        totalPrice: pkg.totalPrice || 0,
         createdAt: new Date(pkg.createdAt).toLocaleDateString("vi-VN"),
         vaccineCount: pkg.vaccinePackageItems.$values.length,
         status:
@@ -599,15 +599,14 @@ const Vaccine = () => {
                 </Select>
               </div>
               <div style={{ width: "80px" }}>
-                <label style={{ display: "block", marginBottom: "4px" }}>Số liều:</label>
-                <InputNumber
-                  min={1}
-                  value={vaccine.doseNumber}
-                  onChange={(value) => updateVaccineField(index, "doseNumber", value)}
-                  placeholder="Số liều"
-                  style={{ width: "100%" }}
-                />
-              </div>
+  <label style={{ display: "block", marginBottom: "4px" }}>Số liều:</label>
+  <InputNumber
+    value={1}
+    disabled
+    style={{ width: "100%" }}
+  />
+</div>
+
               {selectedVaccines.length > 1 && (
                 <Button 
                   onClick={() => removeVaccineField(index)} 
