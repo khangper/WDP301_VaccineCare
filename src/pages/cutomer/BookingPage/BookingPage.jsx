@@ -25,35 +25,40 @@ function BookingPage() {
     const location = useLocation();
     const [selectionMode, setSelectionMode] = useState('');
     const [vaccineDiseaseMap, setVaccineDiseaseMap] = useState({});
-    const [hasCompletedToday, setHasCompletedToday] = useState(false);
+    const [hasCompletedTodayByChild, setHasCompletedTodayByChild] = useState(false);
 
-    useEffect(() => {
-        const checkTodayCompletedAppointments = async () => {
-            try {
-                const response = await api.get('/Appointment/customer-appointments', {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
-    
-                const today = new Date().toISOString().split("T")[0];
-    
-                const allAppointments = [
-                    ...(response.data?.singleVaccineAppointments?.$values || []),
-                    ...(response.data?.packageVaccineAppointments?.$values || [])
-                ];
-    
-                const hasCompleted = allAppointments.some(appt => {
-                    const date = new Date(appt.dateInjection).toISOString().split("T")[0];
-                    return appt.status === "Completed" && date === today;
-                });
-    
-                setHasCompletedToday(hasCompleted);
-            } catch (error) {
-                console.error("Lỗi check lịch hôm nay:", error);
-            }
-        };
-    
-        if (token) checkTodayCompletedAppointments();
-    }, [token]);
+useEffect(() => {
+    const checkChildCompletedToday = async () => {
+        if (!selectedChild || !token) return;
+
+        try {
+            const response = await api.get('/Appointment/customer-appointments', {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            const today = new Date().toISOString().split("T")[0];
+
+            const allAppointments = [
+                ...(response.data?.singleVaccineAppointments?.$values || []),
+                ...(response.data?.packageVaccineAppointments?.$values || [])
+            ];
+
+            const childCompletedToday = allAppointments.some(appt => {
+                const date = new Date(appt.dateInjection).toISOString().split("T")[0];
+                return appt.status === "Completed" &&
+                       date === today &&
+                       appt.childrenId === parseInt(selectedChild);
+            });
+
+            setHasCompletedTodayByChild(childCompletedToday);
+        } catch (error) {
+            console.error("Lỗi check lịch tiêm hôm nay của trẻ:", error);
+        }
+    };
+
+    checkChildCompletedToday();
+}, [selectedChild, token]);
+
     
 
 
@@ -309,10 +314,11 @@ const renderDiseaseNotes = () => {
 
         const today = new Date().toISOString().split("T")[0];
 
-    if (appointmentDate === today && hasCompletedToday) {
-        alert("Bạn đã tiêm 1 mũi hôm nay. Vui lòng chọn ngày khác.");
-        return;
-    }
+        if (appointmentDate === today && hasCompletedTodayByChild) {
+            alert("Trẻ đã tiêm 1 mũi hôm nay. Vui lòng chọn ngày khác.");
+            return;
+        }
+        
         if (
             !selectedChild ||
             !appointmentDate ||
@@ -669,9 +675,10 @@ useEffect(() => {
 />
 
 
-{appointmentDate === new Date().toISOString().split("T")[0] && hasCompletedToday && (
-  <div className="text-danger mt-2">Bạn đã tiêm 1 mũi hôm nay. Không thể đặt thêm.</div>
+{appointmentDate === new Date().toISOString().split("T")[0] && hasCompletedTodayByChild && (
+  <div className="text-danger mt-2">Trẻ đã tiêm 1 mũi hôm nay. Không thể đặt thêm.</div>
 )}
+
 
                     {/* NÚT HOÀN THÀNH */}
                     <button className='BookingPage-button' onClick={handleSubmit}>Hoàn thành đăng ký</button>
