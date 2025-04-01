@@ -26,6 +26,37 @@ function BookingPage() {
     const [selectionMode, setSelectionMode] = useState('');
     const [vaccineDiseaseMap, setVaccineDiseaseMap] = useState({});
     const [hasCompletedTodayByChild, setHasCompletedTodayByChild] = useState(false);
+    const [hasAppointmentTodayByChild, setHasAppointmentTodayByChild] = useState(false);
+
+    useEffect(() => {
+      const checkChildHasAppointmentOnDate = async () => {
+        if (!selectedChild || !appointmentDate) return;
+    
+        try {
+          const response = await api.get('/Appointment/get-all');
+          const allAppointments = response.data?.$values || [];
+    
+          const selectedDate = new Date(appointmentDate).toLocaleDateString("en-CA");
+    
+          const hasAppointmentOnThatDay = allAppointments.some(appt => {
+            const apptDate = new Date(appt.dateInjection).toLocaleDateString("en-CA");
+            return (
+              appt.childrenId === parseInt(selectedChild) &&
+              apptDate === selectedDate &&
+              appt.status !== "Canceled"
+            );
+          });
+    
+          setHasAppointmentTodayByChild(hasAppointmentOnThatDay);
+        } catch (error) {
+          console.error("Lỗi kiểm tra lịch tiêm:", error);
+        }
+      };
+    
+      checkChildHasAppointmentOnDate();
+    }, [selectedChild, appointmentDate]);
+    
+
     useEffect(() => {
       const checkChildHasAppointmentToday = async () => {
           if (!selectedChild) return;
@@ -282,6 +313,11 @@ const renderDiseaseNotes = () => {
     );
   };
     const handleSubmit = async () => {
+      if (hasAppointmentTodayByChild) {
+        alert("⚠️ Trẻ đã có lịch tiêm trong ngày này. Không thể đặt thêm.");
+        return;
+      }
+      
       const today = new Date().toLocaleDateString("en-CA");
 
       if (appointmentDate === today && hasCompletedTodayByChild) {
@@ -616,21 +652,24 @@ useEffect(() => {
   onChange={(e) => setAppointmentDate(e.target.value)} 
 />
 
-
-{/* {appointmentDate === new Date().toISOString().split("T")[0] && hasCompletedTodayByChild && (
-  <div className="text-danger mt-2">Trẻ đã tiêm 1 mũi hôm nay. Không thể đặt thêm.</div>
-)} */}
-
-{appointmentDate === new Date().toLocaleDateString("en-CA") && hasCompletedTodayByChild && (
+{hasAppointmentTodayByChild && (
   <div className="text-danger mt-2">
-    Trẻ đã có lịch tiêm hôm nay. Không thể đặt thêm.
+    ⚠️ Trẻ đã có lịch tiêm trong ngày này. Không thể đặt thêm lịch mới.
   </div>
 )}
 
 
 
+
                     {/* NÚT HOÀN THÀNH */}
-                    <button className='BookingPage-button' onClick={handleSubmit}>Hoàn thành đăng ký</button>
+                    <button 
+  className='BookingPage-button' 
+  onClick={handleSubmit}
+  disabled={hasAppointmentTodayByChild}
+>
+  Hoàn thành đăng ký
+</button>
+
                 </div>
             </div>
         </div>
