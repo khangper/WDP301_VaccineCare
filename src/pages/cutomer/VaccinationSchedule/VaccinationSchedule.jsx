@@ -1251,9 +1251,19 @@ const handleBooking = () => {
           );
 
           // ✅ Kiểm tra ô hiện tại có nằm trong danh sách highlight (vàng) không
-          const isYellow = templateVaccinesForDisease
-            .slice(0, totalHighlight)
-            .some(v => v.month === month);
+          const isYellow = (() => {
+            // Lấy các ô chưa tiêm thực tế
+            const notYetVaccinated = templateVaccinesForDisease
+              .filter(v => !vaccinationRecords.some(
+                record => record.diseaseId === disease.id && record.month === v.month
+              ));
+          
+            // Lấy các mũi cần highlight (pending appointments)
+            const toHighlight = notYetVaccinated.slice(0, totalHighlight);
+          
+            return toHighlight.some(v => v.month === month);
+          })();
+          
 
           return (
             <td
