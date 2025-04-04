@@ -44,9 +44,14 @@
   justify-content: center;
   align-items: center;
 }
-
-.inject-btn,
+.cancel-btn:disabled,
+.inject-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+.inject-btn,.cancel-btn,
 .button-update-inject {
+  margin-top: 10px;
   padding: 8px 16px;
   border: none;
   cursor: pointer;
@@ -57,7 +62,14 @@
   font-weight: 550;
   width: 100%;
 }
-
+.cancel-btn {
+  background-color: #ebb1ad; /* Màu đỏ */
+  color: white;
+}
+.cancel-btn:hover {
+  background-color: #f61808; /* Màu đỏ */
+  color: white;
+}
 .inject-btn:hover,
 .button-update-inject:hover,
 .btn-success:hover {

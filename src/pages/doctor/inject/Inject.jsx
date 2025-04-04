@@ -964,7 +964,7 @@ const Inject = ({ record }) => {
       alert("Lỗi kết nối! Vui lòng thử lại.");
     }
   };
-
+ 
   const handleSaveDatesExpectedDate = async () => {
     console.log("Dữ liệu trước khi cập nhật:", editingDate);
 
@@ -1139,6 +1139,32 @@ const Inject = ({ record }) => {
       setConfirming(false);
     }
   };
+  
+  const handleCancelInjection = async () => {
+    if (!appointment || !vaccinationProfileId) return;
+    console.log("ProfileId:", vaccinationProfileId);
+    console.log("VaccineId:", appointment.vaccineId);
+
+    setConfirming(true);
+    try {
+      // Gọi API huỷ lịch hẹn tiêm
+      await api.put(`/Appointment/cancel-by-doctor/${appointment.id}`);
+
+      notification.success({
+        message: "Huỷ tiêm thành công",
+      });
+
+      setAppointment({ ...appointment, confirmed: false }); // Cập nhật UI sau khi huỷ
+      fetchUpdatedVaccinationRecords(); // Cập nhật thông tin vaccination records
+      fetchVaccineData(); // Cập nhật thông tin vaccine nếu cần
+    } catch (err) {
+      notification.error({
+        message: "Lỗi: " + (err.response ? err.response.data.message : err.message),
+      });
+    } finally {
+      setConfirming(false); // Đảm bảo không bị giữ trạng thái "đang xác nhận" sau khi kết thúc
+    }
+};
 
   if (loading) return <div className="loader"></div>;
 
@@ -1167,6 +1193,14 @@ const Inject = ({ record }) => {
         >
           {confirming ? "Đang xác nhận..." : "Xác nhận đã tiêm"}
         </button>
+        {/* <button
+    className="cancel-btn"
+    type="button"
+    onClick={handleCancelInjection}
+    disabled={confirming}
+  >
+    Huỷ
+  </button> */}
       </div>
 
       <div className="inject-bottom">
