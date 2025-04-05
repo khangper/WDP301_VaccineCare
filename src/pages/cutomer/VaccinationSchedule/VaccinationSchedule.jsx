@@ -470,13 +470,33 @@ const handleBooking = () => {
               {vaccination?.vaccineId && vaccination?.month === month ? "✔️" : ""}
 
               {/* Tooltip hover */}
-              {hasTemplateVaccine && (
+              {/* {hasTemplateVaccine && (
                 <div className="tooltip-box">
                   <div><strong>Ghi chú:</strong> {note}</div>
                   <div><strong>Ngày dự kiến:</strong> {expectedDate}</div>
                   {isYellow && <div><strong>Trạng thái:</strong> ⏳ Đang chờ tiêm</div>}
                 </div>
-              )}
+              )} */}
+              {hasTemplateVaccine && (
+  <div style={{ fontSize: "0.75rem", marginTop: "4px" }}>
+    <div><strong>Ghi chú:</strong> {note}</div>
+    <div>
+      <strong>{vaccination?.actualInjectionDate ? "Ngày tiêm:" : "Dự kiến:"}</strong> {
+        vaccination?.actualInjectionDate
+          ? new Date(vaccination.actualInjectionDate).toLocaleDateString("vi-VN", {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+            })
+          : expectedDate
+      }
+    </div>
+    {isYellow && !vaccination?.actualInjectionDate && (
+      <div><strong>Trạng thái:</strong> ⏳ Đang chờ tiêm</div>
+    )}
+  </div>
+)}
+
             </td>
           );
         })}
@@ -669,9 +689,9 @@ const handleBooking = () => {
         {/* Nút Lưu chỉ hiển thị nếu: 
             - Chưa tiêm thực tế
             - Và chưa có vaccineId (tức là chưa lưu gì hết) */}
-        {!selectedRecord?.actualInjectionDate && !selectedRecord?.vaccineId && (
+        {/* {!selectedRecord?.actualInjectionDate && !selectedRecord?.vaccineId && (
           <button className="btn btn-success" onClick={handleSave}>Lưu</button>
-        )}
+        )} */}
 
         {/* Đặt lịch tiêm (chỉ hiện nếu chưa tiêm thực tế) */}
         {!selectedRecord?.actualInjectionDate && (
