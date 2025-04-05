@@ -82,16 +82,23 @@ const Vaccine = () => {
   const fetchVaccinePackages = async () => {
     try {
       const response = await getAllVaccinePackages();
-      const formattedData = response.data.$values.map((pkg) => ({
-        id: pkg.id,
-        name: pkg.name,
-        totalPrice: pkg.totalPrice || 0,
-        createdAt: new Date(pkg.createdAt).toLocaleDateString("vi-VN"),
-        vaccineCount: pkg.vaccinePackageItems.$values.length,
-        status:
-          pkg.vaccinePackageItems.$values.length > 0 ? "Active" : "Inactive",
-        vaccinePackageItems: pkg.vaccinePackageItems.$values,
-      }));
+      const formattedData = response.data.$values.map((pkg) => {
+        const items = (pkg.vaccinePackageItems?.$values || []).map(item => ({
+          ...item,
+          vaccine: item.vaccine || null,
+        }));
+      
+        return {
+          id: pkg.id,
+          name: pkg.name,
+          totalPrice: pkg.totalPrice || 0,
+          createdAt: new Date(pkg.createdAt).toLocaleDateString("vi-VN"),
+          vaccineCount: items.length,
+          status: items.length > 0 ? "Active" : "Inactive",
+          vaccinePackageItems: items, // ✅ đảm bảo reset lại mỗi lần fetch
+        };
+      });
+      
       setVaccinePackages(formattedData);
     } catch (error) {
       console.error("Error fetching vaccine packages:", error);
@@ -360,7 +367,7 @@ const Vaccine = () => {
             doseNumber: Number(item.doseNumber),
           })),
       };
-
+      
       await api.post("/VaccinePackage/create", payload);
       message.success("Tạo gói vaccine thành công");
       setIsCreateModalVisible(false);

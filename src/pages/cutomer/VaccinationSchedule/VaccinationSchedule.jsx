@@ -451,6 +451,7 @@ const handleBooking = () => {
             return toHighlight.some(v => v.month === month);
           })();
 
+
           return (
             <td
               key={idx}
