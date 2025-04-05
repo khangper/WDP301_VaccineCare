@@ -145,10 +145,10 @@ const HeaderGuest = () => {
     <i className="bi bi-person-heart "></i>
     <li><a className="dropdown-item" href="/in4">Tài khoản</a></li>
     </div>
-    <div className="kfadsjlkfsajdlfsd">
+    {/* <div className="kfadsjlkfsajdlfsd">
     <i className="bi bi-cash-stack " ></i>
     <li><a className="dropdown-item" href="/transaction">Giao dịch</a></li>
-    </div>
+    </div> */}
     <div className="kfadsjlkfsajdlfsd">
     <i className="bi bi-calendar-event " ></i>
     <li><a className="dropdown-item" href="/vaccinationScheduleStatus">Lịch hẹn</a></li>
