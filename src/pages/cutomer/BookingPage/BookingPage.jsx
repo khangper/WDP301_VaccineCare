@@ -330,12 +330,53 @@ const handleSubmit = async () => {
       openNotification(
         'warning',
         'Ngày tiêm không hợp lệ',
-        `⚠️ Ngày tiêm phải sau ${new Date(minDate).toLocaleDateString()} theo lịch tiêm mẫu!`
+        `⚠️ Ngày tiêm phải sau ${format(new Date(minDate), "dd/MM/yyyy", { locale: vi })} theo lịch tiêm mẫu!`
       );
       return;
     }
   }
-
+  if (vaccineType === "Vắc xin gói" && selectedVaccinePackage) {
+    const vaccinePackageId = Number(selectedVaccinePackage);
+    try {
+      const res = await api.get(`/VaccinePackage/get-by-id/${vaccinePackageId}`);
+      const packageData = res.data?.$values?.[0];
+      const vaccineItems = packageData?.vaccinePackageItems?.$values || [];
+  
+      let violatedDiseaseInfo = null;
+  
+      for (const item of vaccineItems) {
+        const diseases = item?.diseases || [];
+  
+        for (const disease of diseases) {
+          const diseaseId = disease.id;
+          const minDate = diseaseEarliestDate[diseaseId];
+  
+          if (minDate && new Date(appointmentDate) < new Date(minDate)) {
+            violatedDiseaseInfo = {
+              name: disease.name,
+              minDate,
+            };
+            break;
+          }
+        }
+  
+        if (violatedDiseaseInfo) break;
+      }
+  
+      if (violatedDiseaseInfo) {
+        openNotification(
+          'warning',
+          'Ngày tiêm không hợp lệ',
+          `⚠️ Trẻ chưa đủ tuổi để tiêm bệnh "${violatedDiseaseInfo.name}" trong gói. Vui lòng chọn ngày sau ${format(new Date(violatedDiseaseInfo.minDate), "dd/MM/yyyy", { locale: vi })} theo lịch tiêm mẫu`
+        );
+        return;
+      }
+  
+    } catch (err) {
+      console.error("❌ Lỗi khi kiểm tra ngày tiêm tối thiểu theo gói:", err);
+    }
+  }
+  
   // 👉 Format vaccine type sớm để sử dụng bên dưới
   const vaccineTypeFormatted =
     vaccineType === "Vaccine lẻ"
