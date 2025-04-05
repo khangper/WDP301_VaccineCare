@@ -4,6 +4,7 @@ import "./CreatechildPage.css";
 import api from '../../../../services/api';
 import { AuthContext } from '../../../../context/AuthContext';
 import jwtDecode from "jwt-decode";
+import { Button, notification } from 'antd';
 
 function CreatechildPage() {
   // States for child and family info
@@ -18,7 +19,6 @@ function CreatechildPage() {
   const [district, setDistrict] = useState("");
   const [ward, setWard] = useState("");
   const [street, setStreet] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
   const [dobError, setDobError] = useState("");
 
   const navigate = useNavigate();
@@ -36,10 +36,12 @@ function CreatechildPage() {
     }
   }
   const handleCreateChild = async () => {
-    setErrorMessage(""); // Reset error message
   
     if (!childrenFullName || !dob || !motherFullName || !fatherFullName || !phonemom || !phonedad || !province || !district || !ward || !street) {
-      setErrorMessage("Vui lòng điền đầy đủ thông tin.");
+      notification.warning({
+        message: "Thiếu thông tin",
+        description: "Vui lòng điền đầy đủ thông tin.",
+      });
       return;
     }
   
@@ -50,7 +52,10 @@ function CreatechildPage() {
     twelveMonthsAgo.setFullYear(today.getFullYear() - 1);
   
     if (dobDate < twelveMonthsAgo || dobDate > today) {
-      setErrorMessage("Ngày sinh phải trong khoảng 0 đến 12 tháng tuổi.");
+      notification.warning({
+        message: "Ngày sinh không hợp lệ",
+        description: "Ngày sinh phải trong khoảng 0 đến 12 tháng tuổi.",
+      });
       return;
     }
   
@@ -90,7 +95,18 @@ function CreatechildPage() {
       navigate("/successbaby");
     } catch (err) {
       console.error("Error creating child profile:", err);
-      setErrorMessage(err.response?.data?.message || "Đã xảy ra lỗi khi tạo hồ sơ trẻ.");
+      const apiMessage = err.response?.data?.message;
+
+      if (err.response?.status === 400) {
+        notification.warning({
+          message: "Trẻ đã tồn tại",
+          description: "⚠️ Trẻ đã tồn tại trong hệ thống với tên và ngày sinh này. Vui lòng kiểm tra lại.",
+        });      
+      } else {
+          notification.error({
+            message: "Lỗi khi tạo hồ sơ",
+            description: apiMessage || "Đã xảy ra lỗi khi tạo hồ sơ trẻ.",
+          });      }
     }
   };
   

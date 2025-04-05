@@ -23,7 +23,7 @@ const VaccinationSchedule = () => {
   const [gender, setGender] = useState("");
   const [updateMessage, setUpdateMessage] = useState("");
   
-  const headers = [" ", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
+  const headers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
 
 
   const [pendingAppointments, setPendingAppointments] = useState([]);
@@ -388,19 +388,27 @@ const handleBooking = () => {
     <div className="HomePage-Allcontainer">
        <Notification notification={notification} />
       <div className="VaccinationPage container">
-        <h3 className="text-center VaccinPage-Intro text-white p-2">LỊCH TIÊM CHỦNG CHO TRẺ TỪ 0-12 tháng</h3>
+        <h3 className="text-center VaccinPage-Intro text-white p-2">Lịch tiêm chủng cho trẻ từ 1 đến 12 tháng tuổi</h3>
         <div className="table-responsive">
 
 
         <table className="table table-bordered text-center">
-      <thead className="table-primary">
-        <tr>
-          <th rowSpan={2} className="align-middle VaccinPage-Title">Vắc xin</th>
-          {headers.map((month, index) => (
-            <th key={index} className="align-middle VaccinPage-Title">{month}</th>
-          ))}
-        </tr>
-      </thead>
+        <thead className="table-primary">
+  <tr>
+    <th rowSpan={2} className="align-middle VaccinPage-Title">
+      <div style={{ lineHeight: "1.2" }}>
+        Vắc xin<br />phòng bệnh
+      </div>
+    </th>
+    <th colSpan={13} className="text-center align-middle VaccinPage-Title">Tháng tuổi</th>
+  </tr>
+  <tr>
+    {[...Array(13)].map((_, i) => (
+      <th key={i + 1} className="align-middle VaccinPage-Title">{i}</th> // từ 0 đến 11
+    ))}
+  </tr>
+</thead>
+
       <tbody>
   {diseases.map((disease, index) => {
     // 🔸 Lấy danh sách các mũi vaccine trong template cho bệnh này
@@ -482,16 +490,12 @@ const handleBooking = () => {
   <div style={{ fontSize: "0.75rem", marginTop: "4px" }}>
     <div><strong>Ghi chú:</strong> {note}</div>
     <div>
-      <strong>{vaccination?.actualInjectionDate ? "Ngày tiêm:" : "Dự kiến:"}</strong> {
-        vaccination?.actualInjectionDate
-          ? new Date(vaccination.actualInjectionDate).toLocaleDateString("vi-VN", {
-              day: "2-digit",
-              month: "2-digit",
-              year: "numeric",
-            })
-          : expectedDate
-      }
-    </div>
+  <strong>{vaccination?.actualInjectionDate ? "Ngày tiêm:" : "Dự kiến:"}</strong>{" "}
+  {vaccination?.actualInjectionDate
+    ? new Date(vaccination.actualInjectionDate).toISOString().slice(0, 10).split("-").reverse().join("/")
+    : expectedDate}
+</div>
+
     {isYellow && !vaccination?.actualInjectionDate && (
       <div><strong>Trạng thái:</strong> ⏳ Đang chờ tiêm</div>
     )}
@@ -652,10 +656,19 @@ const handleBooking = () => {
 
       {/* Ngày tiêm thực tế nếu có */}
       {selectedRecord?.actualInjectionDate && (
-        <div>
-          <p><strong>Ngày tiêm thực tế:</strong> {new Date(selectedRecord.actualInjectionDate).toLocaleDateString()}</p>
-        </div>
-      )}
+  <div>
+    <p>
+      <strong>Ngày tiêm thực tế:</strong>{" "}
+      {new Date(selectedRecord.actualInjectionDate)
+        .toISOString()
+        .slice(0, 10)
+        .split("-")
+        .reverse()
+        .join("/")}
+    </p>
+  </div>
+)}
+
 
       {/* Dropdown chọn vaccine */}
       <div className="form-group">
