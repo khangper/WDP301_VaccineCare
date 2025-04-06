@@ -190,9 +190,9 @@ const ProfileChildPage = () => {
 
   const handleDeleteConfirm = (childId) => {
     confirm({
-      title: "Bạn có chắc chắn muốn xóa?",
+      title: "Bạn có chắc chắn muốn xóa tất cả dữ liệu về đứa trẻ này?",
       icon: <ExclamationCircleOutlined />,
-      content: "Hành động này không thể hoàn tác.",
+      content: "Tất cả dữ liệu liên quan đến đứa trẻ, cuộc hẹn, các hoá đơn và hồ sơ của trẻ cũng sẽ đồng thời bị xoá. Hành động này không thể hoàn tác, vui lòng tham khảo ý kiến của tư vấn viên trước khi xoá!",
       okText: "Xóa",
       okType: "danger",
       cancelText: "Hủy",
