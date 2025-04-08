@@ -30,13 +30,28 @@ const VaccinationSchedule = () => {
 
 
     
+// useEffect(() => {
+//   if (vaccinationProfileId) {
+//     api.get('/Appointment/get-all')
+//       .then(response => {
+//         const allAppointments = response.data.$values || response.data;
+//         const filtered = allAppointments.filter(
+//           (item) => item.childrenId === vaccinationProfileId && item.status === "Pending" 
+//         );
+//         setPendingAppointments(filtered);
+//       })
+//       .catch(error => console.error("API fetch appointments error:", error));
+//   }
+// }, [vaccinationProfileId]);
 useEffect(() => {
   if (vaccinationProfileId) {
     api.get('/Appointment/get-all')
       .then(response => {
         const allAppointments = response.data.$values || response.data;
         const filtered = allAppointments.filter(
-          (item) => item.childrenId === vaccinationProfileId && item.status === "Pending"
+          (item) =>
+            item.childrenId === vaccinationProfileId &&
+            (item.status === "Pending" || item.status === "Processing") // thêm điều kiện ở đây
         );
         setPendingAppointments(filtered);
       })
