@@ -228,7 +228,7 @@ const ProfileChildPage = () => {
           <div className="row">
             <div className="col-12 mt-152 BookingPage-titletitle">
               <div className="BookingPage-heading-protected-together">
-                Hồ Sơ trẻ
+                Danh Sách Sơ trẻ
               </div>
             </div>
           </div>
