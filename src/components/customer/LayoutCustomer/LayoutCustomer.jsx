@@ -7,8 +7,8 @@ import FooterGuest from "../../guest/FooterGuest/FooterGuest";
 const LayoutCustomer = () => {
   return (
     <div>
-      <HeaderGuest />
-      <main>
+      <HeaderGuest /> {/* Navigation bar */}
+      <main style={{ paddingTop: "150px" }}>
         <Outlet /> {/* Đây là nơi sẽ hiển thị các trang con */}
       </main>
       <FooterGuest />

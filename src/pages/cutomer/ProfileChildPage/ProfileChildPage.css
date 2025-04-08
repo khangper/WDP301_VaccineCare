@@ -9,7 +9,7 @@
     border-radius: 8px;
     z-index: 4;
     outline: none;
-    font-size: 16px;
+    font-size: 18px;
     color: #9091a8;
     padding-left: 40px;
     /* width: 80%; */
@@ -25,3 +25,24 @@
 a.ProfileChildPage-text {
     color: brown;
 }
+
+/* Newer jsx code style */
+.child-meta .ant-list-item-meta-title,
+.child-meta .ant-list-item-meta-description {
+  font-size: 16px !important;
+}
+
+.child-detail-link {
+    font-weight: bold;
+    color: var(--primary-colorVaccine);
+    text-decoration: none;
+    transition: color 0.3s;
+    padding: 5px 100px;
+  }
+  
+  .child-detail-link:hover {
+    border-radius: 10px;
+    background: #f0f0f0;
+    color: var(--third-colorVaccine);
+  }
+  

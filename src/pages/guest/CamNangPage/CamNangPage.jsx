@@ -20,7 +20,7 @@ const CamNangPage = () => {
     <div>
          
           
-       <div className="CamNangPage-container container my-4">
+       <div className="CamNangPage-container container">
       <h2 className="text-center  VaccineTitle">Lịch Tiêm Chủng Cho Trẻ</h2>
       <div className="CamNangPage-table-container table-responsive">
         <table className="CamNangPage-table table table-bordered table-striped">
@@ -73,6 +73,25 @@ const CamNangPage = () => {
         </table>
       </div>
        </div>
+
+       {/* Thông tin */}
+      <div className="container">
+        <div className="row">
+            <div className="col-12">
+            <div className="VaccinePrice-note"> 
+      <p className="VaccinePrice-noteText">
+        <em>** Thông tin trên là những mũi tiêm được sắp đặt bởi hệ thống tiêm chủng Vaccine Care **</em>
+      </p>
+      <p className="VaccinePrice-noteText">
+        <b>1. Bảng tiêm trên áp dụng với toàn hệ thống tiêm chủng Vaccine Care từ ngày 18/10/2024</b>
+      </p>
+      <p className="VaccinePrice-noteText">
+        <b>2. Mọi thông tin cập nhật mũi tiêm cho trẻ khi tiêm ở cơ sở khác phải được xử lý trực tiếp tại phòng khám Vaccine Care</b>
+      </p>
+      </div>
+            </div>
+        </div>
+      </div>
      
     </div>
 
