@@ -43,25 +43,31 @@ const VaccinationSchedule = () => {
 //       .catch(error => console.error("API fetch appointments error:", error));
 //   }
 // }, [vaccinationProfileId]);
+const [allAppointments, setAllAppointments] = useState([]);
+
 useEffect(() => {
   if (vaccinationProfileId) {
     api.get('/Appointment/get-all')
       .then(response => {
-        const allAppointments = response.data.$values || response.data;
-        const filtered = allAppointments.filter(
-          item => 
-            item.childrenId === vaccinationProfileId 
-          // &&
-          //   (item.status === "Pending" || item.status === "Processing")
+        const raw = response.data.$values || response.data;
+        const filtered = raw.filter(
+          item =>
+            item.childrenId === vaccinationProfileId &&
+            (item.status === "Pending" || item.status === "Processing")
         );
-        
-        console.log("Raw appointments from API:", allAppointments.slice(0, 3));
-        console.log("Filtered appointments:", filtered);
-        setPendingAppointments(filtered);
+
+        const allRelated = raw.filter(item => item.childrenId === vaccinationProfileId);
+
+        console.log("Raw appointments:", raw.slice(0, 3));
+        console.log("Filtered (Pending/Processing):", filtered);
+
+        setPendingAppointments(filtered);      // dùng cho highlight màu
+        setAllAppointments(allRelated);        // dùng để show ngày và trạng thái
       })
       .catch(error => console.error("API fetch appointments error:", error));
   }
 }, [vaccinationProfileId]);
+
 
 
 // Lấy vaccinationProfileId theo childrenId
@@ -414,7 +420,7 @@ const handleBooking = () => {
     if (!diseaseInfo) return { date: "Chưa có dữ liệu", status: null };
     
     // 2. Find all appointments related to this disease
-    const relevantAppointments = pendingAppointments.filter(appt => {
+    const relevantAppointments = allAppointments.filter(appt => {
       // Check if disease name matches
       const diseaseNameMatch = diseaseInfo.name && 
         appt.diseaseName && 
@@ -665,6 +671,10 @@ const handleBooking = () => {
     </div>
   </div>
 </div>
+<div className ="concaccccccc1" >
+<div className ="concaccccccc"></div>
+</div>
+
        <Notification notification={notification} />
       <div className="VaccinationPage container">
         <h3 className="text-center VaccinPage-Intro text-white p-2">Lịch tiêm chủng cho trẻ từ 1 đến 12 tháng tuổi</h3>
@@ -904,4 +914,3 @@ const handleBooking = () => {
 };
 
 export default VaccinationSchedule;
-

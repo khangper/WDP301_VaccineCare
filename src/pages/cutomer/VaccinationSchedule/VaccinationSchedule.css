@@ -88,6 +88,18 @@ input.VaccinationPage-inputPhone {
     flex-shrink: 0;
     border-radius: 4px;
 }
+.concaccccccc {
+    border:1px solid #ccc;
+    width: 68.5%;
+
+   
+    margin: 10px;
+}
+.concaccccccc1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .modal-overlay {
     position: fixed;
