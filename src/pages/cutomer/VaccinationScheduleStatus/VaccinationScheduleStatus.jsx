@@ -147,6 +147,29 @@ function VaccinationScheduleStatus() {
     }
 
     try {
+      const allAppointmentsRes = await api.get("/Appointment/customer-appointments", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const allPackages = allAppointmentsRes.data.packageVaccineAppointments?.$values || [];
+      const currentPackage = allPackages.find(pkg =>
+        pkg.vaccineItems?.some(item => item.id === editingAppointmentId)
+      );
+      const childId = currentPackage?.childrenId;
+      const isConflict = allPackages.some(pkg =>
+        pkg.childrenId === childId &&
+        pkg.vaccineItems?.some(item =>
+          item.id !== editingAppointmentId &&
+          (item.status === "Pending" || item.status === "Processing") &&
+          new Date(item.dateInjection).toDateString() === new Date(editDate).toDateString()
+        )
+      );
+    
+      if (isConflict) {
+        alert("❌ Ngày bạn chọn đã có mũi tiêm khác. Vui lòng chọn ngày khác!");
+        return;
+      }
+    
+
       const response = await api.put(
         "/Appointment/reschedule-package",
         {
@@ -212,7 +235,7 @@ function VaccinationScheduleStatus() {
                   </button>
                 )}
                 <div className="card-body">
-                  <h5 className="card-title">👶 {s.customer}</h5>
+                  <h5 className="card-title">👶Tên bé: {s.customer}</h5>
                   <p><strong>Vắc xin:</strong> {s.vaccine}</p>
                   <p><strong>Ngày tiêm:</strong> {s.date}</p>
                   <p><strong>Trạng thái:</strong> {getStatusBadge(s.status)}</p>
@@ -229,7 +252,7 @@ function VaccinationScheduleStatus() {
   .map((pkg, index) => (
               <div className="card mb-4 shadow" key={index}>
                 <div className="card-body">
-                  <h5 className="card-title">📦 {pkg.customer}</h5>
+                  <h5 className="card-title">📦Tên bé: {pkg.customer}</h5>
                   <p><strong>SĐT:</strong> {pkg.phone}</p>
                   <p><strong>Gói tiêm:</strong> {pkg.id}</p>
                   <table className="table table-bordered mt-3">
