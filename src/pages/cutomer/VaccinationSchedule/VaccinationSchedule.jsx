@@ -49,10 +49,14 @@ useEffect(() => {
       .then(response => {
         const allAppointments = response.data.$values || response.data;
         const filtered = allAppointments.filter(
-          (item) =>
-            item.childrenId === vaccinationProfileId &&
-            (item.status === "Pending" || item.status === "Processing") // thêm điều kiện ở đây
+          item => 
+            item.childrenId === vaccinationProfileId 
+          // &&
+          //   (item.status === "Pending" || item.status === "Processing")
         );
+        
+        console.log("Raw appointments from API:", allAppointments.slice(0, 3));
+        console.log("Filtered appointments:", filtered);
         setPendingAppointments(filtered);
       })
       .catch(error => console.error("API fetch appointments error:", error));
@@ -118,6 +122,9 @@ const handleBooking = () => {
       expectedInjectionDate: expectedDate || "",
     },
   });
+  setTimeout(() => {
+    window.location.reload();
+  }, 1000);
 };
 
 
@@ -220,6 +227,8 @@ const handleBooking = () => {
           console.warn("⚠️ Phản hồi không mong muốn từ server (Cập nhật):", response);
           setNotification({ message: "Cập nhật thất bại!", type: "error" });
         }
+        const newAppointments = await api.get('/Appointment/get-all');
+        setPendingAppointments(newAppointments.data);
       } catch (error) {
         console.error("❌ Lỗi khi cập nhật tiêm chủng:", error);
         setNotification({ message: "Có lỗi xảy ra khi cập nhật!", type: "error" });
@@ -399,8 +408,263 @@ const handleBooking = () => {
 
   if (!childData) return <div className="loader"></div>;
 
+  const findAppointmentInfo = (diseaseId, month) => {
+    // 1. Find disease info
+    const diseaseInfo = diseases.find(d => d.id === diseaseId);
+    if (!diseaseInfo) return { date: "Chưa có dữ liệu", status: null };
+    
+    // 2. Find all appointments related to this disease
+    const relevantAppointments = pendingAppointments.filter(appt => {
+      // Check if disease name matches
+      const diseaseNameMatch = diseaseInfo.name && 
+        appt.diseaseName && 
+        appt.diseaseName.toLowerCase().includes(diseaseInfo.name.toLowerCase());
+      
+      // Check vaccine map
+      const vaccineMatch = vaccineToDiseaseMap[appt.vaccineId]?.includes(diseaseId);
+      
+      return diseaseNameMatch || vaccineMatch;
+    });
+    const completedAppointment = relevantAppointments.find(
+      appt => appt.status === "Completed" && 
+      appt.diseaseId === diseaseId && 
+      appt.month === month
+    );
+  
+    if (completedAppointment) {
+      return {
+        date: new Date(completedAppointment.dateInjection).toLocaleDateString("vi-VN", {
+          day: "2-digit", month: "2-digit", year: "numeric"
+        }),
+        status: completedAppointment.status
+      };
+    }
+    // Log for debugging
+    console.log(`Disease: ${diseaseInfo.name}, Month: ${month}, Found appointments:`, relevantAppointments);
+    
+    if (relevantAppointments.length === 0) {
+      // No appointments found, use date from template
+      const templateInfo = highlightedVaccines[month]?.find(v => v.diseaseId === diseaseId);
+      if (templateInfo?.expectedInjectionDate) {
+        return {
+          date: new Date(templateInfo.expectedInjectionDate).toLocaleDateString("vi-VN", {
+            day: "2-digit", month: "2-digit", year: "numeric"
+          }),
+          status: null
+        };
+      }
+      return { date: "Chưa có dữ liệu", status: null };
+    }
+    
+    // 3. Try to find the specific appointment for this month
+    // First, get the expected date from the template to match
+    const templateInfo = highlightedVaccines[month]?.find(v => v.diseaseId === diseaseId);
+    let expectedDate = templateInfo?.expectedInjectionDate ? 
+      new Date(templateInfo.expectedInjectionDate).toISOString().split('T')[0] : null;
+      
+    // Try to find matching appointment by comparing dates (ignoring time)
+    const matchingAppointment = relevantAppointments.find(appt => {
+      if (!appt.dateInjection) return false;
+      const appointmentDate = new Date(appt.dateInjection).toISOString().split('T')[0];
+      // Match with some flexibility (within a day)
+      return Math.abs(new Date(appointmentDate) - new Date(expectedDate)) < 24 * 60 * 60 * 1000;
+    });
+    
+    if (matchingAppointment) {
+      return {
+        date: new Date(matchingAppointment.dateInjection).toLocaleDateString("vi-VN", {
+          day: "2-digit", month: "2-digit", year: "numeric"
+        }),
+        status: matchingAppointment.status
+      };
+    }
+    
+    // 4. Fallback: find the closest appointment to this month
+    // Sort by date
+    const sortedAppointments = [...relevantAppointments].sort((a, b) => 
+      new Date(a.dateInjection) - new Date(b.dateInjection)
+    );
+    
+    // Get template months
+    const templateMonths = Object.entries(highlightedVaccines)
+      .filter(([m, list]) => list.some(v => v.diseaseId === diseaseId))
+      .map(([m]) => Number(m))
+      .sort((a, b) => a - b);
+    
+    const doseIndex = templateMonths.indexOf(Number(month));
+    
+    if (doseIndex !== -1 && sortedAppointments.length > doseIndex) {
+      const appointmentForThisMonth = sortedAppointments[doseIndex];
+      if (appointmentForThisMonth?.dateInjection) {
+        return {
+          date: new Date(appointmentForThisMonth.dateInjection).toLocaleDateString("vi-VN", {
+            day: "2-digit", month: "2-digit", year: "numeric"
+          }),
+          status: appointmentForThisMonth.status
+        };
+      }
+    }
+    
+    // 5. Fallback to template date
+    if (templateInfo?.expectedInjectionDate) {
+      return {
+        date: new Date(templateInfo.expectedInjectionDate).toLocaleDateString("vi-VN", {
+          day: "2-digit", month: "2-digit", year: "numeric"
+        }),
+        status: null
+      };
+    }
+    
+    return { date: "Chưa có dữ liệu", status: null };
+  };
   return (
     <div className="HomePage-Allcontainer">
+      {/* Vaccinee Information Form */}
+{/* Vaccinee Information Form */}
+<div className="container">
+  <div className="row">
+    <div className="col-12">
+      <div className="mt-4">
+        <div className="BookingPage-tuade">THÔNG TIN NGƯỜI TIÊM:</div>
+      </div>
+      
+      <div className="VaccinPage-TTlIENHE">
+        {/* Thông tin cá nhân người tiêm */}
+        <div className="CreatechildPage-content-kk">
+          <div className="CreatechildPage-address">
+            <div className="VaccinationPage-Name">*Họ tên người tiêm:</div>
+            <input
+              className="VaccinationPage-input"
+              placeholder="Họ tên"
+              value={childData.childrenFullname}
+              onChange={(e) =>
+                setChildData({ ...childData, childrenFullname: e.target.value })
+              }
+            />
+          </div>
+          
+          <div className="CreatechildPage-address">
+            <div className="VaccinationPage-Name">*Giới tính:</div>
+            <div className="VaccinationPage-custom-select">
+              <span
+                className={`CreatechildPage-custom-option ${gender === "Nam" ? "selected" : ""}`}
+                onClick={() => {
+                  setGender("Nam");
+                  setChildData({ ...childData, gender: "Nam" });
+                }}
+              >
+                Nam
+              </span>
+              <span
+                className={`CreatechildPage-custom-option ${gender === "Nữ" ? "selected" : ""}`}
+                onClick={() => {
+                  setGender("Nữ");
+                  setChildData({ ...childData, gender: "Nữ" });
+                }}
+              >
+                Nữ
+              </span>
+            </div>
+          </div>
+        </div>
+        
+        <div className="CreatechildPage-content-kk">
+          <div className="CreatechildPage-address">
+            <div className="VaccinationPage-Name">*Ngày sinh của bé:</div>
+            <input
+              className="VaccinationPage-input"
+              placeholder="dd/mm/yyyy"
+              value={childData.dob ? childData.dob.substring(0, 10) : ""}
+              onChange={(e) =>
+                setChildData({ ...childData, dob: e.target.value })
+              }
+            />
+          </div>
+          
+          <div className="CreatechildPage-address">
+            <div className="VaccinationPage-Name">*Địa chỉ:</div>
+            <input
+              className="VaccinationPage-input"
+              placeholder="Địa chỉ"
+              value={childData.address}
+              onChange={(e) =>
+                setChildData({ ...childData, address: e.target.value })
+              }
+            />
+          </div>
+        </div>
+        
+        {/* Đường kẻ ngăn cách */}
+        <div className="CreatechildPage-separator"></div>
+        
+        {/* Thông tin phụ huynh */}
+        <div className="VaccinationPage-SectionTitle">Thông tin phụ huynh</div>
+        
+        <div className="CreatechildPage-content-kk">
+          <div className="CreatechildPage-address">
+            <div className="VaccinationPage-Name">*Họ tên cha:</div>
+            <input
+              className="VaccinationPage-input"
+              placeholder="Họ tên cha"
+              value={childData.fatherFullName}
+              onChange={(e) =>
+                setChildData({ ...childData, fatherFullName: e.target.value })
+              }
+            />
+          </div>
+          
+          <div className="CreatechildPage-address">
+            <div className="VaccinationPage-Name">*Số điện thoại ba:</div>
+            <input
+              className="VaccinationPage-input"
+              placeholder="Số điện thoại cha"
+              value={childData.fatherPhoneNumber}
+              onChange={(e) =>
+                setChildData({ ...childData, fatherPhoneNumber: e.target.value })
+              }
+            />
+          </div>
+        </div>
+        
+        <div className="CreatechildPage-content-kk">
+          <div className="CreatechildPage-address">
+            <div className="VaccinationPage-Name">*Họ tên mẹ:</div>
+            <input
+              className="VaccinationPage-input"
+              placeholder="Họ tên mẹ"
+              value={childData.motherFullName}
+              onChange={(e) =>
+                setChildData({ ...childData, motherFullName: e.target.value })
+              }
+            />
+          </div>
+          
+          <div className="CreatechildPage-address">
+            <div className="VaccinationPage-Name">*Số điện thoại mẹ:</div>
+            <input
+              className="VaccinationPage-input"
+              placeholder="Số điện thoại mẹ"
+              value={childData.motherPhoneNumber}
+              onChange={(e) =>
+                setChildData({ ...childData, motherPhoneNumber: e.target.value })
+              }
+            />
+          </div>
+        </div>
+        
+        <div className="VaccinPage-flex2">
+          <div className="BookingPage-button" onClick={handleUpdate}>
+            CẬP NHẬT THÔNG TIN
+          </div>
+        </div>
+        
+        <div className="VaccinPage-flex">
+          {updateMessage && <p className="VaccinPage-message">{updateMessage}</p>}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
        <Notification notification={notification} />
       <div className="VaccinationPage container">
         <h3 className="text-center VaccinPage-Intro text-white p-2">Lịch tiêm chủng cho trẻ từ 1 đến 12 tháng tuổi</h3>
@@ -501,19 +765,34 @@ const handleBooking = () => {
                   {isYellow && <div><strong>Trạng thái:</strong> ⏳ Đang chờ tiêm</div>}
                 </div>
               )} */}
-              {hasTemplateVaccine && (
+{hasTemplateVaccine && (
   <div style={{ fontSize: "0.75rem", marginTop: "4px" }}>
     <div><strong>Ghi chú:</strong> {note}</div>
-    <div>
-  <strong>{vaccination?.actualInjectionDate ? "Ngày tiêm:" : "Dự kiến:"}</strong>{" "}
-  {vaccination?.actualInjectionDate
-    ? new Date(vaccination.actualInjectionDate).toISOString().slice(0, 10).split("-").reverse().join("/")
-    : expectedDate}
-</div>
-
+    {(() => {
+      const { date, status } = findAppointmentInfo(disease.id, month);
+      return (
+        <div>
+          <strong>{vaccination?.actualInjectionDate ? "Ngày tiêm:" : "Dự kiến:"}</strong>{" "}
+          {date}
+        </div>
+      );
+    })()}
     {isYellow && !vaccination?.actualInjectionDate && (
-      <div><strong>Trạng thái:</strong> ⏳ Đang chờ tiêm</div>
-    )}
+  <div>
+    <strong>Trạng thái:</strong>{" "}
+    {(() => {
+      const { status } = findAppointmentInfo(disease.id, month);
+      
+      switch(status) {
+        case "Processing": return "🔄 Đang xử lý";
+        case "Pending": return "📅 Đã đặt lịch";
+        case "Completed": return "✅ Đã tiêm";
+        case "Canceled": return "❌ Đã hủy";
+        default: return "⏳ Chờ xác nhận";
+      }
+    })()}
+  </div>
+)}
   </div>
 )}
 
@@ -528,142 +807,29 @@ const handleBooking = () => {
 
 
     </table>
-
+    <div className="mt-3 p-3 border rounded">
+  <h5 className="font-bold">Chú thích màu sắc:</h5>
+  <div className="d-flex flex-column gap-2">
+    <div className="d-flex align-items-center">
+      <div style={{ width: '24px', height: '24px', backgroundColor: 'var(--primary-colorVaccine)', marginRight: '12px' }}></div>
+      <span>Ngày dự kiến nên tiêm cho em bé</span>
+    </div>
+    
+    <div className="d-flex align-items-center">
+      <div style={{ width: '24px', height: '24px', backgroundColor: '#fff9c4', marginRight: '12px' }}></div>
+      <span>Ngày tiêm của em bé ứng với lịch đặt</span>
+    </div>
+    
+    <div className="d-flex align-items-center">
+      <div style={{ width: '24px', height: '24px', backgroundColor: '#c8e6c9', marginRight: '12px' }}></div>
+      <span>Ngày hoàn thành tiêm của em bé</span>
+    </div>
+  </div>
+</div>
 
 
         </div>
       </div>
-      
-               {/* Vaccinee Information Form */}
-               <div className="container">
-               <div className="row">
-           <div className="col-12">
-             <div className="mt-4">
-               <div className="BookingPage-tuade">THÔNG TIN NGƯỜI TIÊM:</div>
-             </div>
-             <div className="VaccinPage-TTlIENHE">
-               <div className="CreatechildPage-content-kk">
-                 <div className="CreatechildPage-address">
-                   <div className="VaccinationPage-Name">*Họ tên người tiêm:</div>
-                  <input
-                    className="VaccinationPage-input"
-                    placeholder="Họ tên"
-                    value={childData.childrenFullname}
-                    onChange={(e) =>
-                      setChildData({ ...childData, childrenFullname: e.target.value })
-                    }
-                  />
-                </div>
-                <div className="CreatechildPage-address">
-                  <div className="VaccinationPage-Name">*Ngày sinh của bé:</div>
-                  <input
-                    className="VaccinationPage-input"
-                    placeholder="dd/mm/yyyy"
-                    value={childData.dob ? childData.dob.substring(0, 10) : ""}
-                    onChange={(e) =>
-                      setChildData({ ...childData, dob: e.target.value })
-                    }
-                  />
-                </div>
-              </div>
-              <div className="CreatechildPage-content-kk">
-                <div className="CreatechildPage-address">
-                  <div className="VaccinationPage-Name">*Giới tính:</div>
-                  <div className="VaccinationPage-custom-select">
-                    <span
-                      className={`CreatechildPage-custom-option ${gender === "Nam" ? "selected" : ""}`}
-                      onClick={() => {
-                        setGender("Nam");
-                        setChildData({ ...childData, gender: "Nam" });
-                      }}
-                    >
-                      Nam
-                    </span>
-                    <span
-                      className={`CreatechildPage-custom-option ${gender === "Nữ" ? "selected" : ""}`}
-                      onClick={() => {
-                        setGender("Nữ");
-                        setChildData({ ...childData, gender: "Nữ" });
-                      }}
-                    >
-                      Nữ
-                    </span>
-                  </div>
-                </div>
-                <div className="CreatechildPage-address">
-                  <div className="VaccinationPage-Name">*Họ tên cha:</div>
-                  <input
-                    className="VaccinationPage-input"
-                    placeholder="Họ tên cha"
-                    value={childData.fatherFullName}
-                    onChange={(e) =>
-                      setChildData({ ...childData, fatherFullName: e.target.value })
-                    }
-                  />
-                </div>
-              </div>
-              <div className="CreatechildPage-content-kk">
-                <div className="CreatechildPage-address">
-                  <div className="VaccinationPage-Name">*Địa chỉ:</div>
-                  <input
-                    className="VaccinationPage-input"
-                    placeholder="Địa chỉ"
-                    value={childData.address}
-                    onChange={(e) =>
-                      setChildData({ ...childData, address: e.target.value })
-                    }
-                  />
-                </div>
-                <div className="CreatechildPage-address">
-                  <div className="VaccinationPage-Name">*Họ tên mẹ:</div>
-                  <input
-                    className="VaccinationPage-input"
-                    placeholder="Họ tên mẹ"
-                    value={childData.motherFullName}
-                    onChange={(e) =>
-                      setChildData({ ...childData, motherFullName: e.target.value })
-                    }
-                  />
-                </div>
-                <div className="CreatechildPage-address">
-                  <div className="VaccinationPage-Name">*Số điện thoại mẹ:</div>
-                  <input
-                    className="VaccinationPage-input"
-                    placeholder="Số điện thoại mẹ"
-                    value={childData.motherPhoneNumber}
-                    onChange={(e) =>
-                      setChildData({ ...childData, motherPhoneNumber: e.target.value })
-                    }
-                  />
-                </div>
-              </div>
-              <div className="CreatechildPage-content-kk">
-                <div className="CreatechildPage-address">
-                  <div className="VaccinationPage-Name">*Số điện thoại ba:</div>
-                  <input
-                    className="VaccinationPage-inputPhone"
-                    placeholder="Số điện thoại cha"
-                    value={childData.fatherPhoneNumber}
-                    onChange={(e) =>
-                      setChildData({ ...childData, fatherPhoneNumber: e.target.value })
-                    }
-                  />
-                </div>
-              </div>
-              <div className="VaccinPage-flex">
-                <div className="BookingPage-button" onClick={handleUpdate}>
-                  CẬP NHẬT THÔNG TIN
-                </div>
-              </div>
-              <div className="VaccinPage-flex">
-                {updateMessage && <p>{updateMessage}</p>}
-              </div>
-            </div>
-          </div>
-        </div>
-               </div>
-
-
                {showModal && (
   <div className="modal-overlay">
     <div className="modal-content">
