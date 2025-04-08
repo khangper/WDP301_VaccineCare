@@ -7,6 +7,7 @@
       center;
     background-size: cover;
     overflow: hidden;
+    
 }
   .flex-column-eb {
     position: absolute;
@@ -20,8 +21,8 @@
   .background-1 {
     width: 60px;
     height: 60px;
-    margin: 20px 0 0 0;
-    background: var(--primary-colorVaccine);
+    margin: 100px 0 0 0;
+    background: #00ebcf;
     z-index: 12;
     overflow: visible auto;
     border-radius: 500px;
@@ -52,7 +53,7 @@
     /* position: relative; */
     width: 60px;
     height: 60px;
-    margin: 420px 0 0 25.35px;
+    margin: 370px 0 0 25.35px;
     background: #fe5858;
     z-index: 20;
     overflow: visible auto;
@@ -102,7 +103,8 @@
     z-index: 11;
   }
   .hotline-24-7 {
-    color: #8e6b88;
+    /* color: #8e6b88; */
+    color: #d997ce;
     font-family: Manrope, var(--default-font-family);
     font-size: 16px;
     font-weight: 500;
@@ -125,7 +127,7 @@
     left: 4px;
     color: white;
     font-family: Manrope, var(--default-font-family);
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
     line-height: 32px;
     text-align: left;
@@ -185,7 +187,7 @@
     border-radius: 8px;
   }
   .HomPage-datlich:hover{
-    background-color: #285e61; 
+    background-color: var(--third-colorVaccine); 
   }
   .lien-he {
     display: flex;
@@ -206,18 +208,21 @@
     z-index: 10;
   }
   .HomPage-Hotlinelink {
-    background-color: transparent;
+    /* background-color: transparent; */
     height: 52.67px;
     width: 253px;
     text-align: -webkit-right;
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 15px;
+    gap: 5px;
     border-radius: 8px;
     border: 1px solid var(--primary-colorVaccine) ;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(2px);
 }
   .HomePage-iconPhone {
-    margin-left: 30px;
+    /* margin-left: 30px; */
     width: 20px;
     height: 20px;
 }
@@ -235,7 +240,7 @@
     height: 24px;
     top: 325.66px;
     left: calc(50% - 278.63px);
-    color: var(--primary-colorVaccine);
+    color: var(--secondary-colorVaccine);
     font-family: Manrope, var(--default-font-family);
     font-size: 18px;
     font-weight: 800;
@@ -279,7 +284,7 @@ button.btn.bnt-homePagecombo {
   color: white;
 }
 button.btn.bnt-homePagecombo:hover {
-  background-color: var(--primary-colorVaccine);
+  background-color: var(--third-colorVaccine);
   color: white;
 }
 
@@ -359,6 +364,10 @@ a.btn.btn-primary.textdetail {
     border: 1px solid darkcyan;
 }
 
+a.btn.btn-primary.textdetail:hover {
+  background-color: var(--third-colorVaccine);
+}
+
 /* RESPONSIVE - Điều chỉnh số cột theo kích thước màn hình */
 @media (max-width: 1024px) { /* Tablet */
   .col-lg-4 {
@@ -426,9 +435,18 @@ img.HomePage-Danhmuc-img {
 .HomePage-dm{
   line-height: 56px;
     font-weight: 800;
-    font-family: Manrope;
+    /* font-family: Manrope; */
     color: #0a083b;
+    transition: padding 0.2s ease-out;
+
 }
+
+.HomePage-alldm:hover{
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 5px 10px;
+}
+
 .HomePage-DichVu.container {
   margin-top: 100px;
 }

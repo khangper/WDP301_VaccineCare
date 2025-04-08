@@ -1,8 +1,18 @@
+.BookingPage-main-container{
+  width: 100%;
+  height: 400px;
+  margin: 0 auto;
+  background: rgba(232, 242, 255, 0.2)
+    url(../../../assets/HomePage/babybg.png) no-repeat
+    center;
+  background-size: cover;
+  overflow: hidden;
+}
 .BookingPage-container {
     margin-bottom: 200px;
 }
 .col-12.mt-152.BookingPage-titletitle {
-    margin-top: 240px;
+    /* margin-top: 240px; */
     display: flex;
     justify-content: center;
 }
@@ -87,10 +97,14 @@ height: 40px;
 padding: 5px;
 align-items: center;
 flex-shrink: 0;
-border-radius: 4px;
+border-radius: 8px;
 border: 1px solid #DCDFE6;
 background: #FFF;
-width: 500px;
+padding: 10px;
+width: 350px;
+}
+.select-disease{
+width: 510px;
 }
 .BookingPage-flex1 {
     display: flex;
@@ -112,7 +126,14 @@ width: 500px;
     font-weight: 500;
     line-height: 14px;
     border: 1px solid #dcdfe6;
+    border-radius: 8px;
 }
+
+.Booking-goi.selected {
+  background: var(--secondary-colorVaccine);
+  color: #f8f9fa; /* white but not quite */
+}
+
 .BookingPage-flex2 {
     display: flex;
 }

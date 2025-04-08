@@ -180,15 +180,21 @@ function VaccinationScheduleStatus() {
         {activeTab === "single" && (
           <div>
             {singleAppointments.map((s) => (
-              <div className="card mb-4 shadow" key={s.id}>
+              <div className="card mb-4 shadow position-relative" key={s.id}>
+                {s.status !== "Canceled" && s.status !== "Completed" && (
+                  <button
+                    className="btn btn-danger position-absolute"
+                    style={{ top: "15px", right: "20px" }}
+                    onClick={() => handleCancel([s.id], s.vaccine)}
+                  >
+                    ❌ Hủy Lịch
+                  </button>
+                )}
                 <div className="card-body">
                   <h5 className="card-title">👶 {s.customer}</h5>
                   <p><strong>Vắc xin:</strong> {s.vaccine}</p>
                   <p><strong>Ngày tiêm:</strong> {s.date}</p>
                   <p><strong>Trạng thái:</strong> {getStatusBadge(s.status)}</p>
-                  {s.status !== "Canceled" && s.status !== "Completed" && (
-                    <button className="btn btn-danger" onClick={() => handleCancel([s.id], s.vaccine)}>❌ Hủy</button>
-                  )}
                 </div>
               </div>
             ))}
@@ -209,7 +215,7 @@ function VaccinationScheduleStatus() {
                         <th>Mũi tiêm</th>
                         <th>Ngày tiêm</th>
                         <th>Trạng thái</th>
-                        <th>Hành động</th>
+                        {/* <th>Hành động</th> */}
                       </tr>
                     </thead>
                     <tbody>
@@ -231,7 +237,7 @@ function VaccinationScheduleStatus() {
                             )}
                           </td>
                           <td>{getStatusBadge(inj.status)}</td>
-                          <td>
+                          {/* <td>
                             {pkg.injections[0].status === "Completed" &&
                               i !== 0 &&
                               inj.status !== "Completed" &&
@@ -255,14 +261,20 @@ function VaccinationScheduleStatus() {
                                 ❌ Hủy mũi này
                               </button>
                             )}
-                          </td>
+                          </td> */}
                         </tr>
                       ))}
                     </tbody>
                   </table>
-                  <button className="btn btn-danger mt-2" onClick={() => handleCancel(pkg.injections.map((i) => i.id), `Gói tiêm ${pkg.id}`)}>
-                    ❌ Hủy toàn bộ gói
-                  </button>
+                  {pkg.injections.some((inj) => inj.status !== "Canceled") &&
+                    !pkg.injections.find((inj) => inj.vaccine.includes("Mũi 1") && (inj.status === "Completed" || inj.status === "Processing")) && (
+                      <button
+                        className="btn btn-danger mt-2"
+                        onClick={() => handleCancel(pkg.injections.map((i) => i.id), `Gói tiêm ${pkg.id}`)}
+                      >
+                        ❌ Hủy toàn bộ gói
+                      </button>
+                    )}
                 </div>
               </div>
             ))}

@@ -160,7 +160,7 @@ function CreatechildPage() {
   return (
     <div className='CreatechildPage-container'>
       <div className='CreatechildPage-From'>
-        <div className='SuccessRegis-title'>Tạo hồ sơ trẻ em</div>
+        <div className='SuccessRegis1-title'>Tạo hồ sơ trẻ em</div>
         <div className='CreatechildPage-content-kk'>
           <div className='CreatechildPage-content'>
             <div className='CreatechildPage-Name'>Tên của bé:</div>
@@ -227,7 +227,7 @@ function CreatechildPage() {
             <div className='CreatechildPage-Name'>Họ tên cha:</div>
             <input
               className='CreatechildPage-input'
-              placeholder='Name of dad'
+              placeholder='Name of father'
               value={fatherFullName}
               onChange={(e) => setFatherFullName(e.target.value)}
             />
@@ -238,7 +238,7 @@ function CreatechildPage() {
           <div className='CreatechildPage-Name'>Số điện thoại mẹ:</div>
           <input
             className='CreatechildPage-input'
-            placeholder='Phone number'
+            placeholder='Mother phone number'
             value={phonemom}
             onChange={(e) => setPhonemom(e.target.value)}
           />
@@ -247,7 +247,7 @@ function CreatechildPage() {
           <div className='CreatechildPage-Name'>Số điện thoại ba:</div>
           <input
             className='CreatechildPage-input'
-            placeholder='Phone number'
+            placeholder='Father phone number'
             value={phonedad}
             onChange={(e) => setPhonedad(e.target.value)}
           />
@@ -277,7 +277,7 @@ function CreatechildPage() {
             <div className='CreatechildPage-Name'>Tỉnh thành:</div>
             <input
               className='CreatechildPage-input'
-              placeholder='Input address'
+              placeholder='Input province'
               value={province}
               onChange={(e) => setProvince(e.target.value)}
             />
@@ -286,7 +286,7 @@ function CreatechildPage() {
             <div className='CreatechildPage-Name'>Quận huyện:</div>
             <input
               className='CreatechildPage-input'
-              placeholder='Input address'
+              placeholder='Input district'
               value={district}
               onChange={(e) => setDistrict(e.target.value)}
             />
@@ -297,7 +297,7 @@ function CreatechildPage() {
             <div className='CreatechildPage-Name'>Phường xã:</div>
             <input
               className='CreatechildPage-input'
-              placeholder='Input address'
+              placeholder='Input ward'
               value={ward}
               onChange={(e) => setWard(e.target.value)}
             />
@@ -306,7 +306,7 @@ function CreatechildPage() {
             <div className='CreatechildPage-Name'>Số nhà, tên đường:</div>
             <input
               className='CreatechildPage-input'
-              placeholder='Street, House number'
+              placeholder='Input home address'
               value={street}
               onChange={(e) => setStreet(e.target.value)}
             />
@@ -314,9 +314,9 @@ function CreatechildPage() {
         </div>
       </div>
       <div className='CreatechildPage-title'>
-        <div className='SuccessRegis-title'>Chăm sóc từng mũi tiêm trọn vẹn</div>
+        <div className='SuccessRegis1-title'>Chăm sóc từng mũi tiêm trọn vẹn</div>
         <div className='CreatechildPage-button' onClick={handleCreateChild}>
-          Tạo
+          Hoàn tất tạo hồ sơ
         </div>
       </div>
     </div>

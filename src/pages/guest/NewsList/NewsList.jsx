@@ -13,7 +13,19 @@ const newsData = [
     title: 'Cảnh báo sự gia tăng ca bệnh não mô cầu thường gặp vào mùa Đông – Xuân',
     summary: 'Bệnh do vi khuẩn não mô cầu là nhóm các bệnh nhiễm khuẩn cấp tính nguy hiểm do vi khuẩn Neisseria meningitidis gây ra, lây truyền qua đường hô hấp. Đây là bệnh có khả năng lây lan thành dịch, thường xuất hiện vào mùa Đông – Xuân. Theo thống kê từ Bộ Y tế, số ca mắc viêm não mô cầu có xu hướng tăng lên vào thời điểm thời tiết lạnh, độ ẩm cao. Trong những tháng đầu năm, đặc biệt là từ tháng 11 đến tháng 3, tình trạng lây lan bệnh cao hơn do sự tập trung đông người, thường xảy ra trong các trường học, khu công nghiệp và các sự kiện xã hội.',
     image: 'https://vnvc.vn/wp-content/uploads/2025/02/canh-bao-gia-tang-nao-mo-cau.jpg'
-  }
+  },
+  {
+    id: 3,
+    title: 'Vì sao 100% người bị chó cắn tử vong khi phát bệnh dại?',
+    summary: 'Virus dại có khả năng tránh né hệ miễn dịch và vô hiệu hóa hàng rào máu não khi xâm nhập vào não, khiến thuốc kháng virus không thể tiếp cận và tiêu diệt virus dại. Điều này khiến các phương pháp điều trị không còn hiệu quả, dẫn đến tỉ lệ tử vong...',
+    image: 'https://vnvc.vn/wp-content/uploads/2025/04/cho-mac-benh-dai.jpg'
+  },
+  {
+    id: 4,
+    title: 'Biến chứng tiêu chảy do sởi ở trẻ em có thể gây tử vong',
+    summary: 'Tiêu chảy cấp là một trong những biến chứng thường gặp và nguy hiểm ở trẻ em mắc sởi, gây ảnh hưởng lớn đến sức khỏe, thậm chí có thể dẫn đến tử vong nếu không được xử lý kịp thời. Bác sĩ Trúc Phương trích dẫn thống kê từ Trung tâm Phòng ngừa và Kiểm soát Dịch bệnh Mỹ (CDC), cho biết cứ 10 trẻ mắc sởi thì có 1 trẻ bị biến chứng tiêu chảy cấp. Bên cạnh đó, các nghiên cứu tại Việt Nam cũng cho thấy mức độ phổ biến của biến chứng này.',
+    image: 'https://vnvc.vn/wp-content/uploads/2025/03/bien-chung-tieu-chay-soi-o-tre.jpg'
+  },
 ];
 
 export const NewsList = () => {

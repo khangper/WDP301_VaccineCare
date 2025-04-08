@@ -3,6 +3,9 @@
 
 :root{
   --primary-colorVaccine: #5D8AB0;
+  --secondary-colorVaccine: #7cb8e9;
+  --forth-colorVaccine: #f1f8fe;
+  --third-colorVaccine: #4b7395;
 }
 
 * {

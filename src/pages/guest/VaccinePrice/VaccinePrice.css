@@ -15,16 +15,23 @@
     background-color: #3a6ded; /* Màu xanh đậm cho tiêu đề */
     color: white;
   }
-  .vaccine-table tbody td:nth-child(3),  /* Cột Tên vắc xin */
+  .vaccine-table tbody td:nth-child(3){  /* Cột Tên vắc xin */
+    background-color: #8bbfe9; /* Màu xanh nhạt */
+    color: white;
+
+  }
   .vaccine-table tbody td:nth-child(4) { /* Cột Nước sản xuất */
-    background-color: #c2e4ff; /* Màu xanh nhạt */
+    background-color: var(--forth-colorVaccine); /* Màu xanh nhạt */
     color: #0d66a3;
   }
   
-  .vaccine-table tbody td:nth-child(5),  /* Cột Giá bán lẻ */
-  .vaccine-table tbody td:nth-child(6),  /* Cột Giá ưu đãi */
-  .vaccine-table tbody td:nth-child(7) { /* Cột Tình trạng */
-    background-color: var(--primary-colorVaccine); /* Màu xanh đậm */
+  .vaccine-table tbody td:nth-child(5){ /* Cột Giá ưu đãi */
+    background-color: #8bbfe9; /* Màu xanh đậm */
+    color: white;
+  }
+
+  .vaccine-table tbody td:nth-child(6) { /* Cột Tình trạng */
+    background-color: var(--forth-colorVaccine); /* Màu xanh đậm */
     color: white;
   }
   

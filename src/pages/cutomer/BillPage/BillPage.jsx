@@ -201,7 +201,7 @@ function BillPage() {
 
   return (
     <div className='HomePage-Allcontainer'>
-      <div className="HomePage-main-container">
+      <div className="BookingPage-main-container">
         <div className='container'>
           <div className='row'>
             <div className='col-12 mt-152 BookingPage-titletitle'>
