@@ -15,6 +15,9 @@ function VaccinationScheduleStatus() {
   const [selectedInjection, setSelectedInjection] = useState(null);
   const [editDate, setEditDate] = useState(null);
   const [editingAppointmentId, setEditingAppointmentId] = useState(null);
+  const [childrenList, setChildrenList] = useState([]);
+  const [selectedChild, setSelectedChild] = useState("all");
+  
 
   useEffect(() => {
     const fetchAllData = async () => {
@@ -26,6 +29,7 @@ function VaccinationScheduleStatus() {
 
         const childrenList = childrenRes.data.$values;
         const allAppointments = allAppointmentsRes.data.$values;
+        setChildrenList(childrenList);
 
         fetchAppointments(childrenList, allAppointments);
       } catch (err) {
@@ -166,7 +170,21 @@ function VaccinationScheduleStatus() {
   return (
     <div className="container mt-5">
       <h2 className="text-center mb-4">📅 Lịch Tiêm Vaccine</h2>
-
+      <div className="d-flex justify-content-end align-items-center mt-3">
+  <label className="me-2 fw-bold">Lọc theo bé:</label>
+  <select
+    className="form-select w-auto"
+    value={selectedChild}
+    onChange={(e) => setSelectedChild(e.target.value)}
+  >
+    <option value="all">Tất cả</option>
+    {childrenList.map((child) => (
+      <option key={child.id} value={child.childrenFullname}>
+        {child.childrenFullname}
+      </option>
+    ))}
+  </select>
+</div>
       <ul className="nav nav-tabs">
         <li className="nav-item">
           <button className={`nav-link ${activeTab === "single" ? "active" : ""}`} onClick={() => setActiveTab("single")}>Mũi Lẻ</button>
@@ -176,10 +194,13 @@ function VaccinationScheduleStatus() {
         </li>
       </ul>
 
+
       <div className="tab-content mt-3">
         {activeTab === "single" && (
           <div>
-            {singleAppointments.map((s) => (
+           {singleAppointments
+  .filter((s) => selectedChild === "all" || s.customer === selectedChild)
+  .map((s) => (
               <div className="card mb-4 shadow position-relative" key={s.id}>
                 {s.status !== "Canceled" && s.status !== "Completed" && (
                   <button
@@ -203,7 +224,9 @@ function VaccinationScheduleStatus() {
 
         {activeTab === "package" && (
           <div>
-            {packageAppointments.map((pkg, index) => (
+            {packageAppointments
+  .filter((pkg) => selectedChild === "all" || pkg.customer === selectedChild)
+  .map((pkg, index) => (
               <div className="card mb-4 shadow" key={index}>
                 <div className="card-body">
                   <h5 className="card-title">📦 {pkg.customer}</h5>
@@ -215,7 +238,7 @@ function VaccinationScheduleStatus() {
                         <th>Mũi tiêm</th>
                         <th>Ngày tiêm</th>
                         <th>Trạng thái</th>
-                        {/* <th>Hành động</th> */}
+                        <th>Hành động</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -224,20 +247,29 @@ function VaccinationScheduleStatus() {
                           <td>{inj.vaccine}</td>
                           <td>
                             {editingAppointmentId === inj.id ? (
+                              // <DatePicker
+                              //   selected={editDate}
+                              //   onChange={(date) => setEditDate(date)}
+                              //   className="form-control"
+                              //   dateFormat="dd/MM/yyyy"
+                              //   minDate={new Date()}
+                              //   placeholderText="Chọn ngày mới"
+                              // />
                               <DatePicker
-                                selected={editDate}
-                                onChange={(date) => setEditDate(date)}
-                                className="form-control"
-                                dateFormat="dd/MM/yyyy"
-                                minDate={new Date()}
-                                placeholderText="Chọn ngày mới"
-                              />
+  selected={editDate}
+  onChange={(date) => setEditDate(date)}
+  className="form-control"
+  dateFormat="dd/MM/yyyy"
+  minDate={new Date(inj.dateInjection + 24 * 60 * 60 * 1000)} // ngày sau ngày dự kiến
+  placeholderText="Chọn ngày mới"
+/>
+
                             ) : (
                               inj.date
                             )}
                           </td>
                           <td>{getStatusBadge(inj.status)}</td>
-                          {/* <td>
+                          <td>
                             {pkg.injections[0].status === "Completed" &&
                               i !== 0 &&
                               inj.status !== "Completed" &&
@@ -256,12 +288,7 @@ function VaccinationScheduleStatus() {
                                   </button>
                                 )
                               )}
-                            {inj.status !== "Canceled" && inj.status !== "Completed" && (
-                              <button className="btn btn-danger btn-sm" onClick={() => handleCancel([inj.id], `Mũi ${inj.vaccine} trong ${pkg.id}`)}>
-                                ❌ Hủy mũi này
-                              </button>
-                            )}
-                          </td> */}
+                          </td>
                         </tr>
                       ))}
                     </tbody>
