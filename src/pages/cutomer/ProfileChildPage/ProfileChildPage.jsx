@@ -21,7 +21,7 @@
 //       setError("Bạn chưa đăng nhập!");
 //       return;
 //     }
-  
+
 //     let userId;
 //     try {
 //       const decoded = jwtDecode(token);
@@ -32,13 +32,13 @@
 //       setError("Token không hợp lệ!");
 //       return;
 //     }
-  
+
 //     const fetchChildren = async () => {
 //       try {
 //         const response = await api.get(`/Child/get-all?FilterOn=userId&FilterQuery=${userId}`, {
 //           headers: { Authorization: `Bearer ${token}` },
 //         });
-  
+
 //         const childrenArray = response.data.$values ? response.data.$values : response.data;
 //         console.log("Tất cả hồ sơ trẻ:", childrenArray);
 //         setChildrenData(childrenArray);
@@ -47,7 +47,7 @@
 //         setError("Lỗi khi lấy dữ liệu trẻ em.");
 //       }
 //     };
-  
+
 //     fetchChildren();
 //   }, [token]);
 
@@ -67,7 +67,7 @@
 //       setError("Không thể xóa hồ sơ trẻ.");
 //     }
 //   };
-  
+
 //   if (error) {
 //     return (
 //       <div className="alert alert-danger">
@@ -223,54 +223,63 @@ const ProfileChildPage = () => {
 
   return (
     <div className="HomePage-Allcontainer">
-    <div className="HomePage-main-container">
-      <div className="container">
-        <div className="row">
-          <div className="col-12 mt-152 BookingPage-titletitle">
-            <div className="BookingPage-heading-protected-together">
-              Hồ Sơ trẻ
+      <div className="BookingPage-main-container">
+        <div className="container">
+          <div className="row">
+            <div className="col-12 mt-152 BookingPage-titletitle">
+              <div className="BookingPage-heading-protected-together">
+                Hồ Sơ trẻ
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div className="ProfileChildPage-container" style={{ maxWidth: 800, margin: "0 auto", padding: "2rem" }}>
-      <h2 style={{ textAlign: "center", marginBottom: "2rem" }}>🧒 Danh sách hồ sơ trẻ</h2>
-      {childrenData.length > 0 ? (
-        <List
-          itemLayout="horizontal"
-          dataSource={childrenData}
-          renderItem={(child) => (
-            <List.Item
-              actions={[
-                <Button danger onClick={() => handleDeleteConfirm(child.id)}>
-                  Xóa
-                </Button>,
-              ]}
-            >
-              <List.Item.Meta
-                avatar={
-                  <Avatar
-                    src={`https://api.dicebear.com/7.x/initials/svg?seed=${child.childrenFullname}`}
-                    alt={child.childrenFullname}
+      <div className="ProfileChildPage-container" style={{ maxWidth: 800, margin: "0 auto", padding: "2rem" }}>
+        <h2 style={{ textAlign: "center", marginBottom: "2rem" }}>🧒 Danh sách hồ sơ trẻ</h2>
+        {childrenData.length > 0 ? (
+          <List
+            itemLayout="horizontal"
+            dataSource={childrenData}
+            renderItem={(child) => (
+              <List.Item
+                actions={[
+                  <Button danger onClick={() => handleDeleteConfirm(child.id)}>
+                    Xóa hồ sơ
+                  </Button>,
+                ]}
+              >
+                <div style={{ width: "100%", fontSize: "16px" }}>
+                  <List.Item.Meta
+                    className="child-meta"
+                    avatar={
+                      <Avatar
+                        src={`https://api.dicebear.com/7.x/initials/svg?seed=${child.childrenFullname}`}
+                        alt={child.childrenFullname}
+                      />
+                    }
+                    title={<Link to={`/vaccination/${child.id}`}>{child.childrenFullname}</Link>}
+                    description={
+                      <>
+                        <div>🎂 Ngày sinh: {new Date(child.dob).toLocaleDateString("vi-VN")}</div>
+                        <div>
+                          🚻 Giới tính: {["male", "nam"].includes(child.gender?.toLowerCase()) ? "Nam" : "Nữ"}
+                        </div>
+
+                      </>
+                    }
                   />
-                }
-                title={<Link to={`/vaccination/${child.id}`}>{child.childrenFullname}</Link>}
-                description={
-                  <>
-                    <div>🎂 Ngày sinh: {new Date(child.dob).toLocaleDateString("vi-VN")}</div>
-                    <div>🚻 Giới tính: {child.gender}</div>
-                  </>
-                }
-              />
-            </List.Item>
-          )}
-        />
-      ) : (
-        <p style={{ textAlign: "center" }}>Không có hồ sơ nào được tạo.</p>
-      )}
-    </div>
+                  <div style={{ textAlign: "center", marginTop: "8px", marginLeft: "150px" }}>
+                    <Link to={`/vaccination/${child.id}`} className="child-detail-link">« Chi tiết »</Link>
+                  </div>
+                </div>
+              </List.Item>
+            )}
+          />
+        ) : (
+          <p style={{ textAlign: "center" }}>Không có hồ sơ nào được tạo.</p>
+        )}
+      </div>
     </div>
 
 

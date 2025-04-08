@@ -113,16 +113,16 @@ const VaccinePrice = () => {
         <em>(*) Để kiểm tra tình trạng vắc xin, xin vui lòng liên hệ Hotline 028.7102.6595.</em>
       </p>
       <p className="VaccinePrice-noteText">
-        <b>1. Bảng giá áp dụng trên toàn hệ thống tiêm chủng VNVC từ ngày 18/10/2024</b>
+        <b>1. Bảng giá áp dụng trên toàn hệ thống tiêm chủng Vaccine Care từ ngày 18/10/2024</b>
       </p>
       <p className="VaccinePrice-noteText">
-        <strong>2. Giá vắc xin tại VNVC đã bao gồm</strong>: miễn phí khám với đội ngũ bác sĩ chuyên môn cao, miễn phí các dịch vụ chăm sóc khách hàng cao cấp…
+        <strong>2. Giá vắc xin tại Vaccine Care đã bao gồm</strong>: miễn phí khám với đội ngũ bác sĩ chuyên môn cao, miễn phí các dịch vụ chăm sóc khách hàng cao cấp…
       </p>
       <p className="VaccinePrice-noteText">
-        <b>3. VNVC miễn phí đặt giữ theo yêu cầu tất cả các loại vắc xin</b>, tiêm bằng giá lẻ nếu Quý Khách hoàn tất lịch tiêm trong vòng 5 tuần...
+        <b>3. Vaccine Care miễn phí đặt giữ theo yêu cầu tất cả các loại vắc xin</b>, tiêm bằng giá lẻ nếu Quý Khách hoàn tất lịch tiêm trong vòng 5 tuần...
       </p>
       <p className="VaccinePrice-noteText">
-        <b>4. VNVC miễn phí bảo quản vắc xin trong hệ thống kho lạnh GSP theo tiêu chuẩn quốc tế</b>, đảm bảo vắc xin an toàn, chất lượng cao…
+        <b>4. Vaccine Care miễn phí bảo quản vắc xin trong hệ thống kho lạnh GSP theo tiêu chuẩn quốc tế</b>, đảm bảo vắc xin an toàn, chất lượng cao…
       </p>
       </div>
             </div>

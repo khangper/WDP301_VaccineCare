@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../../../src/context/AuthContext"; 
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import "./HeaderGuest.css";
 import logo_vaccine from '../../../assets/logo_vaccine.png';
 import Searchicon from '../../../assets/header/Search-icon.png';
@@ -71,7 +71,7 @@ const HeaderGuest = () => {
   }, []);
 
   return (
-    <header>
+    <header className="sticky-header">
       <div className="Header-main-container">
         <div className="Header-iconContainer">
           <div className="Header-symbol-1" />
@@ -93,16 +93,16 @@ const HeaderGuest = () => {
         {/* Navigation - Ẩn trên mobile, hiển thị trên desktop */}
         {!isMobile && (
           <nav className="header-navigation desktop-menu">
-            <Link to="/" className="Header-text">Trang chủ</Link>
-            <Link to="/Aboutus" className="Header-text hover:underline">Giới thiệu</Link>
+            <NavLink  to="/" className={({ isActive }) => isActive ? "Header-text active-link" : "Header-text"}>Trang chủ</NavLink>
+            <NavLink  to="/Aboutus" className={({ isActive }) => isActive ? "Header-text active-link" : "Header-text"}>Giới thiệu</NavLink>
             {/* <Link to="/Aboutus" className="Header-text hover:underline">Vắc xin trẻ em</Link> */}
-            <Link to="/priceVaccine" className="Header-text hover:underline">Bảng giá</Link>
-            <Link to="/camNang" className="Header-text hover:underline">Cẩm nang</Link>
-            <Link to="/newlist" className="Header-text hover:underline">Tin tức</Link>
+            <NavLink  to="/priceVaccine" className={({ isActive }) => isActive ? "Header-text active-link" : "Header-text"}>Bảng giá</NavLink>
+            <NavLink  to="/newlist" className={({ isActive }) => isActive ? "Header-text active-link" : "Header-text"}>Tin tức</NavLink>
             {isLoggedIn && (
               <div className="HeaderG-flex2">
-                <Link to="/profilechild" className="Header-text hover:underline">Hồ sơ trẻ</Link>
-                <Link to="/bill" className="Header-text hover:underline">Hóa đơn</Link>
+                <NavLink  to="/vaccinationScheduleStatus" className={({ isActive }) => isActive ? "Header-text active-link" : "Header-text"}>Lịch hẹn</NavLink>
+                <NavLink  to="/profilechild" className={({ isActive }) => isActive ? "Header-text active-link" : "Header-text"}>Hồ sơ trẻ</NavLink>
+                <NavLink  to="/bill" className={({ isActive }) => isActive ? "Header-text active-link" : "Header-text"}>Hóa đơn</NavLink>
               </div>
             )}
           </nav>
@@ -149,10 +149,10 @@ const HeaderGuest = () => {
     <i className="bi bi-cash-stack " ></i>
     <li><a className="dropdown-item" href="/transaction">Giao dịch</a></li>
     </div> */}
-    <div className="kfadsjlkfsajdlfsd">
+    {/* <div className="kfadsjlkfsajdlfsd">
     <i className="bi bi-calendar-event " ></i>
     <li><a className="dropdown-item" href="/vaccinationScheduleStatus">Lịch hẹn</a></li>
-    </div>
+    </div> */}
     <div className="kfadsjlkfsajdlfsd">
     <i className="bi bi-box-arrow-in-right " onClick={handleLogout}></i>
     <li><a className="dropdown-item"onClick={handleLogout} >Đăng xuất</a></li>

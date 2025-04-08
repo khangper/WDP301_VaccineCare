@@ -42,7 +42,7 @@
     display: flex;
     width: 64%;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 10px;
     overflow: hidden;
   }
   
@@ -60,10 +60,10 @@
   }
   
   .CreatechildPage-custom-option:hover {
-    background:var(--primary-colorVaccine);
+    background: var(--forth-colorVaccine);
   }
-  
-  .selected {
+
+  .CreatechildPage-custom-option.selected {
     background: var(--primary-colorVaccine);
   }
   .CreatechildPage-content-kk {
@@ -75,27 +75,31 @@
     display: flex;
     flex: 1;
     height: 100%;
-    justify-content: center;
+    margin-top: 450px;
+    justify-content: flex-start;
     flex-direction: column;
     align-items: center;
 }
 .CreatechildPage-button {
     display: flex;
-    width: 148.94px;
+    width: 200px;
     height: 52.67px;
-    padding: 16px 24.647px 17.67px 25px;
+    font-size: 18px;
+    font-weight: bold;
+    /* padding: 16px 24.647px 17.67px 25px; */
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
     margin-top: 190px;
     border-radius: 8px;
     background: var(--primary-colorVaccine);
-    color: white;
-    margin-top: 300px;
+    color: rgb(242, 242, 242);
+    margin-top: 150px;
     margin-left: 440px;
 }
 .CreatechildPage-button:hover{
-  cursor: pointer;
+    background: var(--third-colorVaccine);
+    cursor: pointer;
 }
 .SuccessRegis1-title {
   flex-shrink: 0;
