@@ -44,6 +44,11 @@ margin-top: 10px;
     margin-top: 15px;
     gap: 20px;
 }
+.VaccinPage-flex2 {
+    display: flex;
+    justify-content: start;
+    margin-top: 15px;
+}
 .VaccinationPage-Name {
     color: #000;
     font-family: Roboto;
